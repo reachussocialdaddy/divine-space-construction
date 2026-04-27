@@ -1,0 +1,7 @@
+{
+  "name": "Divine Space Construction-1",
+  "description": "A luxury construction company website featuring project management, product listings, and an AI-powered lead generation chatbot.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
