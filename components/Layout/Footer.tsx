@@ -89,7 +89,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
             <ul className="space-y-4 text-white/60 text-sm">
               <li className="flex items-center space-x-3">
                 <Phone size={16} className="text-white/40" />
-                <span>{settings.phone || '+1 (647) 509-8304'}</span>
+                <span>{settings.phone || '+1 (647) 509-8304 / +1 (289) 946-2003'}</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={16} className="text-white/40" />

@@ -55,7 +55,7 @@ const App: React.FC = () => {
     footer_logo_url: '',
     brand_name: '',
     brand_subtext: '',
-    phone: '+1 (647) 509-8304',
+    phone: '+1 (647) 509-8304 / +1 (289) 946-2003',
     email: '',
     address: '',
     tiktok_url: ''
