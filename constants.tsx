@@ -43,15 +43,6 @@ export const SERVICES: Service[] = [
     image_url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200'
   },
   { 
-    id: 'kitchen-renovation', 
-    title: 'Kitchen Renovation', 
-    icon: <Hammer size={24} />, 
-    description: 'Full kitchen transformations with high-end finishes.',
-    long_description: 'Transform your kitchen into a culinary masterpiece. Divine Space specializes in full kitchen renovations that improve both functionality and market value. From custom cabinetry to premium countertops, we handle every detail.',
-    benefits: ['Custom Cabinetry', 'Premium Countertops', 'Modern Lighting', 'Efficient Layouts', 'High-End Appliances'],
-    image_url: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=1200'
-  },
-  { 
     id: 'modular-cabinetry', 
     title: 'Modular Cabinetry', 
     icon: <Layout size={24} />, 
@@ -95,7 +86,7 @@ export const MOCK_FAQS: FAQ[] = [
 ];
 
 export const MOCK_PRODUCTS: Product[] = [
-  { id: '5', name: 'Windsor Brass Satin Ridge', category: 'handles', price: '$24.95', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=1200', description: 'A premium satin brass handle featuring unique ridge texturing for a sophisticated tactile experience.' },
+  { id: '5', name: '3D View Satin Ridge', category: 'handles', price: '$24.95', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=1200', description: 'A premium satin brass handle featuring unique ridge texturing for a sophisticated tactile experience.' },
   { id: '1', name: 'Azure Modular Kitchen', category: 'kitchen', price: '$12,000+', image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=800', description: 'High-gloss cabinetry with smart storage solutions.' },
   { id: '2', name: 'Royal Walk-in Closet', category: 'closet', price: '$4,500+', image: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800', description: 'Premium wood finish with integrated LED lighting.' },
   { id: '3', name: 'Modern Island Suite', category: 'kitchen', price: '$8,500+', image: 'https://images.unsplash.com/photo-1565182999561-18d7dc63c391?auto=format&fit=crop&q=80&w=800', description: 'Quartz countertops with customized island layout.' },

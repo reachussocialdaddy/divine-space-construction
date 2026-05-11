@@ -308,7 +308,7 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
           <button className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.2em] hover:text-royal-blue transition-colors">View All</button>
         </div>
         
-        <div className={`grid grid-cols-1 sm:grid-cols-2 ${categoryId.toLowerCase() === 'windsor' ? 'md:grid-cols-3 lg:grid-cols-3' : 'md:grid-cols-3 lg:grid-cols-6'} gap-x-6 gap-y-12`}>
+        <div className={`grid grid-cols-1 sm:grid-cols-2 ${categoryId.toLowerCase() === '3d-view' ? 'md:grid-cols-3 lg:grid-cols-3' : 'md:grid-cols-3 lg:grid-cols-6'} gap-x-6 gap-y-12`}>
           {filteredProducts.length > 0 ? (
             filteredProducts.map((product) => (
               <motion.div 
@@ -319,9 +319,9 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
                 className="group cursor-pointer" 
                 onClick={() => onProductClick?.(product.id)}
               >
-                <div className={`relative ${categoryId.toLowerCase() === 'windsor' ? 'aspect-[4/3]' : 'aspect-square'} overflow-hidden bg-gray-50 mb-4 border border-gray-100 group-hover:shadow-xl transition-all duration-500`}>
+                <div className={`relative ${categoryId.toLowerCase() === '3d-view' ? 'aspect-[4/3]' : 'aspect-square'} overflow-hidden bg-gray-50 mb-4 border border-gray-100 group-hover:shadow-xl transition-all duration-500`}>
                   <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onError={handleImageError} />
-                  {categoryId.toLowerCase() === 'windsor' && (
+                  {categoryId.toLowerCase() === '3d-view' && (
                     <div className="absolute top-4 left-4 bg-red-600 text-white text-[10px] font-bold px-3 py-1 uppercase tracking-widest shadow-lg">
                       Handles
                     </div>
@@ -332,10 +332,10 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
                   </div>
                 </div>
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-tight mb-1 group-hover:text-royal-blue transition-colors">{product.name}</h3>
-                <p className={`font-bold mb-2 ${categoryId.toLowerCase() === 'windsor' ? 'text-red-600 text-lg' : 'text-gray-400 text-[10px]'}`}>
-                  {categoryId.toLowerCase() === 'windsor' ? `$${product.price}` : product.price}
+                <p className={`font-bold mb-2 ${categoryId.toLowerCase() === '3d-view' ? 'text-red-600 text-lg' : 'text-gray-400 text-[10px]'}`}>
+                  {categoryId.toLowerCase() === '3d-view' ? `$${product.price}` : product.price}
                 </p>
-                {categoryId.toLowerCase() === 'windsor' && (
+                {categoryId.toLowerCase() === '3d-view' && (
                   <p className="text-xs text-gray-500 leading-relaxed line-clamp-3">
                     {product.description}
                   </p>

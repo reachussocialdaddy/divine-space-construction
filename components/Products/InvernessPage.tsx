@@ -316,7 +316,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
           >
             <div className="space-y-4">
               <h1 className="text-5xl md:text-7xl font-bold text-brand-black leading-tight uppercase tracking-tighter">
-                {featuredProduct?.name || 'WINDSOR COLLECTION'}
+                {featuredProduct?.name || '3D VIEW COLLECTION'}
               </h1>
               <p className="text-royal-blue font-black text-xs uppercase tracking-[0.5em]">
                 DIVINE SERIES
@@ -324,7 +324,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
             </div>
 
             <p className="text-gray-500 text-lg leading-relaxed max-w-md italic font-light">
-              {featuredProduct?.description || "Explore our premium collection of Windsor Brass handles and hardware."}
+              {featuredProduct?.description || "Explore our premium collection of 3D View handles and hardware."}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-8">
@@ -347,12 +347,12 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
           </motion.div>
         </div>
 
-        {/* Windsor Product Listings Section */}
+        {/* 3D View Product Listings Section */}
         <div className="mt-32 space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
-              <h2 className="text-4xl font-bold text-brand-black uppercase tracking-tighter">WINDSOR COLLECTION</h2>
-              <p className="text-gray-500 max-w-xl">Explore our exclusive range of Windsor Brass products, designed for timeless elegance and superior tactile quality.</p>
+              <h2 className="text-4xl font-bold text-brand-black uppercase tracking-tighter">3D VIEW COLLECTION</h2>
+              <p className="text-gray-500 max-w-xl">Explore our exclusive range of 3D View products, designed for timeless elegance and superior tactile quality.</p>
             </div>
             <div className="flex items-center space-x-2 text-royal-blue font-bold text-xs uppercase tracking-widest">
               <span>{windsorProducts.length} Products Found</span>
@@ -407,7 +407,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                     <Camera size={20} />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-brand-black uppercase tracking-tighter">WINDSOR BRASS DESIGNER</h2>
+                    <h2 className="text-2xl font-bold text-brand-black uppercase tracking-tighter">3D VIEW DESIGNER</h2>
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">AI-POWERED ROOM VISUALIZER</p>
                   </div>
                 </div>

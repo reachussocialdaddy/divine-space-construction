@@ -228,7 +228,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
     { id: 'liftup', label: 'Lift Up System' },
     { id: 'accessories', label: 'Cabinet Accessories' },
     { id: 'led', label: 'LED Light System' },
-    { id: 'windsor', label: 'Windsor Brass' },
+    { id: '3d-view', label: '3D View' },
   ];
 
   const menuItems = [
