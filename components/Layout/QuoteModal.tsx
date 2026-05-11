@@ -121,7 +121,7 @@ const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, onSubmit }) =>
                         <input
                           required
                           type="tel"
-                          placeholder="+1 (647) 000-0000"
+                          placeholder="+1 (647) 509-8304"
                           className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-100 rounded-sm text-sm focus:border-royal-blue outline-none transition-all"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
