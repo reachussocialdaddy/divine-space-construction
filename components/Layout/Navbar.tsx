@@ -161,7 +161,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
                 currentView === 'Inverness' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
               }`}
             >
-              WINDSOR
+              3D VIEW 🔥
             </button>
 
             <button

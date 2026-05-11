@@ -54,7 +54,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
 
   const [aiError, setAiError] = useState<string | null>(null);
 
-  const windsorProducts = products.filter(p => p.category === 'Windsor');
+  const windsorProducts = products.filter(p => p.category === '3D View');
   const featuredProduct = windsorProducts[0];
   const designerProducts = windsorProducts;
 
@@ -921,7 +921,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                         <div className="space-y-2">
                           <h4 className="text-[10px] font-black text-royal-blue uppercase tracking-widest">How it works</h4>
                           <p className="text-xs text-gray-500 leading-relaxed">
-                            Our AI analyzes your room's lighting, textures, and style to perfectly place the <span className="font-bold text-brand-black">{featuredProduct?.name || 'Windsor Brass Satin Ridge™'}</span> handles in your space.
+                            Our AI analyzes your room's lighting, textures, and style to perfectly place the <span className="font-bold text-brand-black">{featuredProduct?.name || '3D View Satin Ridge™'}</span> handles in your space.
                           </p>
                         </div>
                         
@@ -932,11 +932,11 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                               <img 
                                 src={featuredProduct?.image || "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=200"} 
                                 className="w-full h-full object-contain" 
-                                alt={featuredProduct?.name || "Windsor Brass"} 
+                                alt={featuredProduct?.name || "3D View"} 
                               />
                             </div>
                             <div>
-                              <p className="text-xs font-bold text-brand-black uppercase tracking-tight">{featuredProduct?.name || 'Windsor Brass'}</p>
+                              <p className="text-xs font-bold text-brand-black uppercase tracking-tight">{featuredProduct?.name || '3D View'}</p>
                               <p className="text-[10px] text-royal-blue font-bold uppercase tracking-widest">Satin Ridge™</p>
                             </div>
                           </div>

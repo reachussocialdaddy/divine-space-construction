@@ -99,7 +99,7 @@ const App: React.FC = () => {
         setCurrentView('Products');
       } else if (normalizedPath === 'inverness') {
         setCurrentView('Inverness');
-        setActiveCategory('Windsor');
+        setActiveCategory('3D View');
         setActiveSubCategoryId(null);
       } else if (['home', 'about', 'products', 'admin', 'process', 'projects', 'clients', 'contact', 'inverness', 'privacy', 'terms'].includes(normalizedPath)) {
         const viewMap: Record<string, View> = {
@@ -383,7 +383,7 @@ const App: React.FC = () => {
       setActiveSubCategoryId(null);
     } else if (view === 'Inverness') {
       path = '/Inverness';
-      setActiveCategory('Windsor');
+      setActiveCategory('3D View');
       setActiveSubCategoryId(null);
     } else if (view === 'Home') {
       path = '/';
