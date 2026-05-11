@@ -26,7 +26,8 @@ import {
   AlertCircle,
   ShoppingCart,
   UserCheck,
-  History
+  History,
+  Menu
 } from 'lucide-react';
 import { Lead, Product, ProjectPin, FAQ, View, GalleryProject, HeroSlide, PageSectionContent, SiteSettings, Client, ProductCategory, ProductSubCategory, Service, Order, AbandonedCart, UserProfile } from '../../types.ts';
 import { Logo } from '../../constants.tsx';
