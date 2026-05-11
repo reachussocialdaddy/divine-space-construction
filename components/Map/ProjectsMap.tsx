@@ -82,7 +82,7 @@ const ProjectsMap: React.FC<ProjectsMapProps> = ({ pins }) => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div>
             <span className="text-royal-blue font-bold tracking-widest text-sm uppercase mb-3 block">Portfolio</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-royal-blue">GTA & Toronto Projects</h2>
+            <h2 className="text-3xl md:text-5xl font-bold text-royal-blue">GTA & Toronto Projects</h2>
           </div>
           <div className="flex items-center space-x-4 bg-white p-3 rounded-sm shadow-sm border border-gray-200">
             <div className="flex items-center text-sm font-medium text-gray-500">
@@ -95,7 +95,7 @@ const ProjectsMap: React.FC<ProjectsMapProps> = ({ pins }) => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-2 relative h-[600px] bg-white rounded-sm shadow-xl overflow-hidden border border-gray-200">
+          <div className="lg:col-span-2 relative h-[400px] md:h-[600px] bg-white rounded-sm shadow-xl overflow-hidden border border-gray-200">
             {isLoaded ? (
               <GoogleMap
                 mapContainerStyle={containerStyle}

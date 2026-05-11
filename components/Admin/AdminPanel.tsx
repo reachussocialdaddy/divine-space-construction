@@ -80,6 +80,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   orders, setOrders, abandonedCarts, setAbandonedCarts, users, setUsers,
   navigateTo 
 }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState('Dashboard');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddingPin, setIsAddingPin] = useState(false);
@@ -731,9 +732,29 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   };
 
   return (
-    <div className="min-h-[800px] flex bg-gray-50/50">
-      <aside className="w-64 bg-[#111111] text-white flex flex-col sticky top-20 h-[calc(100vh-80px)]">
-        <div className="p-8 border-b border-white/5 flex items-center space-x-3">
+    <div className="min-h-screen flex flex-col md:flex-row bg-gray-50/50">
+      {/* Mobile Sidebar Toggle */}
+      <div className="md:hidden bg-[#111111] text-white p-4 flex justify-between items-center sticky top-0 z-[60]">
+        <div className="flex items-center space-x-3">
+          {settings.logo_url ? (
+            <img src={settings.logo_url} alt="Logo" className="w-8 h-8 object-contain" />
+          ) : (
+            <Logo className="w-8 h-8" />
+          )}
+          <span className="brand-font text-lg uppercase tracking-wider">Admin</span>
+        </div>
+        <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2 hover:bg-white/10 rounded-sm">
+          {isSidebarOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+      </div>
+
+      <aside className={`
+        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} 
+        md:translate-x-0 fixed md:sticky top-0 md:top-20 z-50 md:z-auto
+        w-64 bg-[#111111] text-white flex flex-col h-screen md:h-[calc(100vh-80px)]
+        transition-transform duration-300 ease-in-out
+      `}>
+        <div className="hidden md:flex p-8 border-b border-white/5 items-center space-x-3">
           {settings.logo_url ? (
             <img src={settings.logo_url} alt="Logo" className="w-8 h-8 object-contain" />
           ) : (
@@ -743,7 +764,11 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
         </div>
         <nav className="flex-grow py-6 overflow-y-auto">
           {menuItems.map((item) => (
-            <button key={item.id} onClick={() => setActiveTab(item.id)} className={`w-full flex items-center justify-between px-8 py-4 text-sm font-bold transition-all ${activeTab === item.id ? 'bg-royal-blue text-white shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5'}`}>
+            <button 
+              key={item.id} 
+              onClick={() => { setActiveTab(item.id); setIsSidebarOpen(false); }} 
+              className={`w-full flex items-center justify-between px-8 py-4 text-sm font-bold transition-all ${activeTab === item.id ? 'bg-royal-blue text-white shadow-lg' : 'text-white/50 hover:text-white hover:bg-white/5'}`}
+            >
               <div className="flex items-center space-x-3">{item.icon}<span>{item.id}</span></div>
               {item.count && <span className="bg-white text-royal-blue text-[10px] px-2 py-0.5 rounded-full">{item.count}</span>}
             </button>
@@ -751,9 +776,17 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
         </nav>
       </aside>
 
-      <main className="flex-grow p-10 overflow-y-auto">
-        <header className="mb-10 flex justify-between items-center">
-          <h1 className="text-3xl font-bold text-brand-black">{activeTab}</h1>
+      {/* Overlay for mobile sidebar */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      <main className="flex-grow p-4 md:p-10 overflow-y-auto">
+        <header className="mb-6 md:mb-10 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+          <h1 className="text-2xl md:text-3xl font-bold text-brand-black">{activeTab}</h1>
           {activeTab === 'Product Categories' && (
             <button onClick={handleAddNewCategory} className="bg-royal-blue text-white px-6 py-3 text-xs font-bold uppercase flex items-center shadow-lg hover:bg-red-700 transition-colors">
               <Plus size={16} className="mr-2" /> Add New Category

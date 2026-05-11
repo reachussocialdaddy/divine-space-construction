@@ -58,7 +58,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ navigateTo, slides, onOpenQuote
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              className="text-5xl sm:text-7xl lg:text-8xl text-white font-bold leading-[1.1] mb-8 drop-shadow-2xl"
+              className="text-4xl sm:text-7xl lg:text-8xl text-white font-bold leading-[1.1] mb-6 md:mb-8 drop-shadow-2xl"
             >
               {activeSlides[current].title}
             </motion.h1>
@@ -66,7 +66,7 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ navigateTo, slides, onOpenQuote
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="text-xl sm:text-2xl text-gray-200 mb-12 max-w-2xl font-light tracking-wide leading-relaxed border-l-4 border-royal-blue pl-6"
+              className="text-lg sm:text-2xl text-gray-200 mb-8 md:mb-12 max-w-2xl font-light tracking-wide leading-relaxed border-l-4 border-royal-blue pl-4 md:pl-6"
             >
               {activeSlides[current].subtitle}
             </motion.p>
@@ -74,19 +74,19 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ navigateTo, slides, onOpenQuote
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}
-              className="flex flex-wrap gap-6"
+              className="flex flex-col sm:flex-row gap-4 md:gap-6"
             >
               <button 
                 onClick={onOpenQuote}
-                className="px-10 py-5 bg-royal-blue text-white rounded-sm font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all transform hover:-translate-y-1 shadow-[0_15px_30px_rgba(227,30,36,0.3)]"
+                className="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-royal-blue text-white rounded-sm font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all transform hover:-translate-y-1 shadow-[0_15px_30px_rgba(227,30,36,0.3)]"
               >
                 {activeSlides[current].button_text || 'Get Free Quote'}
               </button>
               <button 
                 onClick={onOpenQuote}
-                className="px-10 py-5 bg-white text-black rounded-sm font-bold tracking-widest uppercase hover:bg-royal-blue hover:text-white transition-all transform hover:-translate-y-1"
+                className="w-full sm:w-auto px-8 md:px-10 py-4 md:py-5 bg-white text-black rounded-sm font-bold tracking-widest uppercase hover:bg-royal-blue hover:text-white transition-all transform hover:-translate-y-1"
               >
-                Request Consultation
+                Consultation
               </button>
             </motion.div>
           </div>

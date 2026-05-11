@@ -32,26 +32,26 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
-          <div className="flex-shrink-0 mr-8 lg:mr-12">
+          <div className="flex-shrink-0 mr-4 md:mr-8 lg:mr-12">
             <button 
               onClick={() => navigateTo('Home')}
-              className="flex items-center space-x-4 group"
+              className="flex items-center space-x-2 md:space-x-4 group"
             >
-              <div className={`${settings.logo_url ? 'h-14 w-auto' : ''} flex items-center justify-center transition-transform group-hover:scale-110`}>
+              <div className={`${settings.logo_url ? 'h-10 md:h-14 w-auto' : ''} flex items-center justify-center transition-transform group-hover:scale-110`}>
                 {settings.logo_url ? (
                   <img src={settings.logo_url} alt={settings.brand_name || "Logo"} className="h-full w-auto object-contain" />
                 ) : (
-                  <div className="w-10 h-10 bg-royal-blue/10 rounded-sm flex items-center justify-center">
-                    <Logo className="w-6 h-6 text-royal-blue" />
+                  <div className="w-8 h-8 md:w-10 md:h-10 bg-royal-blue/10 rounded-sm flex items-center justify-center">
+                    <Logo className="w-5 h-5 md:w-6 md:h-6 text-royal-blue" />
                   </div>
                 )}
               </div>
               {!settings.logo_url && (
                 <div className="flex flex-col text-left">
-                  <span className="brand-font text-brand-black text-xl font-bold leading-none tracking-tight">
+                  <span className="brand-font text-brand-black text-lg md:text-xl font-bold leading-none tracking-tight">
                     {settings.brand_name || 'DIVINE SPACE'}
                   </span>
-                  <span className="text-[10px] tracking-[0.2em] font-bold text-gray-500 uppercase mt-1">
+                  <span className="text-[8px] md:text-[10px] tracking-[0.2em] font-bold text-gray-500 uppercase mt-0.5 md:mt-1">
                     {settings.brand_subtext || 'Construction Inc.'}
                   </span>
                 </div>
@@ -230,72 +230,64 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
       </div>
 
       {isOpen && (
-        <div className="md:hidden bg-white border-b border-gray-100 py-4 px-4 space-y-4">
-          <button onClick={() => { navigateTo('Home'); setIsOpen(false); }} className={`block w-full text-left px-4 py-2 text-base font-bold rounded-md ${currentView === 'Home' ? 'bg-royal-blue/5 text-royal-blue' : 'text-gray-700 hover:bg-gray-50'}`}>
-            Home
-          </button>
-          <button onClick={() => { navigateTo('Process'); setIsOpen(false); }} className={`block w-full text-left px-4 py-2 text-base font-bold rounded-md ${currentView === 'Process' ? 'bg-royal-blue/5 text-royal-blue' : 'text-gray-700 hover:bg-gray-50'}`}>
-            Our Process
-          </button>
-          
-          <div className="space-y-1">
-            <p className="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Services</p>
-            {services.map(service => (
-              <button 
-                key={service.id} 
-                onClick={() => { navigateTo('Service', service.id); setIsOpen(false); }} 
-                className={`block w-full text-left px-8 py-2 text-sm font-bold ${currentView === 'Service' && selectedServiceId === service.id ? 'text-royal-blue' : 'text-gray-500 hover:text-royal-blue'}`}
-              >
-                {service.title}
-              </button>
-            ))}
+        <div className="md:hidden bg-white border-b border-gray-100 py-6 px-4 space-y-6 max-h-[80vh] overflow-y-auto">
+          <div className="grid grid-cols-2 gap-4">
+            <button onClick={() => { navigateTo('Home'); setIsOpen(false); }} className={`flex flex-col items-center justify-center p-4 rounded-sm border ${currentView === 'Home' ? 'border-royal-blue bg-red-50 text-royal-blue' : 'border-gray-100 text-gray-700'}`}>
+              <span className="text-xs font-bold uppercase tracking-widest">Home</span>
+            </button>
+            <button onClick={() => { navigateTo('Process'); setIsOpen(false); }} className={`flex flex-col items-center justify-center p-4 rounded-sm border ${currentView === 'Process' ? 'border-royal-blue bg-red-50 text-royal-blue' : 'border-gray-100 text-gray-700'}`}>
+              <span className="text-xs font-bold uppercase tracking-widest">Process</span>
+            </button>
+            <button onClick={() => { navigateTo('Products'); setIsOpen(false); }} className={`flex flex-col items-center justify-center p-4 rounded-sm border ${currentView === 'Products' ? 'border-royal-blue bg-red-50 text-royal-blue' : 'border-gray-100 text-gray-700'}`}>
+              <span className="text-xs font-bold uppercase tracking-widest">Products</span>
+            </button>
+            <button onClick={() => { navigateTo('Inverness'); setIsOpen(false); }} className={`flex flex-col items-center justify-center p-4 rounded-sm border ${currentView === 'Inverness' ? 'border-royal-blue bg-red-50 text-royal-blue' : 'border-gray-100 text-gray-700'}`}>
+              <span className="text-xs font-bold uppercase tracking-widest">3D View</span>
+            </button>
           </div>
 
-          <div className="space-y-1">
-            <button onClick={() => { navigateTo('Products'); setIsOpen(false); }} className={`block w-full text-left px-4 py-2 text-base font-bold rounded-md ${currentView === 'Products' ? 'bg-royal-blue/5 text-royal-blue' : 'text-gray-700 hover:bg-gray-50'}`}>
-              Products
-            </button>
-            {categories.map(cat => {
-              const catSubCats = subCategories.filter(sc => sc.category_id === cat.id);
-              return (
-                <div key={cat.id} className="space-y-1">
-                  <button onClick={() => { navigateTo('Products', cat.name); setIsOpen(false); }} className="block w-full text-left px-8 py-2 text-sm font-bold text-gray-500 hover:text-royal-blue">
-                    - {cat.name}
+          <div className="space-y-4">
+            <div>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-1">Our Services</p>
+              <div className="grid grid-cols-1 gap-2">
+                {services.map(service => (
+                  <button 
+                    key={service.id} 
+                    onClick={() => { navigateTo('Service', service.id); setIsOpen(false); }} 
+                    className={`block w-full text-left px-4 py-3 text-sm font-bold border-l-2 transition-all ${currentView === 'Service' && selectedServiceId === service.id ? 'border-royal-blue text-royal-blue bg-red-50' : 'border-transparent text-gray-600'}`}
+                  >
+                    {service.title}
                   </button>
-                  {catSubCats.map(sub => (
-                    <button key={sub.id} onClick={() => { navigateTo('Products', `sub:${sub.id}`); setIsOpen(false); }} className="block w-full text-left px-12 py-1 text-[11px] font-bold text-gray-400 hover:text-royal-blue">
-                      -- {sub.name}
-                    </button>
-                  ))}
-                </div>
-              );
-            })}
-          </div>
+                ))}
+              </div>
+            </div>
 
-          <button onClick={() => { navigateTo('Inverness'); setIsOpen(false); }} className={`block w-full text-left px-4 py-2 text-base font-bold rounded-md ${currentView === 'Inverness' ? 'bg-royal-blue/5 text-royal-blue' : 'text-gray-700 hover:bg-gray-50'}`}>
-            Windsor
-          </button>
+            <div>
+              <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-1">Portfolio</p>
+              <div className="grid grid-cols-2 gap-2">
+                <button onClick={() => { navigateTo('Projects'); setIsOpen(false); }} className={`text-left px-4 py-3 text-xs font-bold rounded-sm border ${currentView === 'Projects' ? 'border-royal-blue text-royal-blue bg-red-50' : 'border-gray-100 text-gray-600'}`}>
+                  Projects
+                </button>
+                <button onClick={() => { navigateTo('Clients'); setIsOpen(false); }} className={`text-left px-4 py-3 text-xs font-bold rounded-sm border ${currentView === 'Clients' ? 'border-royal-blue text-royal-blue bg-red-50' : 'border-gray-100 text-gray-600'}`}>
+                  Clients
+                </button>
+              </div>
+            </div>
 
-          <button onClick={() => { navigateTo('About'); setIsOpen(false); }} className={`block w-full text-left px-4 py-2 text-base font-bold rounded-md ${currentView === 'About' ? 'bg-royal-blue/5 text-royal-blue' : 'text-gray-700 hover:bg-gray-50'}`}>
-            About Us
-          </button>
-          <button onClick={() => { navigateTo('Contact'); setIsOpen(false); }} className={`block w-full text-left px-4 py-2 text-base font-bold rounded-md ${currentView === 'Contact' ? 'bg-royal-blue/5 text-royal-blue' : 'text-gray-700 hover:bg-gray-50'}`}>
-            Contact
-          </button>
-          <div className="border-t border-gray-100 pt-4">
-            <p className="px-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Portfolio</p>
-            <button onClick={() => { navigateTo('Projects'); setIsOpen(false); }} className={`block w-full text-left px-4 py-2 text-base font-bold rounded-md ${currentView === 'Projects' ? 'bg-royal-blue/5 text-royal-blue' : 'text-gray-700 hover:bg-gray-50'}`}>
-              Our Projects
-            </button>
-            <button onClick={() => { navigateTo('Clients'); setIsOpen(false); }} className={`block w-full text-left px-4 py-2 text-base font-bold rounded-md ${currentView === 'Clients' ? 'bg-royal-blue/5 text-royal-blue' : 'text-gray-700 hover:bg-gray-50'}`}>
-              Our Clients
-            </button>
+            <div className="grid grid-cols-2 gap-2">
+              <button onClick={() => { navigateTo('About'); setIsOpen(false); }} className={`text-left px-4 py-3 text-xs font-bold rounded-sm border ${currentView === 'About' ? 'border-royal-blue text-royal-blue bg-red-50' : 'border-gray-100 text-gray-600'}`}>
+                About Us
+              </button>
+              <button onClick={() => { navigateTo('Contact'); setIsOpen(false); }} className={`text-left px-4 py-3 text-xs font-bold rounded-sm border ${currentView === 'Contact' ? 'border-royal-blue text-royal-blue bg-red-50' : 'border-gray-100 text-gray-600'}`}>
+                Contact
+              </button>
+            </div>
           </div>
           
-          <div className="pt-2">
+          <div className="pt-4">
             <button 
               onClick={() => { onOpenQuote(); setIsOpen(false); }}
-              className="w-full bg-royal-blue text-white py-4 rounded-sm text-xs font-bold uppercase tracking-[0.2em] shadow-lg"
+              className="w-full bg-royal-blue text-white py-5 rounded-sm text-sm font-bold uppercase tracking-[0.3em] shadow-xl active:scale-95 transition-transform"
             >
               Get Free Quote
             </button>
