@@ -32,7 +32,7 @@ const AboutPage: React.FC<AboutPageProps> = ({ pageContent }) => {
           transition={{ duration: 1 }}
           className="max-w-4xl mx-auto px-4 relative z-10"
         >
-          <h1 className="text-5xl md:text-7xl font-bold mb-8 uppercase tracking-tight">
+          <h1 className="text-4xl md:text-7xl font-bold mb-8 uppercase tracking-tight">
             {heroContent?.title || 'Divine Space Construction Inc.'}
           </h1>
           <p className="text-xl md:text-2xl font-light text-white/80 max-w-3xl mx-auto leading-relaxed">
@@ -53,11 +53,11 @@ const AboutPage: React.FC<AboutPageProps> = ({ pageContent }) => {
             >
               <div className="relative p-4">
                 <div className="absolute inset-0 bg-royal-blue transform translate-x-4 translate-y-4"></div>
-                <img 
-                  src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=800" 
-                  alt="Construction Site" 
-                  className="relative z-10 w-full h-[500px] object-cover grayscale hover:grayscale-0 transition-all duration-700" 
-                />
+                  <img 
+                    src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=800" 
+                    alt="Construction Site" 
+                    className="relative z-10 w-full h-[300px] md:h-[500px] object-cover grayscale hover:grayscale-0 transition-all duration-700" 
+                  />
               </div>
             </motion.div>
             <motion.div 

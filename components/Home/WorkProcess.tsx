@@ -29,7 +29,7 @@ const WorkProcess: React.FC<WorkProcessProps> = ({ content }) => {
           className="mb-16"
         >
           <span className="text-royal-blue font-bold tracking-widest text-sm uppercase mb-3 block">Roadmap</span>
-          <h2 className="text-4xl md:text-5xl font-bold">{content?.title || 'Our Work Process'}</h2>
+          <h2 className="text-3xl md:text-5xl font-bold">{content?.title || 'Our Work Process'}</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
