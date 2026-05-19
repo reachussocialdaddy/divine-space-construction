@@ -19,7 +19,7 @@ import QuoteModal from './components/Layout/QuoteModal';
 import CartDrawer from './components/Layout/CartDrawer';
 import CheckoutPage from './components/Checkout/CheckoutPage';
 import { supabase } from './supabaseClient';
-import { MOCK_CLIENTS, MOCK_PRODUCTS, MOCK_PROJECT_PINS, SERVICES } from './constants';
+import { MOCK_CLIENTS, MOCK_PRODUCTS, MOCK_PROJECT_PINS, SERVICES, MOCK_PROJECTS } from './constants';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('Home');
@@ -175,7 +175,11 @@ const App: React.FC = () => {
       ]);
 
       if (leadsData) setLeads(leadsData);
-      if (projectsData) setProjects(projectsData);
+      if (projectsData && projectsData.length > 0) {
+        setProjects(projectsData);
+      } else {
+        setProjects(MOCK_PROJECTS);
+      }
       
       // Fallback for actual Clients
       if (clientsData && clientsData.length > 0) {

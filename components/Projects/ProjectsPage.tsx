@@ -9,24 +9,29 @@ interface ProjectsPageProps {
 }
 
 const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) => {
-  const [activeCategory, setActiveCategory] = useState<string>('RETAIL SHOWROOM');
+  const [activeCategory, setActiveCategory] = useState<string>('KITCHEN RENOVATION');
 
   const heroContent = pageContent?.find(c => c.section_key === 'projects_hero');
   const introContent = pageContent?.find(c => c.section_key === 'projects_intro');
   const contactContent = pageContent?.find(c => c.section_key === 'projects_contact');
 
-  // Hardcoded categories to match the screenshot exactly
+  // Premium residential construction and millwork categories matching our Google Drive portfolio
   const categories = [
-    { label: 'RETAIL', sub: 'SHOWROOM' },
-    { label: 'EXTERIOR', sub: 'RETROFIT' },
-    { label: 'FOOD', sub: 'SERVICE' },
-    { label: 'RESTAURANT', sub: '(FULL SERVICE)' },
-    { label: 'RETAIL', sub: 'GROCERY' },
-    { label: 'FULL DESIGN', sub: 'BUILD' },
-    { label: 'EPOXY', sub: 'FLOORING' },
+    { label: 'KITCHEN', sub: 'RENOVATION' },
+    { label: 'BATHROOM', sub: 'RENOVATION' },
+    { label: 'WASHROOMS', sub: 'SPA DESIGN' },
+    { label: 'LEGAL BASEMENTS', sub: 'PERMIT SUITES' },
+    { label: 'CLOSETS', sub: 'CUSTOM STORAGE' },
+    { label: 'BEDROOMS', sub: 'LUXURY SUITES' },
+    { label: 'LOUNGE', sub: 'LIVING SPACES' },
+    { label: 'BOOKSHELF', sub: 'CUSTOM MILLWORK' },
+    { label: 'MIRROR WORK', sub: 'CREATIVE GLASS' },
+    { label: 'STAIRS', sub: 'CUSTOM CARPENTRY' },
   ];
 
-  const currentProject = projects.find(p => p.name.toUpperCase() === activeCategory) || (projects.length > 0 ? projects[0] : null);
+  const currentProject = projects.find(p => p.name.toUpperCase() === activeCategory) || 
+                         projects.find(p => p.category.toUpperCase() === activeCategory.split(' ')[0]) ||
+                         (projects.length > 0 ? projects[0] : null);
 
   return (
     <div className="bg-white min-h-screen">
@@ -34,7 +39,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
       <div className="relative h-[400px] flex items-center justify-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center grayscale brightness-50 blur-[2px]" 
-          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=1920)' }}
+          style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1920)' }}
         />
         <div className="absolute inset-0 bg-black/30" />
         <h1 className="relative z-10 text-white text-6xl md:text-8xl font-bold tracking-wider uppercase drop-shadow-2xl">
@@ -46,16 +51,16 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
         {/* Title Section */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-[#2c3e50] mb-4">
-            {introContent?.title || 'View Our Commercial Construction Projects'}
+            {introContent?.title || 'View Our Premium Construction Projects'}
           </h2>
-          <div className="w-48 h-1 bg-[#f1c40f] mx-auto mb-8"></div>
+          <div className="w-48 h-1 bg-royal-blue mx-auto mb-8"></div>
           <p className="text-gray-500 max-w-4xl mx-auto leading-relaxed text-lg">
-            {introContent?.description || 'From niche retail to popular food brands, Servcon has built and performed maintenance on projects of all sizes and scopes. View samples of our work below.'}
+            {introContent?.description || 'From custom luxurious kitchens to finished permit-compliant legal basements, Divine Space delivers peerless high-end craftsmanship throughout Ontario. View samples of our premium work below.'}
           </p>
         </div>
 
         {/* Category Grid (Tabs) */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-1 mb-16">
+        <div className="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-10 gap-1 mb-16">
           {categories.map((cat, idx) => {
             const fullLabel = `${cat.label} ${cat.sub}`;
             const isActive = activeCategory === fullLabel;
@@ -63,14 +68,14 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
               <button
                 key={idx}
                 onClick={() => setActiveCategory(fullLabel)}
-                className={`flex flex-col text-center p-6 transition-all h-full justify-center ${
-                  isActive ? 'bg-[#f1c40f] text-[#2c3e50]' : 'bg-[#34495e] text-white hover:bg-[#2c3e50]'
+                className={`flex flex-col text-center p-4 transition-all h-full justify-center ${
+                  isActive ? 'bg-royal-blue text-white' : 'bg-[#111111] text-white hover:bg-royal-blue/90'
                 }`}
               >
-                <div className="font-bold text-xs uppercase tracking-widest mb-1">
+                <div className="font-bold text-[11px] uppercase tracking-wider mb-1">
                   {cat.label}
                 </div>
-                <div className="text-[10px] font-bold uppercase leading-tight">
+                <div className="text-[9px] opacity-75 uppercase leading-tight font-medium">
                   {cat.sub}
                 </div>
               </button>
@@ -84,6 +89,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
             {activeCategory}
           </h3>
         </div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <AnimatePresence mode="wait">
