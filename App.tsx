@@ -209,17 +209,20 @@ const App: React.FC = () => {
 
       if (subCategoriesData) setSubCategories(subCategoriesData);
 
-      // Fallback for Project Pins (19 GTA cities)
-      if (pinsData && pinsData.length > 0) {
-        const formattedPins = pinsData.map((p: any) => ({
-          ...p,
-          lat: typeof p.lat === 'string' ? (parseFloat(p.lat) || 0) : (p.lat || 0),
-          lng: typeof p.lng === 'string' ? (parseFloat(p.lng) || 0) : (p.lng || 0)
-        }));
-        setPins(formattedPins);
-      } else {
-        setPins(MOCK_PROJECT_PINS);
-      }
+      // Merge database project pins with local MOCK_PROJECT_PINS so both are displayed on map
+      const dbPins = pinsData ? pinsData.map((p: any) => ({
+        ...p,
+        lat: typeof p.lat === 'string' ? (parseFloat(p.lat) || 0) : (p.lat || 0),
+        lng: typeof p.lng === 'string' ? (parseFloat(p.lng) || 0) : (p.lng || 0)
+      })) : [];
+
+      const mergedPins = [...MOCK_PROJECT_PINS];
+      dbPins.forEach((dp: any) => {
+        if (!mergedPins.some(mp => mp.id === dp.id || (dp.title && mp.title === dp.title))) {
+          mergedPins.push(dp);
+        }
+      });
+      setPins(mergedPins);
 
       if (faqsData && faqsData.length > 0) setFaqs(faqsData);
 
