@@ -6,6 +6,41 @@ import { View, Product } from '../../types';
 import { getAIClient } from '../../services/geminiService.ts';
 import { Type } from "@google/genai";
 
+const TAB_MATERIALS: Record<string, { id: string; name: string; image: string; description: string }[]> = {
+  WALL: [
+    { id: 'w1', name: 'Chantilly Lace White', image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800', description: 'Clean, premium architectural matte white paint coat.' },
+    { id: 'w2', name: 'Obsidian Slate Plaster', image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=800', description: 'Dark, modern micro-cement textured plaster.' },
+    { id: 'w3', name: 'Classic Taupe Grey', image: 'https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?auto=format&fit=crop&q=80&w=800', description: 'Warm grey beige paint providing a serene room backdrop.' },
+    { id: 'w4', name: 'Sage Green Earth', image: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=800', description: 'Muted organic sage color for luxury accent walls.' }
+  ],
+  FLOOR: [
+    { id: 'f1', name: 'Smoked Oak Herringbone', image: 'https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&q=80&w=800', description: 'Premium European smoked oak laid in classic herringbone pattern.' },
+    { id: 'f2', name: 'Calacatta White Tiling', image: 'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&q=80&w=800', description: 'Polished large-format calacatta marble tiles with grey veining.' },
+    { id: 'f3', name: 'Natural Honey Maple', image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=800', description: 'Warm honey maple wood planks with smooth satin protective coat.' },
+    { id: 'f4', name: 'Industrial Slate Grey', image: 'https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?auto=format&fit=crop&q=80&w=800', description: 'Honed dark charcoal basalt tiles for contemporary industrial look.' }
+  ],
+  COUNTERTOP: [
+    { id: 'c1', name: 'Calacatta Quartz Gold', image: 'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&q=80&w=800', description: 'Stunning white quartz with thick golden and grey veining.' },
+    { id: 'c2', name: 'Nero Marquina Black Marble', image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800', description: 'Deep obsidian black marble with sharp white calcite veins.' },
+    { id: 'c3', name: 'Statuary White Marble', image: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=800', description: 'Bright white stone surface with subtle misty grey patterns.' },
+    { id: 'c4', name: 'Polished Concrete Grey', image: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=800', description: 'Honed concrete gray surface with subtle industrial speckles.' }
+  ],
+  FURNITURE: [
+    { id: 'fu1', name: 'Vida Premium Walnut Veneer', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800', description: 'High-end American walnut wood grain with rich, straight strip patterns.' },
+    { id: 'fu2', name: 'Vida Natural Oak Grain', image: 'https://images.unsplash.com/photo-1588854337236-6889d631faa8?auto=format&fit=crop&q=80&w=800', description: 'Classic vertical red oak grain sheet with organic wood ring textures.' },
+    { id: 'fu3', name: 'Vida Glossy Chantilly White', image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800', description: 'High-gloss acrylic white cabinet panels with mirror finish (Smart Hardware).' },
+    { id: 'fu4', name: 'Vida Obsidian Matte Black', image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=800', description: 'Fingerprint-resistant matte black cabinet panels for an ultra-modern kitchen profile.' },
+    { id: 'fu5', name: 'Vida Royal Windsor Green', image: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=800', description: 'Elegant, deep heritage green shaker cabinet paint coat.' },
+    { id: 'fu6', name: 'Vida Midnight Navy Blue', image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=800', description: 'Rich navy blue satin lacquer coat, perfect with brass hardware.' },
+    { id: 'fu7', name: 'Vida Cashmere Beige Lacquer', image: 'https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?auto=format&fit=crop&q=80&w=800', description: 'Soft cashmere beige high gloss panels for bright, warm interior environments.' },
+    { id: 'fu8', name: 'Vida Charcoal Ash Stained Wood', image: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=80&w=800', description: 'Ash wood panels stained in deep charcoal with prominent visible grain contours.' },
+    { id: 'fu9', name: 'Vida Fluted Teak Shutter', image: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&q=80&w=800', description: 'Teak wood panels with elegant, vertical fluted channels (Smart Hardware).' },
+    { id: 'fu10', name: 'Vida Brushed Gold Accent Sheet', image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=800', description: 'Metallic brushed champagne gold panels for ultra-luxury kitchen cabinets.' },
+    { id: 'fu11', name: 'Vida Silver Elm Veneer', image: 'https://images.unsplash.com/photo-1549692520-acc6669e2f0c?auto=format&fit=crop&q=80&w=800', description: 'Light, contemporary silver elm wood grain with straight, clean linear patterns.' },
+    { id: 'fu12', name: 'Vida Crimson Luxury Lacquer', image: 'https://images.unsplash.com/photo-1565182999561-18d7dc63c391?auto=format&fit=crop&q=80&w=800', description: 'Deep red luxury satin coat designed to stand out on feature accent cupboards.' }
+  ]
+};
+
 interface InvernessPageProps {
   navigateTo: (view: View, id?: string) => void;
   products: Product[];
@@ -16,18 +51,20 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [isDesignerActive, setIsDesignerActive] = useState(false);
-  const [activeTab, setActiveTab] = useState<'FLOOR' | 'WALL' | 'FURNITURE' | 'COUNTERTOP'>('FURNITURE');
-  const [selections, setSelections] = useState({
-    FLOOR: '',
-    WALL: '',
-    FURNITURE: '',
-    COUNTERTOP: ''
+  const [activeTab, setActiveTab] = useState<'FLOOR' | 'WALL' | 'FURNITURE' | 'COUNTERTOP' | 'HARDWARE'>('FURNITURE');
+  const [selections, setSelections] = useState<Record<string, string>>({
+    FLOOR: 'Smoked Oak Herringbone',
+    WALL: 'Chantilly Lace White',
+    FURNITURE: 'Vida Premium Walnut Veneer',
+    COUNTERTOP: 'Calacatta Quartz Gold',
+    HARDWARE: 'Vida Luxe Gold Handle'
   });
-  const [appliedImages, setAppliedImages] = useState({
+  const [appliedImages, setAppliedImages] = useState<Record<string, string>>({
     FLOOR: '',
     WALL: '',
     FURNITURE: '',
-    COUNTERTOP: ''
+    COUNTERTOP: '',
+    HARDWARE: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=200'
   });
   const [imageAspectRatio, setImageAspectRatio] = useState<number | null>(null);
   const [hotspots, setHotspots] = useState<{ x: number, y: number }[]>([]);
@@ -261,7 +298,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
     setImageAspectRatio(null);
   };
 
-  const handleProductSelect = (product: typeof designerProducts[0]) => {
+  const handleProductSelect = (product: { id: string; name: string; image: string; description?: string }) => {
     setSelections(prev => ({ ...prev, [activeTab]: product.name }));
     setAppliedImages(prev => ({ ...prev, [activeTab]: product.image }));
   };
@@ -316,7 +353,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
           >
             <div className="space-y-4">
               <h1 className="text-5xl md:text-7xl font-bold text-brand-black leading-tight uppercase tracking-tighter">
-                {featuredProduct?.name || '3D VIEW COLLECTION'}
+                {featuredProduct?.name || 'QUADS COLLECTION'}
               </h1>
               <p className="text-royal-blue font-black text-xs uppercase tracking-[0.5em]">
                 DIVINE SERIES
@@ -351,8 +388,8 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
         <div className="mt-32 space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
-              <h2 className="text-4xl font-bold text-brand-black uppercase tracking-tighter">3D VIEW COLLECTION</h2>
-              <p className="text-gray-500 max-w-xl">Explore our exclusive range of 3D View products, designed for timeless elegance and superior tactile quality.</p>
+              <h2 className="text-4xl font-bold text-brand-black uppercase tracking-tighter">QUADS COLLECTION</h2>
+              <p className="text-gray-500 max-w-xl">Explore our exclusive range of Quads products from Vida Company, designed for timeless elegance, premium finishes, and superior tactile quality.</p>
             </div>
             <div className="flex items-center space-x-2 text-royal-blue font-bold text-xs uppercase tracking-widest">
               <span>{windsorProducts.length} Products Found</span>
@@ -435,11 +472,11 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                     <div className="lg:w-1/3 border-r border-gray-100 flex flex-col bg-white overflow-hidden">
                       {/* Tabs */}
                       <div className="flex border-b border-gray-100 relative">
-                        {(['FLOOR', 'WALL', 'FURNITURE', 'COUNTERTOP'] as const).map((tab) => (
+                        {(['FLOOR', 'WALL', 'FURNITURE', 'COUNTERTOP', 'HARDWARE'] as const).map((tab) => (
                           <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`flex-1 py-4 text-[10px] font-black tracking-widest transition-all ${
+                            className={`flex-1 py-4 text-[9px] font-black tracking-widest transition-all ${
                               activeTab === tab 
                                 ? 'bg-royal-blue text-white' 
                                 : 'text-gray-400 hover:bg-gray-50'
@@ -455,7 +492,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
 
                       {/* Product List */}
                       <div className="flex-grow overflow-y-auto p-6 space-y-4">
-                        {designerProducts.map((product) => (
+                        {(activeTab === 'HARDWARE' ? designerProducts : TAB_MATERIALS[activeTab]).map((product) => (
                           <button
                             key={product.id}
                             onClick={() => handleProductSelect(product)}
@@ -721,7 +758,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                                     style={{ left: `${spot.x}%`, top: `${spot.y}%` }}
                                   >
                                     <img 
-                                      src="https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=200" 
+                                      src={appliedImages.HARDWARE || "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=200"} 
                                       alt="Hardware" 
                                       className="w-full h-full object-contain drop-shadow-2xl brightness-110 contrast-110"
                                       style={{ transform: 'rotate(-45deg)' }}

@@ -18,11 +18,11 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 pb-16 border-b border-white/10">
           <div className="space-y-6">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-white p-1.5 flex items-center justify-center rounded-sm">
+              <div className="w-10 h-10 bg-white/10 p-2 flex items-center justify-center rounded-sm border border-white/10 shadow-inner">
                 {settings.footer_logo_url ? (
                   <img src={settings.footer_logo_url} alt={settings.brand_name || "Logo"} className="w-full h-full object-contain" />
                 ) : (
-                  <Logo className="w-full h-full" />
+                  <Logo className="w-full h-full text-white" />
                 )}
               </div>
               <span className="brand-font text-2xl tracking-wider">{settings.brand_name || 'DIVINE SPACE'}</span>

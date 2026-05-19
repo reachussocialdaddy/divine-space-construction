@@ -1,14 +1,52 @@
-
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
-import { SiteSettings } from '../../types';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react';
+import { SiteSettings, Lead } from '../../types';
 
 interface ContactPageProps {
   settings: SiteSettings;
+  onLeadSubmit?: (lead: Omit<Lead, 'id' | 'timestamp' | 'status'>) => void;
 }
 
-const ContactPage: React.FC<ContactPageProps> = ({ settings }) => {
+const ContactPage: React.FC<ContactPageProps> = ({ settings, onLeadSubmit }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
+  const [message, setMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !email || !message) return;
+    
+    setIsSubmitting(true);
+    try {
+      if (onLeadSubmit) {
+        onLeadSubmit({
+          name,
+          email,
+          phone: 'N/A',
+          service: subject || 'Contact Us Tab Inquiry',
+          location: 'Contact Page',
+          budget: 'N/A',
+          timeline: 'N/A',
+          topic: message
+        });
+      }
+      setIsSubmitted(true);
+      setName('');
+      setEmail('');
+      setSubject('');
+      setMessage('');
+      setTimeout(() => setIsSubmitted(false), 5000);
+    } catch (err) {
+      console.error('Error submitting contact lead:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="pt-20">
       {/* Hero Section */}
@@ -64,7 +102,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ settings }) => {
                     </div>
                     <div>
                       <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Email Us</h4>
-                      <p className="text-lg font-bold text-brand-black">{settings.email}</p>
+                      <p className="text-lg font-bold text-brand-black">{settings.email || 'info@divinespace.ca'}</p>
                     </div>
                   </div>
 
@@ -74,7 +112,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ settings }) => {
                     </div>
                     <div>
                       <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Visit Us</h4>
-                      <p className="text-lg font-bold text-brand-black leading-relaxed">{settings.address}</p>
+                      <p className="text-lg font-bold text-brand-black leading-relaxed">{settings.address || '10 Bramhurst Ave, Unit 10, Brampton, ON L6T 5H1'}</p>
                     </div>
                   </div>
 
@@ -109,30 +147,92 @@ const ContactPage: React.FC<ContactPageProps> = ({ settings }) => {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-gray-50 p-10 md:p-16 rounded-sm shadow-sm"
+              className="bg-gray-50 p-10 md:p-16 rounded-sm shadow-sm relative overflow-hidden"
             >
               <h2 className="text-3xl font-bold text-brand-black mb-8 uppercase tracking-tight">Send a Message</h2>
-              <form className="space-y-6">
+              
+              <AnimatePresence mode="wait">
+                {isSubmitted ? (
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="absolute inset-0 bg-white/95 backdrop-blur-md flex flex-col items-center justify-center p-8 text-center z-10"
+                  >
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 100 }}
+                      className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6 shadow-sm"
+                    >
+                      <CheckCircle size={36} />
+                    </motion.div>
+                    <h3 className="text-2xl font-bold text-brand-black mb-3 uppercase tracking-tight">Message Received!</h3>
+                    <p className="text-gray-500 max-w-sm text-sm leading-relaxed mb-8">
+                      Thank you for contacting Divine Space. Our representative will review your message and reach back to you shortly.
+                    </p>
+                    <button 
+                      onClick={() => setIsSubmitted(false)}
+                      className="px-8 py-3 bg-royal-blue text-white text-[10px] font-bold uppercase tracking-widest hover:bg-brand-black transition-colors rounded-sm"
+                    >
+                      Send Another Message
+                    </button>
+                  </motion.div>
+                ) : null}
+              </AnimatePresence>
+
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Full Name</label>
-                    <input type="text" className="w-full bg-white border border-gray-200 px-4 py-4 focus:outline-none focus:border-royal-blue transition-colors rounded-sm" placeholder="John Doe" />
+                    <input 
+                      type="text" 
+                      required
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full bg-white border border-gray-200 px-4 py-4 focus:outline-none focus:border-royal-blue transition-colors rounded-sm text-sm font-medium" 
+                      placeholder="John Doe" 
+                    />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Email Address</label>
-                    <input type="email" className="w-full bg-white border border-gray-200 px-4 py-4 focus:outline-none focus:border-royal-blue transition-colors rounded-sm" placeholder="john@example.com" />
+                    <input 
+                      type="email" 
+                      required
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="w-full bg-white border border-gray-200 px-4 py-4 focus:outline-none focus:border-royal-blue transition-colors rounded-sm text-sm font-medium" 
+                      placeholder="john@example.com" 
+                    />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Subject</label>
-                  <input type="text" className="w-full bg-white border border-gray-200 px-4 py-4 focus:outline-none focus:border-royal-blue transition-colors rounded-sm" placeholder="Project Inquiry" />
+                  <input 
+                    type="text" 
+                    value={subject}
+                    onChange={(e) => setSubject(e.target.value)}
+                    className="w-full bg-white border border-gray-200 px-4 py-4 focus:outline-none focus:border-royal-blue transition-colors rounded-sm text-sm font-medium" 
+                    placeholder="Project Inquiry" 
+                  />
                 </div>
                 <div className="space-y-2">
                   <label className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Message</label>
-                  <textarea rows={6} className="w-full bg-white border border-gray-200 px-4 py-4 focus:outline-none focus:border-royal-blue transition-colors rounded-sm resize-none" placeholder="Tell us about your project..."></textarea>
+                  <textarea 
+                    rows={6} 
+                    required
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="w-full bg-white border border-gray-200 px-4 py-4 focus:outline-none focus:border-royal-blue transition-colors rounded-sm resize-none text-sm font-medium" 
+                    placeholder="Tell us about your project..."
+                  ></textarea>
                 </div>
-                <button className="w-full bg-royal-blue text-white py-5 font-bold uppercase tracking-widest text-xs flex items-center justify-center space-x-3 hover:bg-brand-black transition-all duration-300 shadow-lg">
-                  <span>Send Message</span>
+                <button 
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-royal-blue text-white py-5 font-bold uppercase tracking-widest text-xs flex items-center justify-center space-x-3 hover:bg-brand-black transition-all duration-300 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
                   <Send size={16} />
                 </button>
               </form>

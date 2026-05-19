@@ -14,7 +14,7 @@ const DEFAULT_SLIDES = [
   {
     id: 'default-1',
     image_url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1920',
-    title: 'We Built Beautifully with the Best Possible Materials',
+    title: 'We Build Beautifully with the Best Possible Materials',
     subtitle: 'Legal Basements | Renovations | Modular Kitchens | Custom Closets',
     button_text: 'Get Free Quote'
   }

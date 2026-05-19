@@ -19,6 +19,7 @@ import QuoteModal from './components/Layout/QuoteModal';
 import CartDrawer from './components/Layout/CartDrawer';
 import CheckoutPage from './components/Checkout/CheckoutPage';
 import { supabase } from './supabaseClient';
+import { MOCK_CLIENTS, MOCK_PRODUCTS, MOCK_PROJECT_PINS, SERVICES } from './constants';
 
 const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<View>('Home');
@@ -175,22 +176,79 @@ const App: React.FC = () => {
 
       if (leadsData) setLeads(leadsData);
       if (projectsData) setProjects(projectsData);
-      if (clientsData) setClients(clientsData);
-      if (productsData) setProducts(productsData);
-      if (categoriesData) setCategories(categoriesData);
+      
+      // Fallback for actual Clients
+      if (clientsData && clientsData.length > 0) {
+        setClients(clientsData);
+      } else {
+        setClients(MOCK_CLIENTS);
+      }
+
+      // Fallback for Products (Kitchen Corner Units, Cutlery Drawers, Quads line)
+      if (productsData && productsData.length > 0) {
+        setProducts(productsData);
+      } else {
+        setProducts(MOCK_PRODUCTS);
+      }
+
+      // Fallback for Product Categories (renamed/seeded)
+      if (categoriesData && categoriesData.length > 0) {
+        setCategories(categoriesData);
+      } else {
+        setCategories([
+          { id: 'kitchen', name: 'Kitchen', slug: 'kitchen' },
+          { id: 'cabinet-sheet', name: 'Cabinet Sheet', slug: 'cabinet-sheet' },
+          { id: 'Smart Hardware', name: 'Smart Hardware', slug: 'smart-hardware' },
+          { id: '3D View', name: '3D View', slug: '3d-view' }
+        ]);
+      }
+
       if (subCategoriesData) setSubCategories(subCategoriesData);
-      if (pinsData) {
+
+      // Fallback for Project Pins (19 GTA cities)
+      if (pinsData && pinsData.length > 0) {
         const formattedPins = pinsData.map((p: any) => ({
           ...p,
           lat: typeof p.lat === 'string' ? (parseFloat(p.lat) || 0) : (p.lat || 0),
           lng: typeof p.lng === 'string' ? (parseFloat(p.lng) || 0) : (p.lng || 0)
         }));
         setPins(formattedPins);
+      } else {
+        setPins(MOCK_PROJECT_PINS);
       }
+
       if (faqsData && faqsData.length > 0) setFaqs(faqsData);
-      if (slidesData) setHeroSlides(slidesData);
+
+      // Correct tagline on home page slides dynamically and on fallback
+      if (slidesData && slidesData.length > 0) {
+        const correctedSlides = slidesData.map(s => {
+          if (s.title.includes('We Built')) {
+            return { ...s, title: s.title.replace('We Built', 'We Build') };
+          }
+          return s;
+        });
+        setHeroSlides(correctedSlides);
+      } else {
+        setHeroSlides([
+          {
+            id: 'default-1',
+            image_url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1920',
+            title: 'We Build Beautifully with the Best Possible Materials',
+            subtitle: 'Legal Basements | Renovations | Modular Kitchens | Custom Closets',
+            button_text: 'Get Free Quote'
+          }
+        ]);
+      }
+
       if (contentData) setPageContent(contentData);
-      if (servicesData) setServices(servicesData);
+
+      // Fallback for Services in correct layout order
+      if (servicesData && servicesData.length > 0) {
+        setServices(servicesData);
+      } else {
+        setServices(SERVICES);
+      }
+
       if (ordersData) setOrders(ordersData);
       if (abandonedCartsData) setAbandonedCarts(abandonedCartsData);
       if (usersData) setUsers(usersData);
@@ -478,7 +536,7 @@ const App: React.FC = () => {
           />
         )}
         {currentView === 'Process' && <ProcessPage pageContent={pageContent} />}
-        {currentView === 'Contact' && <ContactPage settings={settings} />}
+        {currentView === 'Contact' && <ContactPage settings={settings} onLeadSubmit={addLead} />}
         {currentView === 'Projects' && <ProjectsPage projects={projects} pageContent={pageContent} />}
         {currentView === 'Clients' && <ClientsPage clients={clients} />}
         {currentView === 'Privacy' && (

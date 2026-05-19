@@ -83,6 +83,9 @@ export interface SiteSettings {
 
 export interface Lead {
   id: string;
+  name?: string;
+  email?: string;
+  phone?: string;
   service: string;
   location: string;
   budget: string;
