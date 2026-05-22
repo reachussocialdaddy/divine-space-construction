@@ -18,13 +18,13 @@ const steps = [
     number: '02',
     title: 'Design & Planning',
     description: 'Our team creates detailed designs and plans, collaborating with you to refine every aspect.',
-    image: 'https://images.unsplash.com/photo-1621905252507-b354bcadcabc?auto=format&fit=crop&q=80&w=800'
+    image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=800'
   },
   {
     number: '03',
     title: 'Material Selection',
     description: 'Choose from premium materials and finishes with guidance from our design experts.',
-    image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&q=80&w=800'
+    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800'
   },
   {
     number: '04',
