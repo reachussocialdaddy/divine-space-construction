@@ -24,7 +24,7 @@ const steps = [
     number: '03',
     title: 'Material Selection',
     description: 'Choose from premium materials and finishes with guidance from our design experts.',
-    image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=800'
+    image: '/material_selection.png'
   },
   {
     number: '04',
