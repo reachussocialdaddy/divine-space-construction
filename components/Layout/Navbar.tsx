@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { View, SiteSettings, ProductCategory, ProductSubCategory, Service } from '../../types';
-import { Logo } from '../../constants';
+import { Logo, FullLogo } from '../../constants';
 
 interface NavbarProps {
   currentView: View;
@@ -40,21 +40,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
               <div className={`${settings.logo_url ? 'h-10 md:h-14 w-auto' : ''} flex items-center justify-center transition-transform group-hover:scale-110`}>
                 {settings.logo_url ? (
                   <img src={settings.logo_url} alt={settings.brand_name || "Logo"} className="h-full w-auto object-contain" />
-                ) : (
-                  <div className="w-8 h-8 md:w-10 md:h-10 bg-royal-blue/10 rounded-sm flex items-center justify-center">
-                    <Logo className="w-5 h-5 md:w-6 md:h-6 text-royal-blue" />
-                  </div>
-                )}
-              </div>
+
               {!settings.logo_url && (
-                <div className="flex flex-col text-left overflow-hidden max-w-[150px] sm:max-w-none">
-                  <span className="brand-font text-brand-black text-sm sm:text-lg md:text-xl font-bold leading-none tracking-tight truncate">
-                    {settings.brand_name || 'DIVINE SPACE'}
-                  </span>
-                  <span className="text-[7px] sm:text-[8px] md:text-[10px] tracking-[0.1em] sm:tracking-[0.2em] font-bold text-gray-500 uppercase mt-0.5 md:mt-1 truncate">
-                    {settings.brand_subtext || 'Construction Inc.'}
-                  </span>
-                </div>
+                <FullLogo />
               )}
             </button>
           </div>

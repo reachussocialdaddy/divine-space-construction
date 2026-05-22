@@ -32,6 +32,35 @@ export const Logo = ({ className = "w-12 h-12", colorMode = 'default' }: { class
   );
 };
 
+export const FullLogo = ({ className = "", colorMode = 'default' }: { className?: string; colorMode?: 'default' | 'white' }) => {
+  const isWhite = colorMode === 'white';
+  return (
+    <div className={`flex items-center space-x-2 sm:space-x-4 ${className}`}>
+      <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
+        <Logo className="w-full h-full" colorMode={colorMode} />
+      </div>
+      <div className="flex flex-col justify-center text-left leading-none">
+        <span className={`text-[9px] sm:text-[11px] font-bold ${isWhite ? 'text-white' : 'text-brand-black'} uppercase tracking-widest leading-none`}>
+          Divine Space Construction Inc.
+        </span>
+        <span className={`text-2xl sm:text-3xl font-bold ${isWhite ? 'text-white' : 'text-brand-red'} uppercase tracking-tight leading-none mt-1`} style={{ fontFamily: 'Georgia, serif' }}>
+          DIVINE SPACE
+        </span>
+        <span className={`text-[11px] sm:text-[13px] font-bold ${isWhite ? 'text-white' : 'text-brand-black'} uppercase tracking-widest leading-none mt-1.5`} style={{ fontFamily: 'Georgia, serif' }}>
+          KITCHENS & RENOVATIONS
+        </span>
+        <div className="flex items-center mt-1.5 justify-center sm:justify-start">
+          <div className={`w-3 sm:w-6 h-[1px] ${isWhite ? 'bg-white' : 'bg-brand-red'}`}></div>
+          <span className={`text-[8px] sm:text-[9px] font-bold ${isWhite ? 'text-white' : 'text-brand-red'} uppercase tracking-[0.2em] mx-2 leading-none`}>
+            WE BUILD DREAMS
+          </span>
+          <div className={`w-3 sm:w-6 h-[1px] ${isWhite ? 'bg-white' : 'bg-brand-red'}`}></div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 export const ADDRESS = "10 Bramhurst Ave, Unit 10, Brampton, ON L6T 5H1";
 
 // 5 exact services lined up in the correct sequence as requested

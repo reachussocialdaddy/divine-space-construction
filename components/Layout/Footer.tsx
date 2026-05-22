@@ -2,7 +2,7 @@
 import React from 'react';
 import { Facebook, Instagram, Linkedin, Twitter, Mail, Phone, MapPin } from 'lucide-react';
 import { View, SiteSettings, Service } from '../../types.ts';
-import { ADDRESS, Logo } from '../../constants.tsx';
+import { ADDRESS, Logo, FullLogo } from '../../constants.tsx';
 
 // Updated FooterProps to include settings and fixed navigateTo signature to match App.tsx
 interface FooterProps {
@@ -24,10 +24,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
                 </div>
               ) : (
                 <>
-                  <div className="w-10 h-10 bg-white/10 p-2 flex items-center justify-center rounded-sm border border-white/10 shadow-inner">
-                    <Logo className="w-full h-full text-white" colorMode="white" />
-                  </div>
-                  <span className="brand-font text-2xl tracking-wider">{settings.brand_name || 'DIVINE SPACE'}</span>
+                  <FullLogo colorMode="white" />
                 </>
               )}
             </div>

@@ -249,12 +249,8 @@ const App: React.FC = () => {
 
       if (contentData) setPageContent(contentData);
 
-      // Fallback for Services in correct layout order
-      if (servicesData && servicesData.length > 0) {
-        setServices(servicesData);
-      } else {
-        setServices(SERVICES);
-      }
+      // Enforcing the exact Services from constants.tsx for correct layout order
+      setServices(SERVICES);
 
       if (ordersData) setOrders(ordersData);
       if (abandonedCartsData) setAbandonedCarts(abandonedCartsData);
