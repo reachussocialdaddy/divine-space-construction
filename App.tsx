@@ -100,7 +100,7 @@ const App: React.FC = () => {
         setCurrentView('Products');
       } else if (normalizedPath === 'inverness') {
         setCurrentView('Inverness');
-        setActiveCategory('Quads');
+        setActiveCategory('Quartz');
         setActiveSubCategoryId(null);
       } else if (['home', 'about', 'products', 'admin', 'process', 'projects', 'clients', 'contact', 'inverness', 'privacy', 'terms'].includes(normalizedPath)) {
         const viewMap: Record<string, View> = {
@@ -188,7 +188,7 @@ const App: React.FC = () => {
         setClients(MOCK_CLIENTS);
       }
 
-      // Fallback for Products (Kitchen Corner Units, Cutlery Drawers, Quads line)
+      // Fallback for Products (Kitchen Corner Units, Cutlery Drawers, Quartz line)
       if (productsData && productsData.length > 0) {
         setProducts(productsData);
       } else {
@@ -203,7 +203,7 @@ const App: React.FC = () => {
           { id: 'kitchen', name: 'Kitchen', slug: 'kitchen' },
           { id: 'cabinet-sheet', name: 'Cabinet Sheet', slug: 'cabinet-sheet' },
           { id: 'Smart Hardware', name: 'Smart Hardware', slug: 'smart-hardware' },
-          { id: 'Quads', name: 'Quads', slug: 'quads' }
+          { id: 'Quartz', name: 'Quartz', slug: 'quartz' }
         ]);
       }
 
@@ -448,7 +448,7 @@ const App: React.FC = () => {
       setActiveSubCategoryId(null);
     } else if (view === 'Inverness') {
       path = '/Inverness';
-      setActiveCategory('Quads');
+      setActiveCategory('Quartz');
       setActiveSubCategoryId(null);
     } else if (view === 'Home') {
       path = '/';

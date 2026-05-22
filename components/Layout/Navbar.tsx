@@ -161,7 +161,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
                 currentView === 'Inverness' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
               }`}
             >
-              QUADS 🔥
+              QUARTZ 🔥
             </button>
 
             <button
@@ -242,7 +242,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
               <span className="text-xs font-bold uppercase tracking-widest">Products</span>
             </button>
             <button onClick={() => { navigateTo('Inverness'); setIsOpen(false); }} className={`flex flex-col items-center justify-center p-4 rounded-sm border ${currentView === 'Inverness' ? 'border-royal-blue bg-red-50 text-royal-blue' : 'border-gray-100 text-gray-700'}`}>
-              <span className="text-xs font-bold uppercase tracking-widest">Quads</span>
+              <span className="text-xs font-bold uppercase tracking-widest">Quartz</span>
             </button>
           </div>
 

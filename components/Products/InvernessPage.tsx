@@ -5,6 +5,7 @@ import { X, Upload, ChevronRight, Camera, RefreshCw, AlertCircle } from 'lucide-
 import { View, Product } from '../../types';
 import { getAIClient } from '../../services/geminiService.ts';
 import { Type } from "@google/genai";
+import QUARTZ_DATA from '../../quartzData.json';
 
 const TAB_MATERIALS: Record<string, { id: string; name: string; image: string; description: string }[]> = {
   WALL: [
@@ -99,7 +100,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
 
   const [aiError, setAiError] = useState<string | null>(null);
 
-  const quadProducts = products.filter(p => p.category === 'Quads');
+  const quadProducts = products.filter(p => p.category === 'Quartz');
   const featuredProduct = quadProducts[0];
   const designerProducts = quadProducts;
 
@@ -361,7 +362,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
           >
             <div className="space-y-4">
               <h1 className="text-5xl md:text-7xl font-bold text-brand-black leading-tight uppercase tracking-tighter">
-                {featuredProduct?.name || 'QUADS COLLECTION'}
+                {featuredProduct?.name || 'QUARTZ COLLECTION'}
               </h1>
               <p className="text-royal-blue font-black text-xs uppercase tracking-[0.5em]">
                 DIVINE SERIES
@@ -369,7 +370,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
             </div>
 
             <p className="text-gray-500 text-lg leading-relaxed max-w-md italic font-light">
-              {featuredProduct?.description || "Explore our premium collection of Quads handles and hardware."}
+              {featuredProduct?.description || "Explore our premium collection of Quartz surfaces and hardware."}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-8">
@@ -392,12 +393,12 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
           </motion.div>
         </div>
 
-        {/* Quads Product Listings Section */}
+        {/* Quartz Product Listings Section */}
         <div className="mt-32 space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
-              <h2 className="text-4xl font-bold text-brand-black uppercase tracking-tighter">QUADS COLLECTION</h2>
-              <p className="text-gray-500 max-w-xl">Explore our exclusive range of Quads products from Vida Company, designed for timeless elegance, premium finishes, and superior tactile quality.</p>
+              <h2 className="text-4xl font-bold text-brand-black uppercase tracking-tighter">QUARTZ COLLECTION</h2>
+              <p className="text-gray-500 max-w-xl">Explore our exclusive range of Quartz surfaces from Vida Company, designed for timeless elegance, premium finishes, and superior tactile quality.</p>
             </div>
             <div className="flex items-center space-x-2 text-royal-blue font-bold text-xs uppercase tracking-widest">
               <span>{quadProducts.length} Products Found</span>
@@ -427,6 +428,52 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
               </motion.div>
             ))}
           </div>
+        </div>
+
+        {/* Dynamic Sliders from Scraped Quartz Data */}
+        <div className="mt-24 space-y-24">
+          {Object.entries(QUARTZ_DATA).map(([category, items]) => {
+            if (!items || items.length === 0) return null;
+            return (
+              <div key={category} className="space-y-8">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-3xl font-bold text-brand-black uppercase tracking-tighter">
+                    {category} Quartz
+                  </h3>
+                  <div className="flex items-center space-x-2 text-royal-blue font-bold text-xs uppercase tracking-widest">
+                    <span>{items.length} Options</span>
+                    <div className="w-8 h-0.5 bg-royal-blue" />
+                  </div>
+                </div>
+                
+                {/* Horizontal Scroll Container */}
+                <div className="flex overflow-x-auto pb-8 gap-6 snap-x snap-mandatory hide-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                  {items.map((item) => (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      className="flex-none w-72 md:w-80 group cursor-pointer snap-start"
+                      onClick={() => navigateTo('Contact')}
+                    >
+                      <div className="relative aspect-[4/3] overflow-hidden bg-gray-50 border border-gray-100 group-hover:shadow-2xl transition-all duration-500 mb-4">
+                        <img 
+                          src={item.image} 
+                          alt={item.name} 
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" 
+                        />
+                        <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
+                      </div>
+                      <h4 className="text-sm font-bold text-gray-900 uppercase tracking-tight group-hover:text-royal-blue transition-colors truncate">
+                        {item.name}
+                      </h4>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </main>
 
@@ -966,7 +1013,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                         <div className="space-y-2">
                           <h4 className="text-[10px] font-black text-royal-blue uppercase tracking-widest">How it works</h4>
                           <p className="text-xs text-gray-500 leading-relaxed">
-                            Our AI analyzes your room's lighting, textures, and style to perfectly place the <span className="font-bold text-brand-black">{featuredProduct?.name || 'Quads Satin Ridge™'}</span> handles in your space.
+                            Our AI analyzes your room's lighting, textures, and style to perfectly place the <span className="font-bold text-brand-black">{featuredProduct?.name || 'Quartz Satin Ridge™'}</span> handles in your space.
                           </p>
                         </div>
                         
@@ -977,11 +1024,11 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                               <img 
                                 src={featuredProduct?.image || "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=200"} 
                                 className="w-full h-full object-contain" 
-                                alt={featuredProduct?.name || "Quads"} 
+                                alt={featuredProduct?.name || "Quartz"} 
                               />
                             </div>
                             <div>
-                              <p className="text-xs font-bold text-brand-black uppercase tracking-tight">{featuredProduct?.name || 'Quads'}</p>
+                              <p className="text-xs font-bold text-brand-black uppercase tracking-tight">{featuredProduct?.name || 'Quartz'}</p>
                               <p className="text-[10px] text-royal-blue font-bold uppercase tracking-widest">Satin Ridge™</p>
                             </div>
                           </div>

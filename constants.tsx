@@ -98,11 +98,11 @@ export const MOCK_FAQS: FAQ[] = [
 ];
 
 export const MOCK_PRODUCTS: Product[] = [
-  // Quads category items branded under "Vida"
-  { id: 'v1', name: 'Vida Luxe Gold Handle', category: 'Quads', price: '32.00', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=1200', description: 'A premium satin brass handle from Vida Company featuring unique ridge texturing for a sophisticated tactile experience.', brand: 'Vida Company' },
-  { id: 'v2', name: 'Vida Elite Satin Pull', category: 'Quads', price: '29.50', image: 'https://images.unsplash.com/photo-1502224562085-639556652f33?auto=format&fit=crop&q=80&w=1200', description: 'Graceful satin chrome handpull built by Vida Company, ideal for luxury kitchen cabinetry panels.', brand: 'Vida Company' },
-  { id: 'v3', name: 'Vida Matte Obsidian Bar', category: 'Quads', price: '35.00', image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=1200', description: 'Stunning black obsidian designer pull bar by Vida Company for high-end minimalist aesthetics.', brand: 'Vida Company' },
-  { id: 'v4', name: 'Vida Smart Finger-Pull', category: 'Quads', price: '42.00', image: 'https://images.unsplash.com/photo-1558997519-83ec73027bfd?auto=format&fit=crop&q=80&w=1200', description: 'Vida Company modern edge-integrated handle providing a completely clean cabinet profile face.', brand: 'Vida Company' },
+  // Quartz category items branded under "Vida"
+  { id: 'v1', name: 'Vida Luxe Gold Handle', category: 'Quartz', price: '32.00', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=1200', description: 'A premium satin brass handle from Vida Company featuring unique ridge texturing for a sophisticated tactile experience.', brand: 'Vida Company' },
+  { id: 'v2', name: 'Vida Elite Satin Pull', category: 'Quartz', price: '29.50', image: 'https://images.unsplash.com/photo-1502224562085-639556652f33?auto=format&fit=crop&q=80&w=1200', description: 'Graceful satin chrome handpull built by Vida Company, ideal for luxury kitchen cabinetry panels.', brand: 'Vida Company' },
+  { id: 'v3', name: 'Vida Matte Obsidian Bar', category: 'Quartz', price: '35.00', image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=1200', description: 'Stunning black obsidian designer pull bar by Vida Company for high-end minimalist aesthetics.', brand: 'Vida Company' },
+  { id: 'v4', name: 'Vida Smart Finger-Pull', category: 'Quartz', price: '42.00', image: 'https://images.unsplash.com/photo-1558997519-83ec73027bfd?auto=format&fit=crop&q=80&w=1200', description: 'Vida Company modern edge-integrated handle providing a completely clean cabinet profile face.', brand: 'Vida Company' },
 
   // Kitchen organizer accessories under "Kitchen" category
   { id: 'k1', name: 'Corner Unit Magic-Pullout', category: 'kitchen', price: '340.00', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&q=80&w=800', description: 'Maximize blind corner cabinet spaces. Features heavy-duty racks that pull out completely for effortless access.' },
