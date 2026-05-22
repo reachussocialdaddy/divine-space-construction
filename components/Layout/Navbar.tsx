@@ -1,8 +1,7 @@
-
 import React, { useState } from 'react';
 import { Menu, X, ChevronRight } from 'lucide-react';
 import { View, SiteSettings, ProductCategory, ProductSubCategory, Service } from '../../types';
-import { Logo, FullLogo } from '../../constants';
+import { Logo, FullLogo, SERVICES } from '../../constants';
 
 interface NavbarProps {
   currentView: View;
@@ -20,6 +19,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
   const [isPortfolioOpen, setIsPortfolioOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const displayServices = SERVICES;
 
   const navItems = [
     { label: 'Home', view: 'Home' as View },
@@ -79,9 +79,9 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
                 SERVICES <ChevronRight size={14} className={`ml-1 transition-transform ${isServicesOpen ? 'rotate-90' : ''}`} />
               </button>
               
-              {isServicesOpen && services.length > 0 && (
+              {isServicesOpen && displayServices.length > 0 && (
                 <div className="absolute top-full left-0 w-64 bg-white shadow-xl border border-gray-100 py-2 rounded-sm animate-in fade-in slide-in-from-top-2 duration-200">
-                  {services.map((service) => (
+                  {displayServices.map((service) => (
                     <button 
                       key={service.id}
                       onClick={() => { navigateTo('Service', service.id); setIsServicesOpen(false); }}
@@ -238,7 +238,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
             <div>
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-1">Our Services</p>
               <div className="grid grid-cols-1 gap-2">
-                {services.map(service => (
+                {displayServices.map(service => (
                   <button 
                     key={service.id} 
                     onClick={() => { navigateTo('Service', service.id); setIsOpen(false); }} 

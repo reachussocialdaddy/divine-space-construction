@@ -2,7 +2,7 @@
 import React from 'react';
 import { Facebook, Instagram, Linkedin, Twitter, Mail, Phone, MapPin } from 'lucide-react';
 import { View, SiteSettings, Service } from '../../types.ts';
-import { ADDRESS, Logo, FullLogo } from '../../constants.tsx';
+import { ADDRESS, Logo, FullLogo, SERVICES } from '../../constants.tsx';
 
 // Updated FooterProps to include settings and fixed navigateTo signature to match App.tsx
 interface FooterProps {
@@ -62,26 +62,16 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
           <div>
             <h4 className="text-lg font-bold mb-6">Services</h4>
             <ul className="space-y-4 text-white/60 text-sm">
-              {services.length > 0 ? (
-                services.map((service) => (
-                  <li key={service.id}>
-                    <button 
-                      onClick={() => navigateTo('Service', service.id)} 
-                      className="hover:text-white transition-colors text-left"
-                    >
-                      {service.title}
-                    </button>
-                  </li>
-                ))
-              ) : (
-                <>
-                  <li><button onClick={() => navigateTo('Service', 'legal-basements')} className="hover:text-white transition-colors text-left">Legal Basements</button></li>
-                  <li><button onClick={() => navigateTo('Service', 'kitchen-renovation')} className="hover:text-white transition-colors text-left">Kitchen Renovation</button></li>
-                  <li><button onClick={() => navigateTo('Service', 'modular-cabinetry')} className="hover:text-white transition-colors text-left">Modular Cabinetry</button></li>
-                  <li><button onClick={() => navigateTo('Service', 'custom-closets')} className="hover:text-white transition-colors text-left">Custom Closets</button></li>
-                  <li><button onClick={() => navigateTo('Service', 'condo-renovations')} className="hover:text-white transition-colors text-left">Condo Renovations</button></li>
-                </>
-              )}
+              {SERVICES.map((service) => (
+                <li key={service.id}>
+                  <button 
+                    onClick={() => navigateTo('Service', service.id)} 
+                    className="hover:text-white transition-colors text-left"
+                  >
+                    {service.title}
+                  </button>
+                </li>
+              ))}
             </ul>
           </div>
 
