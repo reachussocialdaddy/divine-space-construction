@@ -100,7 +100,7 @@ const App: React.FC = () => {
         setCurrentView('Products');
       } else if (normalizedPath === 'inverness') {
         setCurrentView('Inverness');
-        setActiveCategory('3D View');
+        setActiveCategory('Quads');
         setActiveSubCategoryId(null);
       } else if (['home', 'about', 'products', 'admin', 'process', 'projects', 'clients', 'contact', 'inverness', 'privacy', 'terms'].includes(normalizedPath)) {
         const viewMap: Record<string, View> = {
@@ -203,7 +203,7 @@ const App: React.FC = () => {
           { id: 'kitchen', name: 'Kitchen', slug: 'kitchen' },
           { id: 'cabinet-sheet', name: 'Cabinet Sheet', slug: 'cabinet-sheet' },
           { id: 'Smart Hardware', name: 'Smart Hardware', slug: 'smart-hardware' },
-          { id: '3D View', name: '3D View', slug: '3d-view' }
+          { id: 'Quads', name: 'Quads', slug: 'quads' }
         ]);
       }
 
@@ -448,7 +448,7 @@ const App: React.FC = () => {
       setActiveSubCategoryId(null);
     } else if (view === 'Inverness') {
       path = '/Inverness';
-      setActiveCategory('3D View');
+      setActiveCategory('Quads');
       setActiveSubCategoryId(null);
     } else if (view === 'Home') {
       path = '/';
@@ -465,7 +465,7 @@ const App: React.FC = () => {
     const newLead: Lead = {
       ...lead,
       id: Math.random().toString(36).substr(2, 9),
-      timestamp: new Date().toLocaleString(),
+      timestamp: new Date().toISOString(),
       status: 'New',
     };
     try {

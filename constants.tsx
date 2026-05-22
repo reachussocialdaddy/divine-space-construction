@@ -18,16 +18,19 @@ export const COLORS = {
   white: '#FFFFFF',
 };
 
-export const Logo = ({ className = "w-12 h-12" }: { className?: string }) => (
-  <svg viewBox="0 0 100 100" className={className} xmlns="http://www.w3.org/2000/svg">
-    <path d="M50 5 L11 27.5 L25 51 L50 36 Z" fill="#E31E24" />
-    <path d="M50 5 L89 27.5 L89 51 L50 36 Z" fill="#111111" />
-    <path d="M50 95 L11 72.5 L11 49 L50 64 Z" fill="#111111" />
-    <path d="M50 95 L89 72.5 L75 49 L50 64 Z" fill="#E31E24" />
-    <path d="M11 27.5 L11 72.5 L25 51 L25 40 Z" fill="#111111" />
-    <path d="M89 27.5 L89 72.5 L75 49 L75 40 Z" fill="#111111" />
-  </svg>
-);
+export const Logo = ({ className = "w-12 h-12", colorMode = 'default' }: { className?: string; colorMode?: 'default' | 'white' }) => {
+  const fillDark = colorMode === 'white' ? '#FFFFFF' : '#111111';
+  return (
+    <svg viewBox="0 0 100 100" className={className} xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 5 L11 27.5 L25 51 L50 36 Z" fill="#E31E24" />
+      <path d="M50 5 L89 27.5 L89 51 L50 36 Z" fill={fillDark} />
+      <path d="M50 95 L11 72.5 L11 49 L50 64 Z" fill={fillDark} />
+      <path d="M50 95 L89 72.5 L75 49 L50 64 Z" fill="#E31E24" />
+      <path d="M11 27.5 L11 72.5 L25 51 L25 40 Z" fill={fillDark} />
+      <path d="M89 27.5 L89 72.5 L75 49 L75 40 Z" fill={fillDark} />
+    </svg>
+  );
+};
 
 export const ADDRESS = "10 Bramhurst Ave, Unit 10, Brampton, ON L6T 5H1";
 
@@ -95,16 +98,17 @@ export const MOCK_FAQS: FAQ[] = [
 ];
 
 export const MOCK_PRODUCTS: Product[] = [
-  // 3D View / Quads category items branded under "Vida"
-  { id: 'v1', name: 'Vida Luxe Gold Handle', category: '3D View', price: '32.00', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=1200', description: 'A premium satin brass handle from Vida Company featuring unique ridge texturing for a sophisticated tactile experience.', brand: 'Vida Company' },
-  { id: 'v2', name: 'Vida Elite Satin Pull', category: '3D View', price: '29.50', image: 'https://images.unsplash.com/photo-1502224562085-639556652f33?auto=format&fit=crop&q=80&w=1200', description: 'Graceful satin chrome handpull built by Vida Company, ideal for luxury kitchen cabinetry panels.', brand: 'Vida Company' },
-  { id: 'v3', name: 'Vida Matte Obsidian Bar', category: '3D View', price: '35.00', image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=1200', description: 'Stunning black obsidian designer pull bar by Vida Company for high-end minimalist aesthetics.', brand: 'Vida Company' },
-  { id: 'v4', name: 'Vida Smart Finger-Pull', category: '3D View', price: '42.00', image: 'https://images.unsplash.com/photo-1558997519-83ec73027bfd?auto=format&fit=crop&q=80&w=1200', description: 'Vida Company modern edge-integrated handle providing a completely clean cabinet profile face.', brand: 'Vida Company' },
+  // Quads category items branded under "Vida"
+  { id: 'v1', name: 'Vida Luxe Gold Handle', category: 'Quads', price: '32.00', image: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=1200', description: 'A premium satin brass handle from Vida Company featuring unique ridge texturing for a sophisticated tactile experience.', brand: 'Vida Company' },
+  { id: 'v2', name: 'Vida Elite Satin Pull', category: 'Quads', price: '29.50', image: 'https://images.unsplash.com/photo-1502224562085-639556652f33?auto=format&fit=crop&q=80&w=1200', description: 'Graceful satin chrome handpull built by Vida Company, ideal for luxury kitchen cabinetry panels.', brand: 'Vida Company' },
+  { id: 'v3', name: 'Vida Matte Obsidian Bar', category: 'Quads', price: '35.00', image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=1200', description: 'Stunning black obsidian designer pull bar by Vida Company for high-end minimalist aesthetics.', brand: 'Vida Company' },
+  { id: 'v4', name: 'Vida Smart Finger-Pull', category: 'Quads', price: '42.00', image: 'https://images.unsplash.com/photo-1558997519-83ec73027bfd?auto=format&fit=crop&q=80&w=1200', description: 'Vida Company modern edge-integrated handle providing a completely clean cabinet profile face.', brand: 'Vida Company' },
 
   // Kitchen organizer accessories under "Kitchen" category
   { id: 'k1', name: 'Corner Unit Magic-Pullout', category: 'kitchen', price: '340.00', image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&q=80&w=800', description: 'Maximize blind corner cabinet spaces. Features heavy-duty racks that pull out completely for effortless access.' },
   { id: 'k2', name: 'Cutlery Organizer Tray', category: 'kitchen', price: '85.00', image: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=800', description: 'Fully adjustable solid oak drawer partitions to custom organize knives, forks, spoons, and cooking utensils.' },
   { id: 'k3', name: 'Pull-Down Pantry Tray', category: 'kitchen', price: '195.00', image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=800', description: 'Reach high shelves easily with a hydraulic-assisted steel wire pull-down shelf tray for cupboards.' },
+  { id: 'k4', name: 'Rotating Pantry Unit', category: 'kitchen', price: '210.00', image: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=800', description: 'Rotating tall pantry unit to make the most out of your kitchen storage.' },
 
   // Cabinet Sheet & Smart Hardware
   { id: 'cbs1', name: 'Smart Hardware Walnut Sheet', category: 'cabinet-sheet', price: '150.00', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800', description: 'Luxury 3/4 inch walnut timber ply cabinet face sheets with smart edge-banding layers.' },
@@ -112,7 +116,7 @@ export const MOCK_PRODUCTS: Product[] = [
   { id: 'cbs3', name: 'Smart Soft-Close Cabinet Hinge', category: 'Smart Hardware', price: '14.99', image: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=800', description: 'Adjustable heavy duty soft close cabinetry hinge.' }
 ];
 
-// Mapped worked cities: Barrie, Newmarket, Guelph, Mississauga, Oakville, Oshawa, Vaughan, Caledon, Cambridge, Kitchener, Milton, Hamilton, Nobleton, King City, Bradford, Whitby, East Gwillimbury, Pickering, Ajax
+// Mapped worked cities: Barrie, Newmarket, Guelph, Mississauga, Oakville, Oshawa, Vaughan, Caledon, Cambridge, Kitchener, Milton, Hamilton, Nobleton, King City, Bradford, Whitby, East Gwillimbury, Pickering, Ajax, Brantford
 export const MOCK_PROJECT_PINS: ProjectPin[] = [
   { id: 'p1', lat: 44.3894, lng: -79.6903, title: 'Luxury House Renovation', description: 'Completed a premium whole home remodeling project in Barrie, ON.' },
   { id: 'p2', lat: 44.0592, lng: -79.4613, title: 'Legal Basement Unit', description: 'Beautifully finished 2-bedroom secondary legal basement suite in Newmarket, ON.' },
@@ -128,11 +132,12 @@ export const MOCK_PROJECT_PINS: ProjectPin[] = [
   { id: 'p12', lat: 43.2557, lng: -79.8711, title: 'Creative Office Closets', description: 'Bespoke corporate modular storage installation in Hamilton, ON.' },
   { id: 'p13', lat: 43.9016, lng: -79.6853, title: 'Stunning Estate Renovation', description: 'Luxury home millwork and modern open-concept floor plan in Nobleton, ON.' },
   { id: 'p14', lat: 43.9213, lng: -79.5286, title: 'Modular Kitchen Island', description: 'Custom quartz waterfall island and LED ambient display in King City, ON.' },
-  { id: 'p15', lat: 44.1139, lng: -79.5658, title: 'Bespoke Closet Organizers', description: 'Premium wood veneer bedroom walk-in closet systems in Bradford, ON.' },
+  { id: 'p15', lat: 44.1139, lng: -79.5658, title: 'Bespoke Closet Organizers', description: 'Premium wood veneer bedroom walk-in closet systems in New Bradford, ON.' },
   { id: 'p16', lat: 43.8975, lng: -78.9429, title: 'Legal Entrance & Basement', description: 'Egress windows and structural legal basement conversion in Whitby, ON.' },
   { id: 'p17', lat: 44.1338, lng: -79.4162, title: 'Luxury Double Vanity Bath', description: 'Frameless glass walk-in shower and floating quartz vanity in East Gwillimbury, ON.' },
   { id: 'p18', lat: 43.8384, lng: -79.0868, title: 'Modern Kitchen Remodeling', description: 'Contemporary wood kitchen panels and smart storage in Pickering, ON.' },
-  { id: 'p19', lat: 43.8509, lng: -79.0204, title: 'Luxury Master Closet Suite', description: 'Double row shoe storage and integrated wardrobe track lighting in Ajax, ON.' }
+  { id: 'p19', lat: 43.8509, lng: -79.0204, title: 'Luxury Master Closet Suite', description: 'Double row shoe storage and integrated wardrobe track lighting in Ajax, ON.' },
+  { id: 'p20', lat: 43.1394, lng: -80.2632, title: 'Home Renovation', description: 'Complete luxury home renovation in Brantford, ON.' }
 ];
 
 export const MOCK_CLIENTS: Client[] = [
@@ -142,8 +147,8 @@ export const MOCK_CLIENTS: Client[] = [
   { id: 'c4', name: 'Plot Studio (Tone and Flo)', category: 'Creative & Corporate', logo_url: '' },
   { id: 'c5', name: 'Social Daddy', category: 'Creative & Corporate', logo_url: '' },
   { id: 'c6', name: 'Dental (Ace Academy)', category: 'Healthcare & Wellness', logo_url: '' },
-  { id: 'c7', name: 'Awbit Express', category: 'Logistics & Infrastructure', logo_url: '' },
-  { id: 'c8', name: 'Astor Asteil', category: 'Retail & Luxury', logo_url: '' },
+  { id: 'c7', name: 'Aurbit Express', category: 'Logistics & Infrastructure', logo_url: '' },
+  { id: 'c8', name: 'Astor Asteritel', category: 'Retail & Luxury', logo_url: '' },
   { id: 'c9', name: 'MKG Freight Lines Inc', category: 'Logistics & Infrastructure', logo_url: '' }
 ];
 

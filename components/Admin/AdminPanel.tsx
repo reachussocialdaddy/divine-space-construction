@@ -222,7 +222,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
 
   const internalCategories = [
     { id: 'handles', label: 'Handles and Knobs' },
-    { id: 'kitchen', label: 'Kitchen Organizer' },
+    { id: 'kitchen', label: 'Kitchen' },
     { id: 'salice', label: 'Salice Hardware' },
     { id: 'closet', label: 'Closet Accessories' },
     { id: 'hinge', label: 'Hinge Systems' },
@@ -230,7 +230,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
     { id: 'liftup', label: 'Lift Up System' },
     { id: 'accessories', label: 'Cabinet Accessories' },
     { id: 'led', label: 'LED Light System' },
-    { id: '3d-view', label: '3D View' },
+    { id: 'quads', label: 'Quads' },
   ];
 
   const menuItems = [
@@ -740,7 +740,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
           {settings.logo_url ? (
             <img src={settings.logo_url} alt="Logo" className="w-8 h-8 object-contain" />
           ) : (
-            <Logo className="w-8 h-8" />
+            <Logo className="w-8 h-8" colorMode="white" />
           )}
           <span className="brand-font text-lg uppercase tracking-wider">Admin</span>
         </div>
@@ -759,7 +759,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
           {settings.logo_url ? (
             <img src={settings.logo_url} alt="Logo" className="w-8 h-8 object-contain" />
           ) : (
-            <Logo className="w-8 h-8" />
+            <Logo className="w-8 h-8" colorMode="white" />
           )}
           <div className="brand-font text-xl uppercase tracking-wider">Admin</div>
         </div>

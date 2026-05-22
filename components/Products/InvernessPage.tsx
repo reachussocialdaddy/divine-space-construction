@@ -91,9 +91,9 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
 
   const [aiError, setAiError] = useState<string | null>(null);
 
-  const windsorProducts = products.filter(p => p.category === '3D View');
-  const featuredProduct = windsorProducts[0];
-  const designerProducts = windsorProducts;
+  const quadProducts = products.filter(p => p.category === 'Quads');
+  const featuredProduct = quadProducts[0];
+  const designerProducts = quadProducts;
 
   const [isZoomed, setIsZoomed] = useState(false);
   const [isAIAnalyzing, setIsAIAnalyzing] = useState(false);
@@ -361,7 +361,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
             </div>
 
             <p className="text-gray-500 text-lg leading-relaxed max-w-md italic font-light">
-              {featuredProduct?.description || "Explore our premium collection of 3D View handles and hardware."}
+              {featuredProduct?.description || "Explore our premium collection of Quads handles and hardware."}
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 pt-8">
@@ -384,7 +384,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
           </motion.div>
         </div>
 
-        {/* 3D View Product Listings Section */}
+        {/* Quads Product Listings Section */}
         <div className="mt-32 space-y-12">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
@@ -392,13 +392,13 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
               <p className="text-gray-500 max-w-xl">Explore our exclusive range of Quads products from Vida Company, designed for timeless elegance, premium finishes, and superior tactile quality.</p>
             </div>
             <div className="flex items-center space-x-2 text-royal-blue font-bold text-xs uppercase tracking-widest">
-              <span>{windsorProducts.length} Products Found</span>
+              <span>{quadProducts.length} Products Found</span>
               <div className="w-12 h-0.5 bg-royal-blue" />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {windsorProducts.map((product) => (
+            {quadProducts.map((product) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -444,7 +444,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                     <Camera size={20} />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-brand-black uppercase tracking-tighter">3D VIEW DESIGNER</h2>
+                    <h2 className="text-2xl font-bold text-brand-black uppercase tracking-tighter">QUADS DESIGNER</h2>
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">AI-POWERED ROOM VISUALIZER</p>
                   </div>
                 </div>
@@ -958,7 +958,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                         <div className="space-y-2">
                           <h4 className="text-[10px] font-black text-royal-blue uppercase tracking-widest">How it works</h4>
                           <p className="text-xs text-gray-500 leading-relaxed">
-                            Our AI analyzes your room's lighting, textures, and style to perfectly place the <span className="font-bold text-brand-black">{featuredProduct?.name || '3D View Satin Ridge™'}</span> handles in your space.
+                            Our AI analyzes your room's lighting, textures, and style to perfectly place the <span className="font-bold text-brand-black">{featuredProduct?.name || 'Quads Satin Ridge™'}</span> handles in your space.
                           </p>
                         </div>
                         
@@ -969,11 +969,11 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                               <img 
                                 src={featuredProduct?.image || "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=200"} 
                                 className="w-full h-full object-contain" 
-                                alt={featuredProduct?.name || "3D View"} 
+                                alt={featuredProduct?.name || "Quads"} 
                               />
                             </div>
                             <div>
-                              <p className="text-xs font-bold text-brand-black uppercase tracking-tight">{featuredProduct?.name || '3D View'}</p>
+                              <p className="text-xs font-bold text-brand-black uppercase tracking-tight">{featuredProduct?.name || 'Quads'}</p>
                               <p className="text-[10px] text-royal-blue font-bold uppercase tracking-widest">Satin Ridge™</p>
                             </div>
                           </div>

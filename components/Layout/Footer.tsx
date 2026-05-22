@@ -22,7 +22,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
                 {settings.footer_logo_url ? (
                   <img src={settings.footer_logo_url} alt={settings.brand_name || "Logo"} className="w-full h-full object-contain" />
                 ) : (
-                  <Logo className="w-full h-full text-white" />
+                  <Logo className="w-full h-full text-white" colorMode="white" />
                 )}
               </div>
               <span className="brand-font text-2xl tracking-wider">{settings.brand_name || 'DIVINE SPACE'}</span>
