@@ -58,7 +58,11 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ navigateTo, slides, onOpenQuote
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2, duration: 0.8 }}
-              className="text-4xl sm:text-7xl lg:text-8xl text-white font-bold leading-[1.1] mb-6 md:mb-8 drop-shadow-2xl"
+              className="text-4xl sm:text-7xl lg:text-8xl font-black leading-[1.1] mb-6 md:mb-8 uppercase tracking-tighter"
+              style={{
+                color: 'rgba(255,255,255,0.9)',
+                textShadow: '2px 4px 6px rgba(0,0,0,0.8), -1px -1px 1px rgba(255,255,255,0.2)'
+              }}
             >
               {activeSlides[current].title}
             </motion.h1>

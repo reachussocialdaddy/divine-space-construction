@@ -37,7 +37,15 @@ const TAB_MATERIALS: Record<string, { id: string; name: string; image: string; d
     { id: 'fu9', name: 'Vida Fluted Teak Shutter', image: 'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&q=80&w=800', description: 'Teak wood panels with elegant, vertical fluted channels (Smart Hardware).' },
     { id: 'fu10', name: 'Vida Brushed Gold Accent Sheet', image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=800', description: 'Metallic brushed champagne gold panels for ultra-luxury kitchen cabinets.' },
     { id: 'fu11', name: 'Vida Silver Elm Veneer', image: 'https://images.unsplash.com/photo-1549692520-acc6669e2f0c?auto=format&fit=crop&q=80&w=800', description: 'Light, contemporary silver elm wood grain with straight, clean linear patterns.' },
-    { id: 'fu12', name: 'Vida Crimson Luxury Lacquer', image: 'https://images.unsplash.com/photo-1565182999561-18d7dc63c391?auto=format&fit=crop&q=80&w=800', description: 'Deep red luxury satin coat designed to stand out on feature accent cupboards.' }
+    { id: 'fu12', name: 'Vida Crimson Luxury Lacquer', image: 'https://images.unsplash.com/photo-1565182999561-18d7dc63c391?auto=format&fit=crop&q=80&w=800', description: 'Deep red luxury satin coat designed to stand out on feature accent cupboards.' },
+    { id: 'fu13', name: 'Vida Alpine Matte White', image: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800', description: 'Silky smooth matte white finish for minimalist kitchen designs.' },
+    { id: 'fu14', name: 'Vida Smokey Quartz Gray', image: 'https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?auto=format&fit=crop&q=80&w=800', description: 'Mid-tone warm gray with a velvet-like anti-fingerprint surface.' },
+    { id: 'fu15', name: 'Vida Desert Sand Oak', image: 'https://images.unsplash.com/photo-1588854337236-6889d631faa8?auto=format&fit=crop&q=80&w=800', description: 'Light washed oak texture for Scandinavian and coastal inspired spaces.' },
+    { id: 'fu16', name: 'Vida Emerald Green Gloss', image: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&q=80&w=800', description: 'High gloss deep emerald green paneling that reflects light beautifully.' },
+    { id: 'fu17', name: 'Vida Macassar Ebony Veneer', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=800', description: 'Exotic dark wood veneer with striking light brown vertical stripes.' },
+    { id: 'fu18', name: 'Vida Rose Gold Brushed Metallic', image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=800', description: 'Soft pink-gold metallic finish for dramatic statement kitchen islands.' },
+    { id: 'fu19', name: 'Vida French Vanilla Shaker', image: 'https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?auto=format&fit=crop&q=80&w=800', description: 'Warm off-white painted finish on classic shaker style door profiles.' },
+    { id: 'fu20', name: 'Vida Industrial Concrete Texture', image: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=800', description: 'Raw, textured concrete-look panels for urban loft aesthetics.' }
   ]
 };
 
@@ -440,12 +448,12 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
               {/* Modal Header */}
               <div className="p-6 md:p-10 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-10">
                 <div className="flex items-center space-x-4">
-                  <div className="w-10 h-10 bg-royal-blue flex items-center justify-center text-white">
-                    <Camera size={20} />
+                  <div className="w-12 h-12 bg-brand-black flex items-center justify-center text-white rounded-sm shadow-lg">
+                    <Camera size={24} />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-brand-black uppercase tracking-tighter">QUADS DESIGNER</h2>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">AI-POWERED ROOM VISUALIZER</p>
+                    <h2 className="text-3xl font-black text-brand-black uppercase tracking-tighter">THE LUXURY DESIGNER</h2>
+                    <p className="text-[10px] font-bold text-royal-blue uppercase tracking-[0.3em] mt-1">BESPOKE ROOM VISUALIZER</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4">
@@ -476,10 +484,10 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                           <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`flex-1 py-4 text-[9px] font-black tracking-widest transition-all ${
+                            className={`flex-1 py-5 text-[10px] font-black tracking-[0.2em] transition-all border-b-2 ${
                               activeTab === tab 
-                                ? 'bg-royal-blue text-white' 
-                                : 'text-gray-400 hover:bg-gray-50'
+                                ? 'border-brand-black text-brand-black bg-white' 
+                                : 'border-transparent text-gray-400 hover:bg-gray-50'
                             }`}
                           >
                             {tab}

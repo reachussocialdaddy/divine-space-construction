@@ -11,9 +11,9 @@ interface WorkProcessProps {
 
 const WorkProcess: React.FC<WorkProcessProps> = ({ content }) => {
   const steps = [
-    { number: '01', title: 'Define Design', description: 'Collaborating with you to understand your vision, requirements, and aesthetic preferences.' },
-    { number: '02', title: 'Estimate Design', description: 'Providing a comprehensive cost breakdown and material selection to ensure budget alignment.' },
-    { number: '03', title: 'Build Design', description: 'Executing the project with professional project management and top-tier craftsmanship.' },
+    { number: '01', title: 'Design & Planning', description: 'Collaborating with you to understand your vision, requirements, and aesthetic preferences.', image: 'https://images.unsplash.com/photo-1621905252507-b354bcadcabc?auto=format&fit=crop&q=80&w=600' },
+    { number: '02', title: 'Estimate Design', description: 'Providing a comprehensive cost breakdown and material selection to ensure budget alignment.', image: 'https://images.unsplash.com/photo-1541888086925-920a0b411d33?auto=format&fit=crop&q=80&w=600' },
+    { number: '03', title: 'Build Design', description: 'Executing the project with professional project management and top-tier craftsmanship.', image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600' },
   ];
 
   return (
@@ -48,7 +48,10 @@ const WorkProcess: React.FC<WorkProcessProps> = ({ content }) => {
               <div className="relative pt-8">
                 <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
                 <div className="w-12 h-1 bg-royal-blue mb-6 group-hover:w-20 transition-all duration-500"></div>
-                <p className="text-white/60 leading-relaxed text-lg">
+                <div className="mb-6 h-48 overflow-hidden rounded-md opacity-80 group-hover:opacity-100 transition-opacity">
+                  <img src={step.image} alt={step.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                </div>
+                <p className="text-white/60 leading-relaxed text-sm">
                   {step.description}
                 </p>
               </div>

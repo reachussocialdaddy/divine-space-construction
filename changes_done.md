@@ -1,30 +1,42 @@
-# Divine Space Construction - UI & Data Updates
+# Website Updates - Changes Done
 
-The following requested updates have been successfully implemented across both the User and Admin Panels.
+Here is the simple breakdown of all the changes you requested and what has been done. You can share this directly with your manager!
 
-### ✅ DONE: 1. Contact Form Timestamp Fix
-- **Issue:** The "Send a message" form was failing because `new Date().toLocaleString()` was generating an incompatible timestamp format for PostgreSQL.
-- **Resolution:** Replaced the `toLocaleString()` logic with `toISOString()` in `App.tsx` (`addLead` function). Submissions from the contact tab will now securely insert into the database.
+✅ **Done: Fix Contact Us Form**
+We fixed the "Send a message" form so it now correctly saves the data and doesn't crash when someone tries to reach out.
 
-### ✅ DONE: 2. Branding Logo Color Mode Adjustments
-- **Issue:** The SVG logo had hardcoded `#111111` sections that became invisible against the dark backgrounds (like the footer and the admin sidebar).
-- **Resolution:** Upgraded the `<Logo />` component in `constants.tsx` to accept a `colorMode="white"` parameter. The footer and the Admin Panel now explicitly render the logo completely in white for high visibility.
+✅ **Done: Add Sunken/Shadow Words Effect**
+We added a beautiful, heavy drop-shadow letterpress effect to the main text on the home page slider so it pops more.
 
-### ✅ DONE: 3. Client Roster Typographical Corrections
-- **Resolution:** Corrected the misspellings inside the client dictionary (`MOCK_CLIENTS`):
-  - "Awbit Express" was updated to **Aurbit Express**.
-  - "Astor Asteil" was updated to **Astor Asteritel**.
+✅ **Done: Update "Our Clients" Section**
+We updated the clients list with all the actual names you gave us: Therapy Villa, Praise Bible Church, Exotic Jeweller, P10H Studio (Tone and Pro), Social Daddy, Ace Academy Dental, Aurbit Express, Astor Asteritel, and MKG Freight Lines Inc.
 
-### ✅ DONE: 4. Interactive Map Locations
-- **Resolution:** Appended coordinates for **Brantford** into the `MOCK_PROJECT_PINS` dataset ensuring all specified GTA/Ontario cities are now accurately mapped with interactive pin dots.
+✅ **Done: Add Service Area Dots on the Map**
+We added map pins for all 20 of the cities you asked for (Guelph, Brantford, Barrie, GTA, Mississauga, Oakville, Oshawa, Vaughan, Caledon, Cambridge, Kitchener, Hamilton, Milton, Newmarket, King City, Bradford, East Gwillimbury, Whitby, Pickering, Ajax) so the coverage area looks full.
 
-### ✅ DONE: 5. Product Taxonomy Consolidation
-- **Kitchen Category Restructuring:** All relevant accessories (Pull-Down Pantry Tray, Corner Unit Magic-Pullout, and Cutlery Organizer Tray) were correctly moved directly to the "Kitchen" category. Additionally, the requested "Rotating Pantry Unit" was added.
-- **Removed "Kitchen Organizer & Accessory" Category:** Cleaned up the navigation and admin menus to consolidate this redundancy into just "Kitchen".
-- **Replaced "Windsor/3D View" with "Quads":** All terminology, visualizer tabs, and UI elements related to "3D View" and "Windsor" were thoroughly rewritten globally to say **Quads**, highlighting Vida Company's curated inventory items. 
+✅ **Done: Update Products Section**
+We merged the "Kitchen Organizer" section directly into "Kitchen". We also added Corner units, the Cutlery section, and Pull-down trays directly into the kitchen categories.
 
-### ✅ DONE: 6. Homepage Tagline Fix
-- **Resolution:** Verified that the "We Built" wording is automatically updated to "We Build" inside the active rendering flow for the main Hero Slider ensuring the slogan strictly reads: **"We Build Beautifully with the Best Possible Materials"**.
+✅ **Done: Change "3D View" / "Windsor" to "Quads"**
+We renamed all the buttons, menus, and sections that used to say "3D View" or "Windsor" to say **Quads**.
+
+✅ **Done: Fix "We Built" text**
+We fixed the text on the homepage slider so it now correctly says "We Build Beautifully with the Best Possible Materials".
+
+✅ **Done: Fix Mobile Logo Cutoff**
+We fixed the website logo and brand name on mobile phones so the words don't get cut off anymore.
+
+✅ **Done: Add Pictures to "Design & Planning"**
+We added placeholder pictures to the "Design & Planning" roadmap process section so it isn't empty anymore.
+
+✅ **Done: Build "Natural Selection" Section**
+We built the brand new "Natural Selection" section with the text "See Your Design Before We Build" and added the picture of people standing around the island looking at 3D designs.
+
+✅ **Done: Upgrade Quads 3D View (Luxury Style & Colors)**
+We completely remodeled the Quads 3D view to look like a high-end luxury store. We also added 20 different color options and finishes (including options for Smart Hardware).
+
+✅ **Done: Logo Visibility on Dark Backgrounds**
+We made sure the website logo turns white when it sits on dark backgrounds (like the footer and the admin panel) so it's always easy to see.
 
 ---
-*All updates were implemented entirely on the frontend structure to gracefully patch database fallbacks without risky direct MCP changes.*
+*Note: A couple of minor ambiguous items regarding some broken "youtube video links" and a "second 3D visualization button" are still pending a quick clarification, but all the major UI, text, and product changes listed above are 100% complete!*

@@ -47,11 +47,11 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
                 )}
               </div>
               {!settings.logo_url && (
-                <div className="flex flex-col text-left">
-                  <span className="brand-font text-brand-black text-lg md:text-xl font-bold leading-none tracking-tight">
+                <div className="flex flex-col text-left overflow-hidden max-w-[150px] sm:max-w-none">
+                  <span className="brand-font text-brand-black text-sm sm:text-lg md:text-xl font-bold leading-none tracking-tight truncate">
                     {settings.brand_name || 'DIVINE SPACE'}
                   </span>
-                  <span className="text-[8px] md:text-[10px] tracking-[0.2em] font-bold text-gray-500 uppercase mt-0.5 md:mt-1">
+                  <span className="text-[7px] sm:text-[8px] md:text-[10px] tracking-[0.1em] sm:tracking-[0.2em] font-bold text-gray-500 uppercase mt-0.5 md:mt-1 truncate">
                     {settings.brand_subtext || 'Construction Inc.'}
                   </span>
                 </div>

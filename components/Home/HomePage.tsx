@@ -4,6 +4,7 @@ import HeroSlider from './HeroSlider';
 import TrustIndicators from './TrustIndicators';
 import ServicesOverview from './ServicesOverview';
 import WorkProcess from './WorkProcess';
+import NaturalSelection from './NaturalSelection';
 import ProjectsMap from '../Map/ProjectsMap';
 import FAQSection from './FAQSection';
 import { View, Lead, HeroSlide, PageSectionContent, ProjectPin, FAQ, Service } from '../../types';
@@ -29,6 +30,7 @@ const HomePage: React.FC<HomePageProps> = ({ navigateTo, onLeadSubmit, heroSlide
       <HeroSlider navigateTo={navigateTo} slides={heroSlides} onOpenQuote={onOpenQuote} />
       <TrustIndicators />
       <ServicesOverview navigateTo={navigateTo} content={servicesContent} services={services} onOpenQuote={onOpenQuote} />
+      <NaturalSelection />
       <WorkProcess content={processContent} />
       <FAQSection content={faqContent} faqs={faqs} />
       <ProjectsMap pins={pins} />
