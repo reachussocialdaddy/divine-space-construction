@@ -197,10 +197,9 @@ const App: React.FC = () => {
 
       // Fallback for Product Categories (renamed/seeded)
       if (categoriesData && categoriesData.length > 0) {
-        setCategories(categoriesData);
+        setCategories(categoriesData.filter((c: any) => c.name.toLowerCase() !== 'kitchen'));
       } else {
         setCategories([
-          { id: 'kitchen', name: 'Kitchen', slug: 'kitchen' },
           { id: 'cabinet-sheet', name: 'Cabinet Sheet', slug: 'cabinet-sheet' },
           { id: 'Smart Hardware', name: 'Smart Hardware', slug: 'smart-hardware' },
           { id: 'Quartz', name: 'Quartz', slug: 'quartz' }
