@@ -38,9 +38,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
               className="flex items-center space-x-2 md:space-x-4 group"
             >
               <div className={`${settings.logo_url ? 'h-10 md:h-14 w-auto' : ''} flex items-center justify-center transition-transform group-hover:scale-110`}>
-                {settings.logo_url ? (
+                {settings.logo_url && (
                   <img src={settings.logo_url} alt={settings.brand_name || "Logo"} className="h-full w-auto object-contain" />
-
+                )}
+              </div>
               {!settings.logo_url && (
                 <FullLogo />
               )}
