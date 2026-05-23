@@ -154,10 +154,10 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
             </button>
 
             <button
-              onClick={() => navigateTo('Products', 'Cabinet Sheet')}
+              onClick={() => navigateTo('Products', 'Front Elevation')}
               className="text-[13px] font-bold tracking-wide transition-all whitespace-nowrap text-gray-600 hover:text-royal-blue"
             >
-              CABINET SHEET
+              FRONT ELEVATION
             </button>
 
             <button
@@ -240,8 +240,8 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
             <button onClick={() => { navigateTo('Inverness'); setIsOpen(false); }} className={`flex flex-col items-center justify-center p-4 rounded-sm border ${currentView === 'Inverness' ? 'border-royal-blue bg-red-50 text-royal-blue' : 'border-gray-100 text-gray-700'}`}>
               <span className="text-xs font-bold uppercase tracking-widest">Quartz</span>
             </button>
-            <button onClick={() => { navigateTo('Products', 'Cabinet Sheet'); setIsOpen(false); }} className={`flex flex-col items-center justify-center p-4 rounded-sm border border-gray-100 text-gray-700`}>
-              <span className="text-xs font-bold uppercase tracking-widest text-center">Cabinet Sheet</span>
+            <button onClick={() => { navigateTo('Products', 'Front Elevation'); setIsOpen(false); }} className={`flex flex-col items-center justify-center p-4 rounded-sm border border-gray-100 text-gray-700`}>
+              <span className="text-xs font-bold uppercase tracking-widest text-center">Front Elevation</span>
             </button>
           </div>
 

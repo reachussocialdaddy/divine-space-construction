@@ -200,7 +200,7 @@ const App: React.FC = () => {
         setCategories(categoriesData.filter((c: any) => c.name.toLowerCase() !== 'kitchen'));
       } else {
         setCategories([
-          { id: 'cabinet-sheet', name: 'Cabinet Sheet', slug: 'cabinet-sheet' },
+          { id: 'front-elevation', name: 'Front Elevation', slug: 'front-elevation' },
           { id: 'Smart Hardware', name: 'Smart Hardware', slug: 'smart-hardware' },
           { id: 'Quartz', name: 'Quartz', slug: 'quartz' }
         ]);
