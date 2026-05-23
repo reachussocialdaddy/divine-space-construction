@@ -228,9 +228,14 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
               {contactContent?.description?.split('\n')[1] || "Contact us right now to get your project in motion."}
             </p>
           </div>
-          <button className="px-12 py-5 border-2 border-white text-white font-bold tracking-widest uppercase hover:bg-white hover:text-[#34495e] transition-all transform hover:-translate-y-1">
+          <a 
+            href="https://wa.me/12899462003?text=Hi%2C%20I%20need%20more%20information%20about%20your%20premium%20construction%20and%20renovation%20work."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block px-12 py-5 border-2 border-white text-white font-bold tracking-widest uppercase hover:bg-white hover:text-[#34495e] transition-all transform hover:-translate-y-1"
+          >
             {contactContent?.button_text || 'CONTACT US NOW!'}
-          </button>
+          </a>
         </div>
       </section>
     </div>
