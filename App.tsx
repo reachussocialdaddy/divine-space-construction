@@ -188,22 +188,38 @@ const App: React.FC = () => {
         setClients(MOCK_CLIENTS);
       }
 
-      // Fallback for Products (Kitchen Corner Units, Cutlery Drawers, Quartz line)
+      // Merge DB Products with MOCK_PRODUCTS so new items always show up
       if (productsData && productsData.length > 0) {
-        setProducts(productsData);
+        const mergedProducts = [...MOCK_PRODUCTS];
+        productsData.forEach((dp: any) => {
+          if (!mergedProducts.some(mp => mp.id === dp.id || mp.name === dp.name)) {
+            mergedProducts.push(dp);
+          }
+        });
+        setProducts(mergedProducts);
       } else {
         setProducts(MOCK_PRODUCTS);
       }
 
-      // Fallback for Product Categories (renamed/seeded)
+      // Merge DB Categories with core categories
+      const coreCategories = [
+        { id: 'front-elevation', name: 'Front Elevation', slug: 'front-elevation' },
+        { id: 'Smart Hardware', name: 'Smart Hardware', slug: 'smart-hardware' },
+        { id: 'Quartz', name: 'Quartz', slug: 'quartz' }
+      ];
+
       if (categoriesData && categoriesData.length > 0) {
-        setCategories(categoriesData.filter((c: any) => c.name.toLowerCase() !== 'kitchen'));
+        const filteredCategories = categoriesData.filter((c: any) => c.name.toLowerCase() !== 'kitchen');
+        
+        coreCategories.forEach(coreCat => {
+          if (!filteredCategories.some((c: any) => c.name.toLowerCase() === coreCat.name.toLowerCase())) {
+            filteredCategories.push(coreCat);
+          }
+        });
+        
+        setCategories(filteredCategories);
       } else {
-        setCategories([
-          { id: 'front-elevation', name: 'Front Elevation', slug: 'front-elevation' },
-          { id: 'Smart Hardware', name: 'Smart Hardware', slug: 'smart-hardware' },
-          { id: 'Quartz', name: 'Quartz', slug: 'quartz' }
-        ]);
+        setCategories(coreCategories);
       }
 
       if (subCategoriesData) setSubCategories(subCategoriesData);
