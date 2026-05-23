@@ -1,7 +1,7 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { GalleryProject, PageSectionContent } from '../../types';
+import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 interface ProjectsPageProps {
   projects: GalleryProject[];
@@ -10,6 +10,7 @@ interface ProjectsPageProps {
 
 const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) => {
   const [activeCategory, setActiveCategory] = useState<string>('KITCHEN RENOVATION');
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   const heroContent = pageContent?.find(c => c.section_key === 'projects_hero');
   const introContent = pageContent?.find(c => c.section_key === 'projects_intro');
@@ -33,8 +34,42 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
                          projects.find(p => p.category.toUpperCase() === activeCategory.split(' ')[0]) ||
                          (projects.length > 0 ? projects[0] : null);
 
+  const currentImages = currentProject?.images || [];
+
+  const openLightbox = (index: number) => setLightboxIndex(index);
+  const closeLightbox = () => setLightboxIndex(null);
+  
+  const nextImage = () => {
+    setLightboxIndex(prev => (prev === null ? null : (prev + 1) % currentImages.length));
+  };
+  
+  const prevImage = () => {
+    setLightboxIndex(prev => (prev === null ? null : (prev - 1 + currentImages.length) % currentImages.length));
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowRight') nextImage();
+      if (e.key === 'ArrowLeft') prevImage();
+    };
+    
+    if (lightboxIndex !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [lightboxIndex, currentImages.length]);
+
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen relative">
       {/* Hero Banner */}
       <div className="relative h-[400px] flex items-center justify-center overflow-hidden">
         <div 
@@ -67,7 +102,10 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
             return (
               <button
                 key={idx}
-                onClick={() => setActiveCategory(fullLabel)}
+                onClick={() => {
+                  setActiveCategory(fullLabel);
+                  setLightboxIndex(null);
+                }}
                 className={`flex flex-col text-center p-4 transition-all h-full justify-center ${
                   isActive ? 'bg-royal-blue text-white' : 'bg-[#111111] text-white hover:bg-royal-blue/90'
                 }`}
@@ -90,20 +128,23 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
           </h3>
         </div>
 
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <AnimatePresence mode="wait">
-            {currentProject && currentProject.images && currentProject.images.length > 0 ? (
-              currentProject.images.map((img, idx) => (
+            {currentImages.length > 0 ? (
+              currentImages.map((img, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3, delay: idx * 0.05 }}
-                  className="relative group overflow-hidden bg-gray-100 rounded-sm shadow-md aspect-video"
+                  className="relative group overflow-hidden bg-gray-100 rounded-sm shadow-md aspect-video cursor-pointer"
+                  onClick={() => openLightbox(idx)}
                 >
                   <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={`Project ${idx}`} />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
+                    <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-bold uppercase tracking-widest text-[10px] bg-black/50 px-3 py-1 rounded-sm">View</span>
+                  </div>
                 </motion.div>
               ))
             ) : (
@@ -114,6 +155,60 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
           </AnimatePresence>
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-8"
+            onClick={closeLightbox}
+          >
+            <div className="absolute top-6 right-6 z-50">
+              <button 
+                onClick={closeLightbox}
+                className="text-white/50 hover:text-white bg-black/50 hover:bg-royal-blue rounded-full p-2 transition-all"
+              >
+                <X size={32} />
+              </button>
+            </div>
+            
+            {currentImages.length > 1 && (
+              <>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                  className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white bg-black/50 hover:bg-royal-blue rounded-full p-3 transition-all z-50"
+                >
+                  <ChevronLeft size={36} />
+                </button>
+                <button 
+                  onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                  className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white bg-black/50 hover:bg-royal-blue rounded-full p-3 transition-all z-50"
+                >
+                  <ChevronRight size={36} />
+                </button>
+              </>
+            )}
+
+            <div 
+              className="relative max-w-7xl max-h-[90vh] w-full flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img 
+                src={currentImages[lightboxIndex]} 
+                alt={`Project detail ${lightboxIndex + 1}`} 
+                className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"
+              />
+              <div className="absolute -bottom-10 left-0 right-0 text-center text-white/50 font-bold tracking-widest text-[10px] uppercase">
+                {lightboxIndex + 1} / {currentImages.length}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Blue Fast Response Section */}
       <section className="bg-[#34495e] py-24 text-white text-center relative overflow-hidden">
