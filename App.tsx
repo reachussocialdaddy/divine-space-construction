@@ -529,6 +529,8 @@ const App: React.FC = () => {
         subCategories={subCategories} 
         services={services}
         onOpenQuote={() => setIsQuoteModalOpen(true)}
+        cartCount={cart.reduce((sum, item) => sum + item.quantity, 0)}
+        onOpenCart={() => setIsCartOpen(true)}
       />
       
       <main className="flex-grow">

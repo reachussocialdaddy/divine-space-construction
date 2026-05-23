@@ -10,9 +10,9 @@
       body { font-family: 'Inter', sans-serif; overflow-x: hidden; background-color: #ffffff; }
       h1, h2, h3, .brand-font { font-family: 'Playfair Display', serif; }
       
-      .bg-royal-blue { background-color: #E31E24; }
-      .text-royal-blue { color: #E31E24; }
-      .border-royal-blue { border-color: #E31E24; }
+      .bg-brand-red, .bg-royal-blue { background-color: #E31E24; }
+      .text-brand-red, .text-royal-blue { color: #E31E24; }
+      .border-brand-red, .border-royal-blue { border-color: #E31E24; }
       
       .bg-brand-black { background-color: #111111; }
       .text-brand-black { color: #111111; }
@@ -28,6 +28,19 @@
     <script>
       // Global process shim for browser compatibility - Vite will replace process.env.GEMINI_API_KEY during build
       window.process = window.process || { env: {} };
+      
+      // Configure Tailwind with brand colors so opacity and other modifiers work natively
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'royal-blue': '#E31E24',
+              'brand-red': '#E31E24',
+              'brand-black': '#111111'
+            }
+          }
+        }
+      };
     </script>
     <script type="importmap">
 {

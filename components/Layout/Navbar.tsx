@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight, ShoppingBag } from 'lucide-react';
 import { View, SiteSettings, ProductCategory, ProductSubCategory, Service } from '../../types';
 import { Logo, FullLogo, SERVICES } from '../../constants';
 
@@ -12,9 +12,22 @@ interface NavbarProps {
   subCategories: ProductSubCategory[];
   services: Service[];
   onOpenQuote: () => void;
+  cartCount?: number;
+  onOpenCart?: () => void;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigateTo, settings, categories, subCategories, services, onOpenQuote }) => {
+const Navbar: React.FC<NavbarProps> = ({ 
+  currentView, 
+  selectedServiceId, 
+  navigateTo, 
+  settings, 
+  categories, 
+  subCategories, 
+  services, 
+  onOpenQuote,
+  cartCount = 0,
+  onOpenCart
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isPortfolioOpen, setIsPortfolioOpen] = useState(false);
   const [isProductsOpen, setIsProductsOpen] = useState(false);
@@ -209,6 +222,21 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
               )}
             </div>
 
+            {onOpenCart && (
+              <button 
+                onClick={onOpenCart}
+                className="relative p-2.5 text-gray-600 hover:text-royal-blue transition-colors flex items-center justify-center mr-2 group"
+                aria-label="View Cart"
+              >
+                <ShoppingBag size={20} className="group-hover:scale-110 transition-transform" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 bg-royal-blue text-white text-[8px] font-bold h-4 w-4 rounded-full flex items-center justify-center shadow-md animate-pulse">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+            )}
+
             <button 
               onClick={onOpenQuote}
               className="bg-royal-blue text-white px-5 py-2.5 rounded-sm text-[13px] font-bold shadow-lg hover:shadow-royal-blue/30 transition-all flex items-center whitespace-nowrap flex-shrink-0"
@@ -217,7 +245,21 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
             </button>
           </div>
 
-          <div className="md:hidden flex items-center">
+          <div className="md:hidden flex items-center space-x-2">
+            {onOpenCart && (
+              <button 
+                onClick={onOpenCart}
+                className="relative p-2 text-gray-600 hover:text-royal-blue transition-colors flex items-center justify-center"
+                aria-label="View Cart"
+              >
+                <ShoppingBag size={22} />
+                {cartCount > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 bg-royal-blue text-white text-[8px] font-bold h-4 w-4 rounded-full flex items-center justify-center shadow-md animate-pulse">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+            )}
             <button onClick={() => setIsOpen(!isOpen)} className="text-gray-600 hover:text-royal-blue p-2">
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
