@@ -7,12 +7,13 @@ interface ClientsPageProps {
 }
 
 const ClientsPage: React.FC<ClientsPageProps> = ({ clients }) => {
-  // Updated categories to reflect the actual corporate and commercial segments of our new clients
-  const categories = [
-    'Retail & Luxury',
-    'Healthcare & Wellness',
-    'Creative & Corporate',
-    'Logistics & Infrastructure'
+  // Dynamically extract categories from the actual clients so no client is ever hidden.
+  // We use Set to ensure uniqueness. If a client lacks a category, we bucket them into 'Other Partners'.
+  const dynamicCategories = Array.from(new Set(clients.map(c => c.category || 'Other Partners')));
+  
+  // Fallback if no clients have loaded yet
+  const categories = dynamicCategories.length > 0 ? dynamicCategories : [
+    'Corporate Partners'
   ];
 
   // Helper to render beautiful vector-designed client logos/badges if no logo_url is present or it fails
