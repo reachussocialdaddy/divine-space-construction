@@ -11,7 +11,7 @@ interface WorkProcessProps {
 
 const WorkProcess: React.FC<WorkProcessProps> = ({ content }) => {
   const steps = [
-    { number: '01', title: 'Design & Planning', description: 'Collaborating with you to understand your vision, requirements, and aesthetic preferences.', image: 'https://images.unsplash.com/photo-1503387762-592ded58c45a?auto=format&fit=crop&q=80&w=600' },
+    { number: '01', title: 'Design & Planning', description: 'Collaborating with you to understand your vision, requirements, and aesthetic preferences.', image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&q=80&w=600' },
     { number: '02', title: 'Design Estimate', description: 'Providing a comprehensive cost breakdown and material selection to ensure budget alignment.', image: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&q=80&w=600' },
     { number: '03', title: 'Build Phase', description: 'Executing the project with professional project management and top-tier craftsmanship.', image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=600' },
   ];

@@ -105,7 +105,27 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
                 </button>
               ))}
             </div>
-            <div className="flex-grow relative aspect-square bg-white rounded-sm overflow-hidden border border-gray-100 group">
+            <div 
+              className="flex-grow relative aspect-square bg-white rounded-sm overflow-hidden border border-gray-100 group cursor-zoom-in"
+              onClick={() => {
+                const lightbox = document.createElement('div');
+                lightbox.className = 'fixed inset-0 z-[9999] bg-black/95 backdrop-blur-sm flex items-center justify-center p-4 md:p-8 cursor-zoom-out animate-in fade-in duration-200';
+                
+                const closeBtn = document.createElement('button');
+                closeBtn.className = 'absolute top-6 right-6 text-white/50 hover:text-white bg-black/50 hover:bg-royal-blue rounded-full p-2 transition-all z-50';
+                closeBtn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+                
+                const img = document.createElement('img');
+                img.src = images[selectedImage];
+                img.className = 'max-w-full max-h-[90vh] object-contain shadow-2xl rounded-sm';
+                
+                lightbox.appendChild(closeBtn);
+                lightbox.appendChild(img);
+                
+                lightbox.onclick = () => document.body.removeChild(lightbox);
+                document.body.appendChild(lightbox);
+              }}
+            >
               <img 
                 src={images[selectedImage]} 
                 alt={product.name} 
@@ -113,7 +133,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
               />
               <div className="absolute bottom-4 left-0 right-0 text-center">
                 <p className="text-[10px] text-gray-400 flex items-center justify-center uppercase tracking-widest">
-                  <Search size={12} className="mr-2" /> Roll over image to zoom in
+                  <Search size={12} className="mr-2" /> Click image to zoom in
                 </p>
               </div>
             </div>
