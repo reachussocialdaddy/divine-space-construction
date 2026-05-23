@@ -13,7 +13,7 @@ const NaturalSelection: React.FC = () => {
             transition={{ duration: 0.8 }}
             className="w-full lg:w-1/2"
           >
-            <span className="text-royal-blue font-bold tracking-widest text-[10px] uppercase mb-4 block">Natural Selection</span>
+            <span className="text-royal-blue font-bold tracking-widest text-[10px] uppercase mb-4 block">3D Visualization</span>
             <h2 className="text-3xl md:text-5xl font-bold text-brand-black mb-6 uppercase tracking-tighter leading-tight">
               See Your Design Before We Build
             </h2>

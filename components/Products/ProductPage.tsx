@@ -14,6 +14,15 @@ interface ProductPageProps {
   initialSubCategoryId?: string | null;
 }
 
+export const formatPrice = (price: string) => {
+  if (!price) return '';
+  const cleanPrice = price.trim();
+  if (cleanPrice.toLowerCase().includes('contact') || cleanPrice.toLowerCase().includes('inquire') || isNaN(Number(cleanPrice))) {
+    return cleanPrice;
+  }
+  return `$${parseFloat(cleanPrice).toFixed(2)} CAD`;
+};
+
 const ProductPage: React.FC<ProductPageProps> = ({ products, categories: dynamicCategories, subCategories, onProductClick, pageContent, initialCategory, initialSubCategoryId }) => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(initialCategory || null);
@@ -179,7 +188,7 @@ const ProductPage: React.FC<ProductPageProps> = ({ products, categories: dynamic
               <div>
                 <p className="text-[10px] text-royal-blue font-black uppercase tracking-[0.3em] mb-2">{selectedProduct.category}</p>
                 <h4 className="font-bold text-brand-black text-2xl uppercase tracking-tight">{selectedProduct.name}</h4>
-                <p className="text-gray-400 font-bold text-sm mt-1">{selectedProduct.price}</p>
+                <p className="text-gray-400 font-bold text-sm mt-1">{formatPrice(selectedProduct.price)}</p>
               </div>
             </div>
             <form onSubmit={sendWhatsApp} className="space-y-4">
@@ -273,7 +282,7 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
           <p className="text-white/80 max-w-4xl text-sm md:text-base leading-relaxed mx-auto font-light">
             {selectedSubCategoryId 
               ? subCategories.find(s => s.id === selectedSubCategoryId)?.description || `Explore our premium ${subCategories.find(s => s.id === selectedSubCategoryId)?.name} collection.`
-              : `Along with the high end ${cat.title.toLowerCase()} from our premium collections, Divine Space offer our customers the most cost saving solutions for nice designed products.`
+              : `Along with the high-end ${cat.title.toLowerCase()} from our premium collections, Divine Space offers our customers sophisticated solutions for nicely designed, bespoke spaces.`
             }
           </p>
         </div>
@@ -340,8 +349,8 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
                   </div>
                 </div>
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-tight mb-1 group-hover:text-royal-blue transition-colors">{product.name}</h3>
-                <p className={`font-bold mb-2 ${categoryId.toLowerCase() === '3d-view' ? 'text-red-600 text-lg' : 'text-gray-400 text-[10px]'}`}>
-                  {categoryId.toLowerCase() === '3d-view' ? `$${product.price}` : product.price}
+                <p className="font-bold mb-2 text-red-600 text-sm">
+                  {formatPrice(product.price)}
                 </p>
                 {categoryId.toLowerCase() === '3d-view' && (
                   <p className="text-xs text-gray-500 leading-relaxed line-clamp-3">

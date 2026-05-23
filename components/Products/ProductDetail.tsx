@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Product, View } from '../../types';
+import { formatPrice } from './ProductPage';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -182,7 +183,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
               {/* Price */}
               <div className="pt-6 border-t border-gray-100">
                 <div className="flex items-baseline space-x-2">
-                  <span className="text-3xl font-bold text-gray-900">{product.price}</span>
+                  <span className="text-3xl font-bold text-gray-900">{formatPrice(product.price)}</span>
                 </div>
                 <p className="text-[11px] text-gray-500 mt-3">
                   Pay over time for orders over <span className="font-bold">$35.00</span> with <span className="text-royal-blue font-bold">shop Pay</span> <button className="underline">Learn more</button>
@@ -310,7 +311,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
                 </div>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">WINNEC</p>
                 <h4 className="text-[13px] font-bold text-gray-800 uppercase tracking-tight mb-2 group-hover:text-royal-blue transition-colors line-clamp-1">{p.name}</h4>
-                <p className="text-[13px] font-bold text-gray-700">From {p.price}</p>
+                <p className="text-[13px] font-bold text-gray-700">From {formatPrice(p.price)}</p>
               </div>
             ))}
           </div>
@@ -327,7 +328,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
                 </div>
                 <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5">WINNEC</p>
                 <h4 className="text-[13px] font-bold text-gray-800 uppercase tracking-tight mb-2 group-hover:text-royal-blue transition-colors line-clamp-1">{p.name}</h4>
-                <p className="text-[13px] font-bold text-gray-700">From {p.price}</p>
+                <p className="text-[13px] font-bold text-gray-700">From {formatPrice(p.price)}</p>
               </div>
             ))}
           </div>

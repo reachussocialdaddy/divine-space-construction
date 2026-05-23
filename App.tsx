@@ -69,6 +69,20 @@ const App: React.FC = () => {
       const path = window.location.pathname;
       const normalizedPath = path.toLowerCase().replace(/^\/|\/$/g, ''); // Remove leading/trailing slashes
       
+      if (normalizedPath === 'gallery') {
+        setCurrentView('Projects');
+        return;
+      }
+      
+      if (normalizedPath === 'services') {
+        setCurrentView('Home');
+        setTimeout(() => {
+          const el = document.getElementById('services-section');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+        return;
+      }
+
       if (normalizedPath === 'admin') {
         setCurrentView('Admin');
         return;

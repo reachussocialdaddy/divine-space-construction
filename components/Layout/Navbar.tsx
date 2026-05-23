@@ -77,7 +77,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
                   currentView === 'Service' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
                 }`}
               >
-                SERVICES <ChevronRight size={14} className={`ml-1 transition-transform ${isServicesOpen ? 'rotate-90' : ''}`} />
+                Services <ChevronRight size={14} className={`ml-1 transition-transform ${isServicesOpen ? 'rotate-90' : ''}`} />
               </button>
               
               {isServicesOpen && displayServices.length > 0 && (
@@ -107,7 +107,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
                   currentView === 'Products' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
                 }`}
               >
-                PRODUCTS <ChevronRight size={14} className={`ml-1 transition-transform ${isProductsOpen ? 'rotate-90' : ''}`} />
+                Products <ChevronRight size={14} className={`ml-1 transition-transform ${isProductsOpen ? 'rotate-90' : ''}`} />
               </button>
               
               {isProductsOpen && categories.length > 0 && (
@@ -150,14 +150,14 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
                 currentView === 'Inverness' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
               }`}
             >
-              QUARTZ 🔥
+              Quartz
             </button>
 
             <button
               onClick={() => navigateTo('Products', 'Front Elevation')}
               className="text-[13px] font-bold tracking-wide transition-all whitespace-nowrap text-gray-600 hover:text-royal-blue"
             >
-              FRONT ELEVATION
+              Front Elevation
             </button>
 
             <button
@@ -188,7 +188,7 @@ const Navbar: React.FC<NavbarProps> = ({ currentView, selectedServiceId, navigat
                   (currentView === 'Projects' || currentView === 'Clients') ? 'text-royal-blue' : 'text-gray-600 hover:text-royal-blue'
                 }`}
               >
-                PORTFOLIO <ChevronRight size={14} className={`ml-1 transition-transform ${isPortfolioOpen ? 'rotate-90' : ''}`} />
+                Portfolio <ChevronRight size={14} className={`ml-1 transition-transform ${isPortfolioOpen ? 'rotate-90' : ''}`} />
               </button>
               
               {isPortfolioOpen && (

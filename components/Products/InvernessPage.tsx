@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Upload, ChevronRight, Camera, RefreshCw, AlertCircle } from 'lucide-react';
 import { View, Product } from '../../types';
 import { getAIClient } from '../../services/geminiService.ts';
+import { formatPrice } from './ProductPage';
 import { Type } from "@google/genai";
 import QUARTZ_DATA from '../../quartzData.json';
 
@@ -140,7 +141,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
     setAiError(null);
     try {
       const ai = getAIClient();
-      const model = "gemini-3-flash-preview";
+      const model = "gemini-2.5-flash";
       
       const prompt = `Act as a WORLD-CLASS ARCHITECTURAL SCANNER and PHOTOSHOP EXPERT with 25 years of experience. 
       Analyze this interior room image and perform ULTIMATE DEEP SEGMENTATION with pixel-perfect precision. 
@@ -424,7 +425,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
                   </div>
                 </div>
                 <h3 className="text-sm font-bold text-gray-900 uppercase tracking-tight mb-1 group-hover:text-royal-blue transition-colors">{product.name}</h3>
-                <p className="text-red-600 font-bold text-lg">${product.price}</p>
+                <p className="text-red-600 font-bold text-lg">{formatPrice(product.price)}</p>
               </motion.div>
             ))}
           </div>

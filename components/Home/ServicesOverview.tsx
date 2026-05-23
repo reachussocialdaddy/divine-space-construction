@@ -16,7 +16,7 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ navigateTo, content
   const [activeTab, setActiveTab] = useState(0);
 
   return (
-    <section className="bg-brand-black py-20">
+    <section id="services-section" className="bg-brand-black py-20">
       <div className="max-w-7xl mx-auto px-4">
         {/* Header Section */}
         <motion.div 

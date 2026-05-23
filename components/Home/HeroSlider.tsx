@@ -51,6 +51,9 @@ const HeroSlider: React.FC<HeroSliderProps> = ({ navigateTo, slides, onOpenQuote
             animate={{ scale: 1 }}
             transition={{ duration: 10 }}
             src={activeSlides[current].image_url} 
+            onError={(e) => {
+              e.currentTarget.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1920';
+            }}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 z-20 flex flex-col justify-center px-6 sm:px-12 lg:px-24 max-w-6xl">

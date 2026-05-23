@@ -124,6 +124,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ settings, onLeadSubmit }) => 
                       <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Working Hours</h4>
                       <p className="text-lg font-bold text-brand-black">{settings.working_hours_weekday || 'Mon - Fri: 9:00 AM - 6:00 PM'}</p>
                       <p className="text-lg font-bold text-brand-black">{settings.working_hours_weekend || 'Sat: 10:00 AM - 4:00 PM'}</p>
+                      <p className="text-lg font-bold text-brand-black">Sun: Closed</p>
                     </div>
                   </div>
                 </div>
