@@ -34,7 +34,7 @@ export const getGeminiResponse = async (prompt: string, history: { role: 'user' 
     const ai = getAIClient();
     
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-1.5-flash',
       contents: [...history, { role: 'user', parts: [{ text: prompt }] }],
       config: {
         systemInstruction: `You are the Lead Architect for Divine Space Construction. 
@@ -112,7 +112,7 @@ export const analyzeRoomSurfaces = async (base64Image: string, mimeType: string)
 
     // Switched to Flash for better availability and quota management
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview', 
+      model: 'gemini-1.5-flash', 
       contents: [{ parts: [imagePart, promptPart] }],
       config: {
         responseMimeType: "application/json",
