@@ -65,8 +65,13 @@ const ProductPage: React.FC<ProductPageProps> = ({ products, categories: dynamic
 
   const filteredProducts = useMemo(() => {
     if (!selectedCategory) return [];
+    
+    // Normalize category names for comparison (lowercase, replace hyphens with spaces)
+    const normalizeCat = (cat: string) => cat.toLowerCase().replace(/-/g, ' ');
+    const normalizedSelectedCat = normalizeCat(selectedCategory);
+
     let categoryProducts = products.filter(p => 
-      p.category.toLowerCase() === selectedCategory.toLowerCase()
+      normalizeCat(p.category) === normalizedSelectedCat
     );
 
     if (selectedSubCategoryId) {
@@ -213,7 +218,10 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
   selectedSubCategoryId, setSelectedSubCategoryId, setSelectedCategory,
   filteredProducts, handleImageError, onProductClick 
 }) => {
-  const cat = displayCategories.find(c => c.id === categoryId);
+  const normalizeCat = (cat: string) => cat.toLowerCase().replace(/-/g, ' ');
+  const normalizedCategoryId = normalizeCat(categoryId);
+  
+  const cat = displayCategories.find(c => normalizeCat(c.id) === normalizedCategoryId);
   
   if (!cat) {
     return (
@@ -223,7 +231,7 @@ const CategoryDetail: React.FC<CategoryDetailProps> = ({
     );
   }
   
-  const actualCategory = dynamicCategories.find(c => c.name === categoryId);
+  const actualCategory = dynamicCategories.find(c => normalizeCat(c.name) === normalizedCategoryId);
   const currentSubCategories = actualCategory ? subCategories.filter(sc => sc.category_id === actualCategory.id) : [];
   
   const handleSubCategoryClick = (subId: string | null) => {
