@@ -623,7 +623,8 @@ const App: React.FC = () => {
           <ServiceDetail 
             serviceId={selectedServiceId} 
             navigateTo={navigateTo} 
-            services={services} 
+            services={services}
+            projects={projects}
             onOpenQuote={() => setIsQuoteModalOpen(true)}
           />
         )}

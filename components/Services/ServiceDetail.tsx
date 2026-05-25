@@ -1,5 +1,5 @@
 
-import { Service, View } from '../../types';
+import { Service, View, GalleryProject } from '../../types';
 import { CheckCircle, ArrowRight, Home, Hammer, Layout, Bath, Layers, ChefHat, DoorOpen, Building2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -7,6 +7,7 @@ interface ServiceDetailProps {
   serviceId: string;
   navigateTo: (view: View, id?: string) => void;
   services: Service[];
+  projects?: GalleryProject[];
   onOpenQuote: () => void;
 }
 
@@ -24,8 +25,19 @@ const getIcon = (iconName?: string) => {
   }
 };
 
-const ServiceDetail: React.FC<ServiceDetailProps> = ({ serviceId, navigateTo, services, onOpenQuote }) => {
+const ServiceDetail: React.FC<ServiceDetailProps> = ({ serviceId, navigateTo, services, projects = [], onOpenQuote }) => {
   const service = services.find(s => s.id === serviceId);
+
+  const serviceToProjectMap: Record<string, string> = {
+    'home-renovation': 'LOUNGE LIVING SPACES',
+    'modular-kitchen': 'KITCHEN RENOVATION',
+    'legal-basements': 'LEGAL BASEMENTS PERMIT SUITES',
+    'luxury-washrooms': 'BATHROOM RENOVATIONS',
+    'custom-closets': 'CLOSETS CUSTOM STORAGE'
+  };
+
+  const relatedProjectName = serviceToProjectMap[serviceId];
+  const relatedProject = projects.find(p => p.name === relatedProjectName);
 
   if (!service) return <div className="py-20 text-center">Service not found.</div>;
 
@@ -122,6 +134,25 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ serviceId, navigateTo, se
           </div>
         </div>
       </section>
+
+      {/* Service Gallery */}
+      {relatedProject && relatedProject.images && relatedProject.images.length > 0 && (
+        <section className="py-24 bg-gray-50 border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-4">
+            <h2 className="text-3xl font-bold text-royal-blue mb-2 text-center">Portfolio & Inspiration</h2>
+            <p className="text-gray-500 text-center mb-12 max-w-2xl mx-auto">Explore some of our recently completed {service.title.toLowerCase()} projects across the GTA.</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {relatedProject.images.map((img, idx) => (
+                <div key={idx} className="relative aspect-[4/3] rounded-sm overflow-hidden group shadow-sm border border-gray-100">
+                  <img src={img} alt={`${service.title} Project ${idx + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-royal-blue/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </div>
   );
 };
