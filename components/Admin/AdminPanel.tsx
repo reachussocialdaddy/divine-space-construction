@@ -2151,15 +2151,45 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
                           <img src={formData.logo_url} className="max-w-full max-h-full object-contain" />
                         </div>
                       )}
-                      <label className="flex-1 border-2 border-dashed border-gray-200 p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-all">
+                      <label 
+                        className="flex-1 border-2 border-dashed border-gray-200 p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 transition-all"
+                        onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+                        onDrop={async (e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          const file = e.dataTransfer.files?.[0];
+                          if (file) {
+                            if (file.type !== 'image/png' && !file.name.toLowerCase().endsWith('.png')) {
+                              alert('Only .png format is allowed for Client Logos.');
+                              return;
+                            }
+                            try {
+                              setUploading(true);
+                              const url = await uploadToImgBB(file);
+                              setFormData((prev: any) => ({...prev, logo_url: url}));
+                            } catch (err: any) {
+                              console.error("Upload failed:", err);
+                              alert(`Upload failed: ${err.message || 'Unknown error'}`);
+                            } finally {
+                              setUploading(false);
+                            }
+                          }
+                        }}
+                      >
                         <input 
                           type="file" 
+                          accept=".png,image/png"
                           className="hidden" 
                           onChange={async (e) => {
-                            if (e.target.files?.[0]) {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              if (file.type !== 'image/png' && !file.name.toLowerCase().endsWith('.png')) {
+                                alert('Only .png format is allowed for Client Logos.');
+                                return;
+                              }
                               try {
                                 setUploading(true);
-                                const url = await uploadToImgBB(e.target.files[0]);
+                                const url = await uploadToImgBB(file);
                                 setFormData((prev: any) => ({...prev, logo_url: url}));
                               } catch (err: any) {
                                 console.error("Upload failed:", err);
@@ -2175,7 +2205,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
                         ) : (
                           <>
                             <Upload size={24} className="text-gray-400 mb-2" />
-                            <span className="text-[10px] font-bold uppercase text-gray-400">Upload Logo</span>
+                            <span className="text-[10px] font-bold uppercase text-gray-400 text-center">Drag & Drop or Click to Upload<br/>(.PNG Only)</span>
                           </>
                         )}
                       </label>
