@@ -188,11 +188,25 @@ const App: React.FC = () => {
         supabase.from('user_profiles').select('*').order('created_at', { ascending: false })
       ]);
 
+      const fixGoogleDriveUrl = (url: string) => {
+        if (!url) return url;
+        if (url.includes('lh3.googleusercontent.com/d/')) {
+          const id = url.split('/d/')[1]?.split('/')[0];
+          if (id) return `https://drive.google.com/uc?export=view&id=${id}`;
+        }
+        return url;
+      };
+
+      const processProjects = (projs: any[]) => projs.map(p => ({
+        ...p,
+        images: p.images ? p.images.map(fixGoogleDriveUrl) : []
+      }));
+
       if (leadsData) setLeads(leadsData);
       if (projectsData && projectsData.length > 0) {
-        setProjects(projectsData);
+        setProjects(processProjects(projectsData));
       } else {
-        setProjects(MOCK_PROJECTS);
+        setProjects(processProjects(MOCK_PROJECTS));
       }
       
       // Fallback for actual Clients
@@ -278,8 +292,13 @@ const App: React.FC = () => {
 
       if (contentData) setPageContent(contentData);
 
+      const processServices = (srvs: any[]) => srvs.map(s => ({
+        ...s,
+        image_url: fixGoogleDriveUrl(s.image_url)
+      }));
+
       // Enforcing the exact Services from constants.tsx for correct layout order
-      setServices(SERVICES);
+      setServices(processServices(SERVICES));
 
       if (ordersData) setOrders(ordersData);
       if (abandonedCartsData) setAbandonedCarts(abandonedCartsData);
