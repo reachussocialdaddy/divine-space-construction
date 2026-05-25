@@ -19,8 +19,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
   // Premium residential construction and millwork categories matching our Google Drive portfolio
   const categories = [
     { label: 'KITCHEN', sub: 'RENOVATION' },
-    { label: 'BATHROOM', sub: 'RENOVATION' },
-    { label: 'WASHROOMS', sub: 'SPA DESIGN' },
+    { label: 'BATHROOM', sub: 'RENOVATIONS' },
     { label: 'LEGAL BASEMENTS', sub: 'PERMIT SUITES' },
     { label: 'CLOSETS', sub: 'CUSTOM STORAGE' },
     { label: 'BEDROOMS', sub: 'LUXURY SUITES' },

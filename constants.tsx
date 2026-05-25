@@ -259,21 +259,14 @@ export const MOCK_PROJECTS: GalleryProject[] = [
   },
   {
     "id": "c3b8d0f0-f67c-4fc7-a2da-387dfa6c5cd8",
-    "name": "BATHROOM RENOVATION",
+    "name": "BATHROOM RENOVATIONS",
     "category": "Bathroom",
     "images": [
       "https://lh3.googleusercontent.com/d/1oKOnDlGBgIi8T9uMM8yzGkhqed6Ufr30",
       "https://lh3.googleusercontent.com/d/1d2LzamXOk3_dHQ3zTFkrc4Rs78VQuBkj",
       "https://lh3.googleusercontent.com/d/1wumXRHNWeBqNH94A0UPuZNRJjBNgu1v_",
       "https://lh3.googleusercontent.com/d/1KYfrZJ6B8jLiYh3SltnH_DrFDCbmF8ow",
-      "https://lh3.googleusercontent.com/d/1VX3Tcpx1wOczmYpBxIiIVli6Bt3PxL3f"
-    ]
-  },
-  {
-    "id": "2eca4954-10bd-4085-bb47-7253d5a501dd",
-    "name": "WASHROOMS SPA DESIGN",
-    "category": "Washrooms",
-    "images": [
+      "https://lh3.googleusercontent.com/d/1VX3Tcpx1wOczmYpBxIiIVli6Bt3PxL3f",
       "https://lh3.googleusercontent.com/d/1Pzqm1vYNKepn5kSCHUss2e9kO2mGjaAy",
       "https://lh3.googleusercontent.com/d/1ZY2vvLyvN-xfB3r9h6f3xlhZZ5Pt98qm",
       "https://lh3.googleusercontent.com/d/1XZd4-W5397MJdRlTTtin_USDK6Y3daZy",
