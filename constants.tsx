@@ -72,7 +72,7 @@ export const SERVICES: Service[] = [
     description: 'Luxurious whole house updates and high-end architectural renovations.',
     long_description: 'Transform your existing property into a premium living experience. From master bedroom updates and open-concept structural walls to electrical, custom plaster moldings, and flooring installations, we manage the entire home renovation journey with flawless craft.',
     benefits: ['Full Permit & Architectural Designs', 'High-End Custom Carpentry', 'Sleek Flooring & Wall Coverings', 'Modern Smart Home Integrations', 'Strict Compliance to Ontario Building Codes'],
-    image_url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200'
+    image_url: 'https://lh3.googleusercontent.com/d/11qHCW6X_AFHZBxAeLIDSX7Hl8ux1bdAT'
   },
   { 
     id: 'modular-kitchen', 
@@ -81,7 +81,7 @@ export const SERVICES: Service[] = [
     description: 'Sleek, Italian-inspired kitchen cabinet designs and islands.',
     long_description: 'We build custom, high-end modular kitchens that pair Italian aesthetic styling with daily functional utility. Incorporating premium wood finishes, high-gloss UV panels, and elegant quartz countertops, our kitchens are masterpieces engineered to last.',
     benefits: ['German Soft-Close Hinges & Tracks', 'Sleek Under-Cabinet Lighting', 'Innovative Corner Pullouts & Spices', 'Premium Heat-Resistant Counters', 'Custom Hidden Appliance Integration'],
-    image_url: 'https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=1200'
+    image_url: 'https://lh3.googleusercontent.com/d/1Q4qf-NXTi9ea_nyvPk1Xwr75X7yneiyE'
   },
   { 
     id: 'legal-basements', 
@@ -90,7 +90,7 @@ export const SERVICES: Service[] = [
     description: 'Compliant legal secondary suites finished with city-registered permits.',
     long_description: 'Turn your basement space into a beautifully finished, legal, income-generating unit. Our permit-compliant basements cover complete municipal zoning approvals, egress window systems, fire-rated insulation separations, separate kitchen lines, and HVAC balancing.',
     benefits: ['100% City Permit Guarantee', 'Complete Fire-Rated Drywalls', 'Dedicated Separate Entrances', 'HVAC Integration & Heating Comfort', 'Plumbing & Laundry Solutions'],
-    image_url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200'
+    image_url: 'https://lh3.googleusercontent.com/d/1qs63Z26UDsYxsVjylAwXuEgjhn1WOift'
   },
   { 
     id: 'luxury-washrooms', 
@@ -99,7 +99,7 @@ export const SERVICES: Service[] = [
     description: 'Spa-inspired luxury bathrooms and premium walk-in showers.',
     long_description: 'Indulge in a boutique hotel bathroom experience inside your home. We custom build walk-in rain showers with linear floor drains, freestanding tubs, smart toilets, floating quartz vanities, custom tiling patterns, and heated floor systems.',
     benefits: ['Custom Frameless Glass Showers', 'Premium Heated Tile Floors', 'Elegant Floating Quartz Vanities', 'High-End Schluter Waterproofing', 'Atmospheric Dimming Controls'],
-    image_url: 'https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=1200'
+    image_url: 'https://lh3.googleusercontent.com/d/1oKOnDlGBgIi8T9uMM8yzGkhqed6Ufr30'
   },
   { 
     id: 'custom-closets', 
@@ -108,7 +108,7 @@ export const SERVICES: Service[] = [
     description: 'Bespoke walk-in wardrobe storage organizers and vanity tables.',
     long_description: 'Create an organized sanctuary for your personal wardrobe. Our bespoke closets feature built-in LED track lightning, luxurious velvet drawer liners, premium shoe racks, tie and accessory pullouts, and full-length vanity mirror cabinets.',
     benefits: ['Full Closet Space Optimization', 'Built-In Warm LED Backlights', 'Soft-Close Accessory Drawers', 'Elegant Glass-Front Wardrobes', 'Premium Solid Hardwood Finishes'],
-    image_url: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=1200'
+    image_url: 'https://lh3.googleusercontent.com/d/1cugPyUHFt6kSutmejfR7Dcosuzc4Nhtz'
   },
 ];
 
