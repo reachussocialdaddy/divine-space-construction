@@ -973,7 +973,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {clients.map((client) => (
               <div key={client.id} className="bg-white border border-gray-100 rounded-sm p-6 shadow-sm group relative flex flex-col items-center justify-center text-center">
-                <div className="absolute top-2 right-2 flex space-x-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="absolute top-2 right-2 flex space-x-1 opacity-100 transition-opacity bg-white/80 rounded-sm p-1">
                   <button 
                     onClick={() => handleEditClient(client)}
                     className="p-1.5 text-gray-300 hover:text-royal-blue transition-colors"
