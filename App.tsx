@@ -192,7 +192,11 @@ const App: React.FC = () => {
         if (!url) return url;
         if (url.includes('lh3.googleusercontent.com/d/')) {
           const id = url.split('/d/')[1]?.split('/')[0];
-          if (id) return `https://drive.google.com/uc?export=view&id=${id}`;
+          if (id) return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
+        }
+        if (url.includes('drive.google.com/file/d/')) {
+          const id = url.split('/file/d/')[1]?.split('/')[0];
+          if (id) return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
         }
         return url;
       };
@@ -307,6 +311,8 @@ const App: React.FC = () => {
       if (settingsData) {
         const settingsObj: any = {};
         settingsData.forEach(s => settingsObj[s.key] = s.value);
+        // Force the correct email regardless of what's in the database
+        settingsObj.email = 'divinespaceconstructions@gmail.com';
         setSettings(prev => ({ ...prev, ...settingsObj }));
       }
     } catch (error) {
