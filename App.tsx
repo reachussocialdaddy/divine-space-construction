@@ -191,12 +191,13 @@ const App: React.FC = () => {
       const fixGoogleDriveUrl = (url: string) => {
         if (!url) return url;
         
-        // If it's already an lh3 link, it works perfectly natively!
+        // Convert lh3 links to thumbnail endpoint as lh3 links expire and return 403
         if (url.includes('lh3.googleusercontent.com/d/')) {
-          return url;
+          const id = url.split('/d/')[1]?.split('/')[0];
+          if (id) return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
         }
 
-        // If it's a standard drive link, we can try to extract ID and use thumbnail, but returning raw url if not
+        // Convert standard drive links to thumbnail endpoint
         if (url.includes('drive.google.com/file/d/')) {
           const id = url.split('/file/d/')[1]?.split('/')[0];
           if (id) return `https://drive.google.com/thumbnail?id=${id}&sz=w1000`;
