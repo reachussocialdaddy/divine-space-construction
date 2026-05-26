@@ -84,7 +84,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail size={16} className="text-white/40" />
-                <span>{settings.email || 'info@divinespace.ca'}</span>
+                <span>{settings.email || 'divinespaceconstructions@gmail.com'}</span>
               </li>
               <li className="flex items-start space-x-3">
                 <MapPin size={16} className="text-white/40 mt-1" />

@@ -72,7 +72,7 @@ export const SERVICES: Service[] = [
     description: 'Luxurious whole house updates and high-end architectural renovations.',
     long_description: 'Transform your existing property into a premium living experience. From master bedroom updates and open-concept structural walls to electrical, custom plaster moldings, and flooring installations, we manage the entire home renovation journey with flawless craft.',
     benefits: ['Full Permit & Architectural Designs', 'High-End Custom Carpentry', 'Sleek Flooring & Wall Coverings', 'Modern Smart Home Integrations', 'Strict Compliance to Ontario Building Codes'],
-    image_url: 'https://lh3.googleusercontent.com/d/11qHCW6X_AFHZBxAeLIDSX7Hl8ux1bdAT'
+    image_url: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200'
   },
   { 
     id: 'modular-kitchen', 
@@ -81,7 +81,7 @@ export const SERVICES: Service[] = [
     description: 'Sleek, Italian-inspired kitchen cabinet designs and islands.',
     long_description: 'We build custom, high-end modular kitchens that pair Italian aesthetic styling with daily functional utility. Incorporating premium wood finishes, high-gloss UV panels, and elegant quartz countertops, our kitchens are masterpieces engineered to last.',
     benefits: ['German Soft-Close Hinges & Tracks', 'Sleek Under-Cabinet Lighting', 'Innovative Corner Pullouts & Spices', 'Premium Heat-Resistant Counters', 'Custom Hidden Appliance Integration'],
-    image_url: 'https://lh3.googleusercontent.com/d/1Q4qf-NXTi9ea_nyvPk1Xwr75X7yneiyE'
+    image_url: 'https://images.unsplash.com/photo-1556910103-1c02745a872f?auto=format&fit=crop&q=80&w=1200'
   },
   { 
     id: 'legal-basements', 
@@ -90,7 +90,7 @@ export const SERVICES: Service[] = [
     description: 'Compliant legal secondary suites finished with city-registered permits.',
     long_description: 'Turn your basement space into a beautifully finished, legal, income-generating unit. Our permit-compliant basements cover complete municipal zoning approvals, egress window systems, fire-rated insulation separations, separate kitchen lines, and HVAC balancing.',
     benefits: ['100% City Permit Guarantee', 'Complete Fire-Rated Drywalls', 'Dedicated Separate Entrances', 'HVAC Integration & Heating Comfort', 'Plumbing & Laundry Solutions'],
-    image_url: 'https://lh3.googleusercontent.com/d/1qs63Z26UDsYxsVjylAwXuEgjhn1WOift'
+    image_url: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=1200'
   },
   { 
     id: 'luxury-washrooms', 
@@ -99,7 +99,7 @@ export const SERVICES: Service[] = [
     description: 'Spa-inspired luxury bathrooms and premium walk-in showers.',
     long_description: 'Indulge in a boutique hotel bathroom experience inside your home. We custom build walk-in rain showers with linear floor drains, freestanding tubs, smart toilets, floating quartz vanities, custom tiling patterns, and heated floor systems.',
     benefits: ['Custom Frameless Glass Showers', 'Premium Heated Tile Floors', 'Elegant Floating Quartz Vanities', 'High-End Schluter Waterproofing', 'Atmospheric Dimming Controls'],
-    image_url: 'https://lh3.googleusercontent.com/d/1oKOnDlGBgIi8T9uMM8yzGkhqed6Ufr30'
+    image_url: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&q=80&w=1200'
   },
   { 
     id: 'custom-closets', 
@@ -108,7 +108,7 @@ export const SERVICES: Service[] = [
     description: 'Bespoke walk-in wardrobe storage organizers and vanity tables.',
     long_description: 'Create an organized sanctuary for your personal wardrobe. Our bespoke closets feature built-in LED track lightning, luxurious velvet drawer liners, premium shoe racks, tie and accessory pullouts, and full-length vanity mirror cabinets.',
     benefits: ['Full Closet Space Optimization', 'Built-In Warm LED Backlights', 'Soft-Close Accessory Drawers', 'Elegant Glass-Front Wardrobes', 'Premium Solid Hardwood Finishes'],
-    image_url: 'https://lh3.googleusercontent.com/d/1cugPyUHFt6kSutmejfR7Dcosuzc4Nhtz'
+    image_url: 'https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&q=80&w=1200'
   },
 ];
 
@@ -229,32 +229,9 @@ export const MOCK_PROJECTS: GalleryProject[] = [
     "name": "KITCHEN RENOVATION",
     "category": "Kitchen",
     "images": [
-      "https://lh3.googleusercontent.com/d/1Q4qf-NXTi9ea_nyvPk1Xwr75X7yneiyE",
-      "https://lh3.googleusercontent.com/d/11yNeDmtIt4NS7aS8d9NLrSRpVxSIdMhQ",
-      "https://lh3.googleusercontent.com/d/1hmK_98J0H9mQuBp4xpNB4HA2N9odRDBE",
-      "https://lh3.googleusercontent.com/d/1ys_MJO6vvo4SQP6ZISQhXpdUHIqWtVIN",
-      "https://lh3.googleusercontent.com/d/1zSXBGt4tUxV6aLO5gLEs77oVJuJ8hJzz",
-      "https://lh3.googleusercontent.com/d/1S_iJatTFmCS5teBp4Qh0ue-k5D7vosJz",
-      "https://lh3.googleusercontent.com/d/133iq_Ll6AkX9VCifjfaQOJY3mLAhRyyJ",
-      "https://lh3.googleusercontent.com/d/1If7ymjoQphJWVyW3LArH8V4OKGkLYlet",
-      "https://lh3.googleusercontent.com/d/1GTycmramg3CHt0bkKNPvgwRk-nqHsShV",
-      "https://lh3.googleusercontent.com/d/13DBRppIrQ7WVQOZm5DZc9O2sn068zWnr",
-      "https://lh3.googleusercontent.com/d/1SCWkp6jym9vTynSqnxwOByThl53CAPwk",
-      "https://lh3.googleusercontent.com/d/1925bGc7fZxUcYiPR50R9_cVwJjrqtN7b",
-      "https://lh3.googleusercontent.com/d/1fFsCNBIyDkTBRVvCYDXExGyDnG-pVVbd",
-      "https://lh3.googleusercontent.com/d/1W2eUubAds8_I7Vn8eIZJu4_FHR792kIO",
-      "https://lh3.googleusercontent.com/d/1IbTNdpeS5ZGJZkHdk1tsoULyt-xJm359",
-      "https://lh3.googleusercontent.com/d/1B-GL_nz_Ja69vdpf_HpVizvvRu7L89Pv",
-      "https://lh3.googleusercontent.com/d/1oFNZB7zsxDJfNWGpFoHstY8ZaOigdT8K",
-      "https://lh3.googleusercontent.com/d/1RbvK2wvgbz-dr7IarOplAzNghB8roCs_",
-      "https://lh3.googleusercontent.com/d/1maCH6ihDOHflIfD9fjmyAsAlJ5ZNp6tg",
-      "https://lh3.googleusercontent.com/d/1MAPpXqe2iJ_2uvm1IuJRR0r2Bu74av0_",
-      "https://lh3.googleusercontent.com/d/1kS70LLuNzlm0wjPjL8V7JOF-F88MTlGx",
-      "https://lh3.googleusercontent.com/d/1MMcFTsDKO80kHrMkH7PBw-qt0MOdUvfK",
-      "https://lh3.googleusercontent.com/d/14dp-bWtF7G9d2VdYVVp3tnIq8ezIYFxa",
-      "https://lh3.googleusercontent.com/d/1kCRrt2tYeSKAL10POGhNKok67Wc_y0AA",
-      "https://lh3.googleusercontent.com/d/19RuYq-sg0LdX-9Gg8YbjdMESsPy6ajAr",
-      "https://lh3.googleusercontent.com/d/1yvK4I-ObkRNX3HxAjjGdrPI0DuSU-jrB"
+      "https://images.unsplash.com/photo-1556909212-d5b604d0c90d?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&q=80&w=1200"
     ]
   },
   {
@@ -262,17 +239,9 @@ export const MOCK_PROJECTS: GalleryProject[] = [
     "name": "BATHROOM RENOVATIONS",
     "category": "Bathroom",
     "images": [
-      "https://lh3.googleusercontent.com/d/1oKOnDlGBgIi8T9uMM8yzGkhqed6Ufr30",
-      "https://lh3.googleusercontent.com/d/1d2LzamXOk3_dHQ3zTFkrc4Rs78VQuBkj",
-      "https://lh3.googleusercontent.com/d/1wumXRHNWeBqNH94A0UPuZNRJjBNgu1v_",
-      "https://lh3.googleusercontent.com/d/1KYfrZJ6B8jLiYh3SltnH_DrFDCbmF8ow",
-      "https://lh3.googleusercontent.com/d/1VX3Tcpx1wOczmYpBxIiIVli6Bt3PxL3f",
-      "https://lh3.googleusercontent.com/d/1Pzqm1vYNKepn5kSCHUss2e9kO2mGjaAy",
-      "https://lh3.googleusercontent.com/d/1ZY2vvLyvN-xfB3r9h6f3xlhZZ5Pt98qm",
-      "https://lh3.googleusercontent.com/d/1XZd4-W5397MJdRlTTtin_USDK6Y3daZy",
-      "https://lh3.googleusercontent.com/d/1k6fWZdXzFuv6f2S35afpVsf8g948X0qf",
-      "https://lh3.googleusercontent.com/d/1y0U0Hgn6Exu42Nh8S00A3bjII267KJGC",
-      "https://lh3.googleusercontent.com/d/1XUwCK9nmv7NSVNk31ohMiGhfM8um8n0K"
+      "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1620626011761-9ea0184404ec?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1604709177227-3977c61c62cb?auto=format&fit=crop&q=80&w=1200"
     ]
   },
   {
@@ -280,9 +249,9 @@ export const MOCK_PROJECTS: GalleryProject[] = [
     "name": "LEGAL BASEMENTS PERMIT SUITES",
     "category": "Legal Basements",
     "images": [
-      "https://lh3.googleusercontent.com/d/1qs63Z26UDsYxsVjylAwXuEgjhn1WOift",
-      "https://lh3.googleusercontent.com/d/1nkj_1H7A2Ukf5qxwFEi8y8S1OBVdVwP0",
-      "https://lh3.googleusercontent.com/d/169Y8fWjq0_FaFniUn5BiBS6FRv4hBnZp"
+      "https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200"
     ]
   },
   {
@@ -290,12 +259,9 @@ export const MOCK_PROJECTS: GalleryProject[] = [
     "name": "CLOSETS CUSTOM STORAGE",
     "category": "Closets",
     "images": [
-      "https://lh3.googleusercontent.com/d/1cugPyUHFt6kSutmejfR7Dcosuzc4Nhtz",
-      "https://lh3.googleusercontent.com/d/1c1vIsBHtqCs765doAZvf7vRxWzJOfexD",
-      "https://lh3.googleusercontent.com/d/177V-jOUuRFBO3wBNwtPr2gPk-N3jMMD8",
-      "https://lh3.googleusercontent.com/d/1D2jH17vTiCZ2eEFeZC8Jyw1HAqHzoM3v",
-      "https://lh3.googleusercontent.com/d/1rljcXoyusXgitFinxvTdzzTgQx-JjABV",
-      "https://lh3.googleusercontent.com/d/1tUXXfTZAs7vM7aQejL4YpVIcfrBTBVUR"
+      "https://images.unsplash.com/photo-1558997519-83ea9252edf8?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1595514535311-6677f24e9309?auto=format&fit=crop&q=80&w=1200"
     ]
   },
   {
@@ -303,11 +269,8 @@ export const MOCK_PROJECTS: GalleryProject[] = [
     "name": "BEDROOMS LUXURY SUITES",
     "category": "Bedrooms",
     "images": [
-      "https://lh3.googleusercontent.com/d/1tncdJ_xHjSDUEMKAh6rKR1xIONfXpg2X",
-      "https://lh3.googleusercontent.com/d/18kJtmg4yNzJiGMvZPyBF2gjB_UQvSBzw",
-      "https://lh3.googleusercontent.com/d/1QGS2EmZyHq306m1sOOIaHf5e6QAnBTw6",
-      "https://lh3.googleusercontent.com/d/1h2lZJlJSIa9tnbfTIGbpBv-fM-rRM5hy",
-      "https://lh3.googleusercontent.com/d/1_uJucq7WtL678VkxgmfjcZ2E7HoTCSdx"
+      "https://images.unsplash.com/photo-1505693314120-0d443867891c?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1536353982823-1d02341b5cfc?auto=format&fit=crop&q=80&w=1200"
     ]
   },
   {
@@ -315,8 +278,8 @@ export const MOCK_PROJECTS: GalleryProject[] = [
     "name": "LOUNGE LIVING SPACES",
     "category": "Lounge",
     "images": [
-      "https://lh3.googleusercontent.com/d/11qHCW6X_AFHZBxAeLIDSX7Hl8ux1bdAT",
-      "https://lh3.googleusercontent.com/d/1c1knvadED__RZ62gWHDsPMUhmg8MsQ-x"
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=80&w=1200"
     ]
   },
   {
@@ -324,8 +287,8 @@ export const MOCK_PROJECTS: GalleryProject[] = [
     "name": "BOOKSHELF CUSTOM MILLWORK",
     "category": "BookShelf",
     "images": [
-      "https://lh3.googleusercontent.com/d/1IqZAddKZFq9702zOydepcrea_NNRJbyB",
-      "https://lh3.googleusercontent.com/d/1nQMBOEIzorARb_1jWlWg_0ePdnOdfKJP"
+      "https://images.unsplash.com/photo-1594901511217-109ecf00b77b?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&q=80&w=1200"
     ]
   },
   {
@@ -333,9 +296,8 @@ export const MOCK_PROJECTS: GalleryProject[] = [
     "name": "MIRROR WORK CREATIVE GLASS",
     "category": "Mirror Work",
     "images": [
-      "https://lh3.googleusercontent.com/d/1USu3QoRYpwJ2cBnxFJVk3UddTV72Bxoj",
-      "https://lh3.googleusercontent.com/d/1MDkTApeLJ1C9MSxoCuMQa6mRhRTO6PuC",
-      "https://lh3.googleusercontent.com/d/1c25G0ZcKgISdNpKKpkGo8l-ITDb7a3bp"
+      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1620626011761-9ea0184404ec?auto=format&fit=crop&q=80&w=1200"
     ]
   },
   {
@@ -343,9 +305,8 @@ export const MOCK_PROJECTS: GalleryProject[] = [
     "name": "STAIRS CUSTOM CARPENTRY",
     "category": "Stairs",
     "images": [
-      "https://lh3.googleusercontent.com/d/1gMSC1bvSjA1v6XtRybxYFI71Zfpdubmf",
-      "https://lh3.googleusercontent.com/d/1G3cHQszD9FS1sHrQ18TfguJF6L_TpX5E",
-      "https://lh3.googleusercontent.com/d/1G91IwtBO-fTWZ5ZPSzV-HUjQ9yS7Lnum"
+      "https://images.unsplash.com/photo-1507726420169-08dc80118357?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&q=80&w=1200"
     ]
   }
 ];

@@ -102,7 +102,7 @@ const ContactPage: React.FC<ContactPageProps> = ({ settings, onLeadSubmit }) => 
                     </div>
                     <div>
                       <h4 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">Email Us</h4>
-                      <p className="text-lg font-bold text-brand-black">{settings.email || 'info@divinespace.ca'}</p>
+                      <p className="text-lg font-bold text-brand-black">{settings.email || 'divinespaceconstructions@gmail.com'}</p>
                     </div>
                   </div>
 
