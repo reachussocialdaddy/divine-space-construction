@@ -140,7 +140,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
                   className="relative group overflow-hidden bg-gray-100 rounded-sm shadow-md aspect-video cursor-pointer"
                   onClick={() => openLightbox(idx)}
                 >
-                  <img src={img} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={`Project ${idx}`} />
+                  <img src={img} referrerPolicy="no-referrer" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt={`Project ${idx}`} />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center">
                     <span className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 font-bold uppercase tracking-widest text-[10px] bg-black/50 px-3 py-1 rounded-sm">View</span>
                   </div>
@@ -198,6 +198,7 @@ const ProjectsPage: React.FC<ProjectsPageProps> = ({ projects, pageContent }) =>
             >
               <img 
                 src={currentImages[lightboxIndex]} 
+                referrerPolicy="no-referrer"
                 alt={`Project detail ${lightboxIndex + 1}`} 
                 className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"
               />
