@@ -2159,8 +2159,8 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
                           e.stopPropagation();
                           const file = e.dataTransfer.files?.[0];
                           if (file) {
-                            if (file.type !== 'image/png' && !file.name.toLowerCase().endsWith('.png')) {
-                              alert('Only .png format is allowed for Client Logos.');
+                            if (file.type !== 'image/png' && file.type !== 'image/jpeg' && !file.name.toLowerCase().match(/\.(png|jpe?g)$/)) {
+                              alert('Only .png, .jpg, and .jpeg formats are allowed for Client Logos.');
                               return;
                             }
                             try {
@@ -2178,13 +2178,13 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
                       >
                         <input 
                           type="file" 
-                          accept=".png,image/png"
+                          accept=".png,.jpg,.jpeg,image/png,image/jpeg"
                           className="hidden" 
                           onChange={async (e) => {
                             const file = e.target.files?.[0];
                             if (file) {
-                              if (file.type !== 'image/png' && !file.name.toLowerCase().endsWith('.png')) {
-                                alert('Only .png format is allowed for Client Logos.');
+                              if (file.type !== 'image/png' && file.type !== 'image/jpeg' && !file.name.toLowerCase().match(/\.(png|jpe?g)$/)) {
+                                alert('Only .png, .jpg, and .jpeg formats are allowed for Client Logos.');
                                 return;
                               }
                               try {
@@ -2205,7 +2205,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
                         ) : (
                           <>
                             <Upload size={24} className="text-gray-400 mb-2" />
-                            <span className="text-[10px] font-bold uppercase text-gray-400 text-center">Drag & Drop or Click to Upload<br/>(.PNG Only)</span>
+                            <span className="text-[10px] font-bold uppercase text-gray-400 text-center">Drag & Drop or Click to Upload<br/>(.PNG, .JPG, .JPEG)</span>
                           </>
                         )}
                       </label>
