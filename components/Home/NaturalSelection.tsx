@@ -32,7 +32,7 @@ const NaturalSelection: React.FC = () => {
             <div className="absolute inset-0 bg-royal-blue/10 transform translate-x-4 translate-y-4 rounded-sm"></div>
             <div className="relative z-10 overflow-hidden rounded-sm shadow-2xl group">
               <img 
-                src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&q=80&w=1200" 
+                src="/designimage.avif" 
                 alt="People standing on island seeing 3D designs" 
                 className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
               />
