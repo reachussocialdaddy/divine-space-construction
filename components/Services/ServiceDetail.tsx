@@ -1,7 +1,8 @@
 
+import React, { useState, useEffect } from 'react';
 import { Service, View, GalleryProject } from '../../types';
 import { CheckCircle, ArrowRight, Home, Hammer, Layout, Bath, Layers, ChefHat, DoorOpen, Building2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ServiceDetailProps {
   serviceId: string;
@@ -27,6 +28,19 @@ const getIcon = (iconName?: string) => {
 
 const ServiceDetail: React.FC<ServiceDetailProps> = ({ serviceId, navigateTo, services, projects = [], onOpenQuote }) => {
   const service = services.find(s => s.id === serviceId);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (service && service.images && service.images.length > 1) {
+      interval = setInterval(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % service.images!.length);
+      }, 3000);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [service]);
 
   const serviceToProjectMap: Record<string, string> = {
     'home-renovation': 'LOUNGE LIVING SPACES',
@@ -136,7 +150,28 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ serviceId, navigateTo, se
       </section>
 
       {/* Service Gallery */}
-      {relatedProject && relatedProject.images && relatedProject.images.length > 0 && (
+      {service.images && service.images.length > 0 ? (
+        <section className="py-24 bg-gray-50 border-t border-gray-100">
+          <div className="max-w-7xl mx-auto px-4">
+            <h2 className="text-3xl font-bold text-royal-blue mb-2 text-center">Portfolio & Inspiration</h2>
+            <p className="text-gray-500 text-center mb-12 max-w-2xl mx-auto">Explore some of our recently completed {service.title.toLowerCase()} projects across the GTA.</p>
+            
+            <div className="relative w-full max-w-4xl mx-auto aspect-[16/9] rounded-sm overflow-hidden shadow-xl border border-gray-100">
+              <AnimatePresence mode="wait">
+                <motion.img 
+                  key={currentImageIndex}
+                  src={service.images[currentImageIndex]}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8 }}
+                  className="w-full h-full object-cover"
+                />
+              </AnimatePresence>
+            </div>
+          </div>
+        </section>
+      ) : relatedProject && relatedProject.images && relatedProject.images.length > 0 && (
         <section className="py-24 bg-gray-50 border-t border-gray-100">
           <div className="max-w-7xl mx-auto px-4">
             <h2 className="text-3xl font-bold text-royal-blue mb-2 text-center">Portfolio & Inspiration</h2>
