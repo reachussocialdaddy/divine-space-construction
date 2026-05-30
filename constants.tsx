@@ -111,7 +111,8 @@ export const SERVICES: Service[] = [
     description: 'Bespoke walk-in wardrobe storage organizers and vanity tables.',
     long_description: 'Create an organized sanctuary for your personal wardrobe. Our bespoke closets feature built-in LED track lightning, luxurious velvet drawer liners, premium shoe racks, tie and accessory pullouts, and full-length vanity mirror cabinets.',
     benefits: ['Full Closet Space Optimization', 'Built-In Warm LED Backlights', 'Soft-Close Accessory Drawers', 'Elegant Glass-Front Wardrobes', 'Premium Solid Hardwood Finishes'],
-    image_url: 'https://lh3.googleusercontent.com/d/1cugPyUHFt6kSutmejfR7Dcosuzc4Nhtz'
+    image_url: 'https://lh3.googleusercontent.com/d/1cugPyUHFt6kSutmejfR7Dcosuzc4Nhtz',
+    images: ['/custom closets (1).png', '/custom closets (2).png']
   },
 ];
 
