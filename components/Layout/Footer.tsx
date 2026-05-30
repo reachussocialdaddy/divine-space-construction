@@ -95,7 +95,12 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
         </div>
         
         <div className="flex flex-col md:flex-row justify-between items-center text-white/40 text-[10px] font-bold uppercase tracking-widest">
-          <p>© {new Date().getFullYear()} {settings.brand_name || 'Divine Space Construction Inc.'} All Rights Reserved.</p>
+          <p>
+            © {new Date().getFullYear()} {settings.brand_name || 'Divine Space Construction Inc.'} All Rights Reserved. | Designed by{' '}
+            <a href="https://socialdaddy.io" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline underline-offset-2">
+              Social Daddy
+            </a>
+          </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <button onClick={() => navigateTo('Privacy')} className="hover:text-white transition-colors">Privacy Policy</button>
             <button onClick={() => navigateTo('Terms')} className="hover:text-white transition-colors">Terms of Service</button>
