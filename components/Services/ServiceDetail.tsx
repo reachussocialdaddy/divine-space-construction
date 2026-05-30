@@ -156,18 +156,13 @@ const ServiceDetail: React.FC<ServiceDetailProps> = ({ serviceId, navigateTo, se
             <h2 className="text-3xl font-bold text-royal-blue mb-2 text-center">Portfolio & Inspiration</h2>
             <p className="text-gray-500 text-center mb-12 max-w-2xl mx-auto">Explore some of our recently completed {service.title.toLowerCase()} projects across the GTA.</p>
             
-            <div className="relative w-full max-w-4xl mx-auto aspect-[16/9] rounded-sm overflow-hidden shadow-xl border border-gray-100">
-              <AnimatePresence mode="wait">
-                <motion.img 
-                  key={currentImageIndex}
-                  src={service.images[currentImageIndex]}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.8 }}
-                  className="w-full h-full object-cover"
-                />
-              </AnimatePresence>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {service.images.map((img, idx) => (
+                <div key={idx} className="relative aspect-[4/3] rounded-sm overflow-hidden group shadow-sm border border-gray-100">
+                  <img src={img} alt={`${service.title} Project ${idx + 1}`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute inset-0 bg-royal-blue/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
