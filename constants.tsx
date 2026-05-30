@@ -101,7 +101,8 @@ export const SERVICES: Service[] = [
     description: 'Spa-inspired luxury bathrooms and premium walk-in showers.',
     long_description: 'Indulge in a boutique hotel bathroom experience inside your home. We custom build walk-in rain showers with linear floor drains, freestanding tubs, smart toilets, floating quartz vanities, custom tiling patterns, and heated floor systems.',
     benefits: ['Custom Frameless Glass Showers', 'Premium Heated Tile Floors', 'Elegant Floating Quartz Vanities', 'High-End Schluter Waterproofing', 'Atmospheric Dimming Controls'],
-    image_url: 'https://lh3.googleusercontent.com/d/1oKOnDlGBgIi8T9uMM8yzGkhqed6Ufr30'
+    image_url: 'https://lh3.googleusercontent.com/d/1oKOnDlGBgIi8T9uMM8yzGkhqed6Ufr30',
+    images: ['/washrooms (1).png', '/washrooms (2).png', '/washrooms (3).png', '/washrooms (4).png']
   },
   { 
     id: 'custom-closets', 
