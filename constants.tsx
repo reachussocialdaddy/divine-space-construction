@@ -72,7 +72,8 @@ export const SERVICES: Service[] = [
     description: 'Luxurious whole house updates and high-end architectural renovations.',
     long_description: 'Transform your existing property into a premium living experience. From master bedroom updates and open-concept structural walls to electrical, custom plaster moldings, and flooring installations, we manage the entire home renovation journey with flawless craft.',
     benefits: ['Full Permit & Architectural Designs', 'High-End Custom Carpentry', 'Sleek Flooring & Wall Coverings', 'Modern Smart Home Integrations', 'Strict Compliance to Ontario Building Codes'],
-    image_url: 'https://lh3.googleusercontent.com/d/11qHCW6X_AFHZBxAeLIDSX7Hl8ux1bdAT'
+    image_url: 'https://lh3.googleusercontent.com/d/11qHCW6X_AFHZBxAeLIDSX7Hl8ux1bdAT',
+    images: ['/homereno (1).png', '/homereno (2).png']
   },
   { 
     id: 'modular-kitchen', 
