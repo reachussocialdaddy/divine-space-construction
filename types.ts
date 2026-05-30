@@ -132,8 +132,8 @@ export interface ProductCategory {
 export type View = 'Home' | 'About' | 'Products' | 'Admin' | 'Service' | 'Process' | 'Projects' | 'Clients' | 'ProductDetail' | 'Contact' | 'Inverness' | 'Privacy' | 'Terms' | 'Checkout';
 
 export interface ChatMessage {
-  role: 'user' | 'model';
-  parts: { text: string }[];
+  role: 'user' | 'assistant';
+  content: string;
 }
 
 export interface CartItem {

@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { MessageSquare, X, Send, Bot, PhoneCall } from 'lucide-react';
-import { getGeminiResponse } from '../../services/geminiService.ts';
+import { getAIResponse } from '../../services/aiService.ts';
 import { Lead, ChatMessage } from '../../types.ts';
 
 const TypewriterText: React.FC<{ text: string; onUpdate?: () => void }> = ({ text, onUpdate }) => {
@@ -69,7 +69,7 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({ onLeadSubmit }) => {
   };
 
   const addBotMessage = (text: string) => {
-    setMessages(prev => [...prev, { role: 'model', parts: [{ text }] }]);
+    setMessages(prev => [...prev, { role: 'assistant', content: text }]);
   };
 
   const extractAndSubmitLead = (text: string) => {
@@ -120,14 +120,14 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({ onLeadSubmit }) => {
     const userText = inputValue.trim();
     extractAndSubmitLead(userText);
 
-    const newMessages: ChatMessage[] = [...messages, { role: 'user', parts: [{ text: userText }] }];
+    const newMessages: ChatMessage[] = [...messages, { role: 'user', content: userText }];
     setMessages(newMessages);
     setInputValue('');
 
     setIsTyping(true);
     try {
       console.log("Sending message to AI:", userText);
-      const response = await getGeminiResponse(userText, messages);
+      const response = await getAIResponse(userText, messages);
       console.log("AI Response received:", response);
       setIsTyping(false);
       addBotMessage(response);
@@ -260,10 +260,10 @@ const FloatingChatbot: React.FC<FloatingChatbotProps> = ({ onLeadSubmit }) => {
                           ? 'bg-royal-blue text-white rounded-tr-none shadow-lg' 
                           : 'bg-gray-50 text-gray-800 rounded-tl-none border border-gray-100'
                       }`}>
-                        {msg.role === 'model' ? (
-                          <TypewriterText text={msg.parts[0].text} onUpdate={scrollToBottom} />
+                        {msg.role === 'assistant' ? (
+                          <TypewriterText text={msg.content} onUpdate={scrollToBottom} />
                         ) : (
-                          msg.parts[0].text
+                          msg.content
                         )}
                       </div>
                     </div>

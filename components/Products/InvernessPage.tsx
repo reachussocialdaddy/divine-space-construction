@@ -3,9 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Upload, ChevronRight, Camera, RefreshCw, AlertCircle } from 'lucide-react';
 import { View, Product } from '../../types';
-import { getAIClient } from '../../services/geminiService.ts';
+import { getAIClient } from '../../services/aiService.ts';
 import { formatPrice } from './ProductPage';
-import { Type } from "@google/genai";
 import QUARTZ_DATA from '../../quartzData.json';
 
 const TAB_MATERIALS: Record<string, { id: string; name: string; image: string; description: string }[]> = {
@@ -185,87 +184,93 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
       Be extremely precise. Use percentages (0-100%) for coordinates. 
       Identify ALL visible components, not just the main ones.`;
 
-      const response = await ai.models.generateContent({
-        model,
-        contents: [
+      const response = await ai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
           {
-            parts: [
-              { text: prompt },
+            role: "user",
+            content: [
+              { type: "text", text: prompt },
               {
-                inlineData: {
-                  mimeType: "image/jpeg",
-                  data: base64Image.split(',')[1]
+                type: "image_url",
+                image_url: {
+                  url: base64Image
                 }
               }
             ]
           }
         ],
-        config: {
-          responseMimeType: "application/json",
-          responseSchema: {
-            type: Type.OBJECT,
-            properties: {
-              WALL: { type: Type.STRING, description: "CSS polygon() string for the wall area" },
-              FLOOR: { type: Type.STRING, description: "CSS polygon() string for the floor area" },
-              FURNITURE_SURFACES: {
-                type: Type.ARRAY,
-                description: "Array of individual furniture surface masks",
-                items: {
-                  type: Type.OBJECT,
-                  properties: {
-                    id: { type: Type.STRING, description: "Unique ID for the surface" },
-                    mask: { type: Type.STRING, description: "CSS polygon() string for this specific surface" },
-                    label: { type: Type.STRING, description: "Descriptive label for the surface" },
-                    transform: { type: Type.STRING, description: "Optional CSS transform for perspective" }
-                  },
-                  required: ["id", "mask", "label"]
+        response_format: {
+          type: "json_schema",
+          json_schema: {
+            name: "room_segmentation",
+            strict: true,
+            schema: {
+              type: "object",
+              properties: {
+                WALL: { type: "string" },
+                FLOOR: { type: "string" },
+                FURNITURE_SURFACES: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: { type: "string" },
+                      mask: { type: "string" },
+                      label: { type: "string" },
+                      transform: { type: "string" }
+                    },
+                    required: ["id", "mask", "label", "transform"],
+                    additionalProperties: false
+                  }
+                },
+                COUNTERTOPS: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: { type: "string" },
+                      mask: { type: "string" },
+                      label: { type: "string" }
+                    },
+                    required: ["id", "mask", "label"],
+                    additionalProperties: false
+                  }
+                },
+                APPLIANCES: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      id: { type: "string" },
+                      mask: { type: "string" },
+                      label: { type: "string" }
+                    },
+                    required: ["id", "mask", "label"],
+                    additionalProperties: false
+                  }
+                },
+                HOTSPOTS: {
+                  type: "array",
+                  items: {
+                    type: "object",
+                    properties: {
+                      x: { type: "number" },
+                      y: { type: "number" }
+                    },
+                    required: ["x", "y"],
+                    additionalProperties: false
+                  }
                 }
               },
-              COUNTERTOPS: {
-                type: Type.ARRAY,
-                description: "Array of countertop and island surface masks",
-                items: {
-                  type: Type.OBJECT,
-                  properties: {
-                    id: { type: Type.STRING },
-                    mask: { type: Type.STRING },
-                    label: { type: Type.STRING }
-                  },
-                  required: ["id", "mask", "label"]
-                }
-              },
-              APPLIANCES: {
-                type: Type.ARRAY,
-                description: "Array of appliance masks (gas stove, sink, etc.)",
-                items: {
-                  type: Type.OBJECT,
-                  properties: {
-                    id: { type: Type.STRING },
-                    mask: { type: Type.STRING },
-                    label: { type: Type.STRING }
-                  },
-                  required: ["id", "mask", "label"]
-                }
-              },
-              HOTSPOTS: {
-                type: Type.ARRAY,
-                description: "Coordinates of cabinet handles and knobs",
-                items: {
-                  type: Type.OBJECT,
-                  properties: {
-                    x: { type: Type.NUMBER, description: "X coordinate (0-100)" },
-                    y: { type: Type.NUMBER, description: "Y coordinate (0-100)" }
-                  },
-                  required: ["x", "y"]
-                }
-              }
-            },
-            required: ["WALL", "FLOOR", "FURNITURE_SURFACES", "COUNTERTOPS", "APPLIANCES"]
+              required: ["WALL", "FLOOR", "FURNITURE_SURFACES", "COUNTERTOPS", "APPLIANCES", "HOTSPOTS"],
+              additionalProperties: false
+            }
           }
         }
       });
 
-      const text = response.text;
+      const text = response.choices[0]?.message?.content;
       if (!text) throw new Error("Empty response from AI");
       const result = JSON.parse(text);
       if (result) {
