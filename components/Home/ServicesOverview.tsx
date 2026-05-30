@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SERVICES } from '../../constants.tsx';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { View, PageSectionContent, Service } from '../../types';
 
 interface ServicesOverviewProps {
@@ -14,6 +14,26 @@ interface ServicesOverviewProps {
 const ServicesOverview: React.FC<ServicesOverviewProps> = ({ navigateTo, content, services = [], onOpenQuote }) => {
   const displayServices = services.length > 0 ? services : SERVICES;
   const [activeTab, setActiveTab] = useState(0);
+  const [imageIndex, setImageIndex] = useState(0);
+
+  const activeService = displayServices[activeTab];
+  const hasMultipleImages = activeService.images && activeService.images.length > 0;
+
+  useEffect(() => {
+    setImageIndex(0);
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (!hasMultipleImages || !activeService.images) return;
+    
+    const interval = setInterval(() => {
+      setImageIndex((prev) => (prev + 1) % activeService.images!.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [hasMultipleImages, activeTab, activeService]);
+
+  const currentImage = hasMultipleImages ? activeService.images![imageIndex] : activeService.image_url;
 
   return (
     <section id="services-section" className="bg-brand-black py-20">
@@ -69,19 +89,22 @@ const ServicesOverview: React.FC<ServicesOverviewProps> = ({ navigateTo, content
           {/* Active Tab Content */}
           <div className="md:w-2/3 bg-white p-2 shadow-2xl relative group cursor-pointer h-[500px] flex flex-col" onClick={() => navigateTo?.('Service', displayServices[activeTab].id)}>
             <div className="relative flex-grow w-full overflow-hidden mb-4">
-              <motion.img 
-                key={activeTab}
-                initial={{ opacity: 0, scale: 1.05 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                src={displayServices[activeTab].image_url} 
-                alt={displayServices[activeTab].title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent pointer-events-none" />
-              <div className="absolute bottom-6 left-6 right-6">
-                 <h3 className="text-3xl font-bold text-white mb-2 drop-shadow-md">{displayServices[activeTab].title}</h3>
-                 <p className="text-gray-200 text-sm drop-shadow-md line-clamp-2 max-w-md">{displayServices[activeTab].description}</p>
+              <AnimatePresence>
+                <motion.img 
+                  key={currentImage}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8 }}
+                  src={currentImage} 
+                  alt={activeService.title}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </AnimatePresence>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent pointer-events-none z-10" />
+              <div className="absolute bottom-6 left-6 right-6 z-20">
+                 <h3 className="text-3xl font-bold text-white mb-2 drop-shadow-md">{activeService.title}</h3>
+                 <p className="text-gray-200 text-sm drop-shadow-md line-clamp-2 max-w-md">{activeService.description}</p>
               </div>
             </div>
             

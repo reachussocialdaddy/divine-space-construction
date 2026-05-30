@@ -110,6 +110,7 @@ export interface Service {
   long_description: string;
   benefits: string[];
   image_url: string;
+  images?: string[];
   created_at?: string;
 }
 

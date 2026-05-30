@@ -81,7 +81,8 @@ export const SERVICES: Service[] = [
     description: 'Sleek, Italian-inspired kitchen cabinet designs and islands.',
     long_description: 'We build custom, high-end modular kitchens that pair Italian aesthetic styling with daily functional utility. Incorporating premium wood finishes, high-gloss UV panels, and elegant quartz countertops, our kitchens are masterpieces engineered to last.',
     benefits: ['German Soft-Close Hinges & Tracks', 'Sleek Under-Cabinet Lighting', 'Innovative Corner Pullouts & Spices', 'Premium Heat-Resistant Counters', 'Custom Hidden Appliance Integration'],
-    image_url: 'https://lh3.googleusercontent.com/d/1Q4qf-NXTi9ea_nyvPk1Xwr75X7yneiyE'
+    image_url: 'https://lh3.googleusercontent.com/d/1Q4qf-NXTi9ea_nyvPk1Xwr75X7yneiyE',
+    images: ['/modularkitchen (1).png', '/modularkitchen (2).png', '/modularkitchen (3).png']
   },
   { 
     id: 'legal-basements', 
