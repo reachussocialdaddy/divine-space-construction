@@ -91,7 +91,8 @@ export const SERVICES: Service[] = [
     description: 'Compliant legal secondary suites finished with city-registered permits.',
     long_description: 'Turn your basement space into a beautifully finished, legal, income-generating unit. Our permit-compliant basements cover complete municipal zoning approvals, egress window systems, fire-rated insulation separations, separate kitchen lines, and HVAC balancing.',
     benefits: ['100% City Permit Guarantee', 'Complete Fire-Rated Drywalls', 'Dedicated Separate Entrances', 'HVAC Integration & Heating Comfort', 'Plumbing & Laundry Solutions'],
-    image_url: 'https://lh3.googleusercontent.com/d/1qs63Z26UDsYxsVjylAwXuEgjhn1WOift'
+    image_url: 'https://lh3.googleusercontent.com/d/1qs63Z26UDsYxsVjylAwXuEgjhn1WOift',
+    images: ['/legalbse (1).png', '/legalbse (2).png', '/legalbse (3).png']
   },
   { 
     id: 'luxury-washrooms', 
