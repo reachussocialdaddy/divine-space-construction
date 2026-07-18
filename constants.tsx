@@ -62,29 +62,70 @@ export const Logo = ({ className = "w-12 h-12", colorMode = 'default' }: { class
   );
 };
 
-export const FullLogo = ({ className = "", colorMode = 'default' }: { className?: string; colorMode?: 'default' | 'white' }) => {
+export const FullLogo = ({ 
+  className = "", 
+  colorMode = 'default', 
+  size = 'default' 
+}: { 
+  className?: string; 
+  colorMode?: 'default' | 'white' | 'footer';
+  size?: 'default' | 'small';
+}) => {
   const isWhite = colorMode === 'white';
+  const isFooter = colorMode === 'footer';
+  const isSmall = size === 'small';
+  
+  const text1Color = isWhite || isFooter ? 'text-white' : 'text-brand-black';
+  const text2Color = isWhite ? 'text-white' : isFooter ? 'text-brand-black' : 'text-brand-red';
+  const text3Color = isWhite || isFooter ? 'text-white' : 'text-brand-black';
+  
+  // Icon dimensions
+  const iconClass = isSmall 
+    ? "w-8 h-8 lg:w-10 lg:h-10" 
+    : "w-12 h-12 sm:w-16 sm:h-16";
+    
+  // Text sizes
+  const text1Class = isSmall
+    ? "text-[7px] lg:text-[8px]"
+    : "text-[9px] sm:text-[11px]";
+    
+  const text2Class = isSmall
+    ? "text-base lg:text-xl"
+    : "text-2xl sm:text-3xl";
+    
+  const text3Class = isSmall
+    ? "text-[8px] lg:text-[9px]"
+    : "text-[11px] sm:text-[13px]";
+    
+  const tagClass = isSmall
+    ? "text-[6px] lg:text-[7px]"
+    : "text-[8px] sm:text-[9px]";
+    
+  const lineWidthClass = isSmall
+    ? "w-2 lg:w-3"
+    : "w-3 sm:w-6";
+  
   return (
-    <div className={`flex items-center space-x-2 sm:space-x-4 ${className}`}>
-      <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
+    <div className={`flex items-center space-x-2 lg:space-x-3 ${className}`}>
+      <div className={`${iconClass} flex-shrink-0`}>
         <Logo className="w-full h-full" colorMode={colorMode} />
       </div>
       <div className="flex flex-col justify-center text-left leading-none">
-        <span className={`text-[9px] sm:text-[11px] font-bold ${isWhite ? 'text-white' : 'text-brand-black'} uppercase tracking-widest leading-none`}>
+        <span className={`font-bold ${text1Class} ${text1Color} uppercase tracking-widest leading-none`}>
           Divine Space Construction Inc.
         </span>
-        <span className={`text-2xl sm:text-3xl font-bold ${isWhite ? 'text-white' : 'text-brand-red'} uppercase tracking-tight leading-none mt-1`} style={{ fontFamily: 'Georgia, serif' }}>
+        <span className={`font-bold ${text2Class} ${text2Color} uppercase tracking-tight leading-none mt-0.5 lg:mt-1`} style={{ fontFamily: 'Georgia, serif' }}>
           DIVINE SPACE
         </span>
-        <span className={`text-[11px] sm:text-[13px] font-bold ${isWhite ? 'text-white' : 'text-brand-black'} uppercase tracking-widest leading-none mt-1.5`} style={{ fontFamily: 'Georgia, serif' }}>
+        <span className={`font-bold ${text3Class} ${text3Color} uppercase tracking-widest leading-none mt-1 lg:mt-1.5`} style={{ fontFamily: 'Georgia, serif' }}>
           KITCHENS & RENOVATIONS
         </span>
-        <div className="flex items-center mt-1.5 justify-center sm:justify-start">
-          <div className={`w-3 sm:w-6 h-[1px] ${isWhite ? 'bg-white' : 'bg-brand-red'}`}></div>
-          <span className={`text-[8px] sm:text-[9px] font-bold ${isWhite ? 'text-white' : 'text-brand-red'} uppercase tracking-[0.2em] mx-2 leading-none`}>
+        <div className="flex items-center mt-1 lg:mt-1.5 justify-center sm:justify-start">
+          <div className={`${lineWidthClass} h-[1px] ${isWhite || isFooter ? 'bg-white' : 'bg-brand-red'}`}></div>
+          <span className={`font-bold ${tagClass} ${isWhite || isFooter ? 'text-white' : 'text-brand-red'} uppercase tracking-[0.2em] mx-1.5 lg:mx-2 leading-none`}>
             WE BUILD DREAMS
           </span>
-          <div className={`w-3 sm:w-6 h-[1px] ${isWhite ? 'bg-white' : 'bg-brand-red'}`}></div>
+          <div className={`${lineWidthClass} h-[1px] ${isWhite || isFooter ? 'bg-white' : 'bg-brand-red'}`}></div>
         </div>
       </div>
     </div>

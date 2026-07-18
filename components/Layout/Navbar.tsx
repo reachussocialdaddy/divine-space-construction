@@ -57,7 +57,7 @@ const Navbar: React.FC<NavbarProps> = ({
                 )}
               </div>
               {!settings.logo_url && (
-                <FullLogo />
+                <FullLogo size="small" />
               )}
             </button>
           </div>
