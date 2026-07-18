@@ -48,59 +48,43 @@ export const COLORS = {
   white: '#FFFFFF',
 };
 
-export const Logo = ({ className = "w-12 h-12", colorMode = 'default' }: { className?: string; colorMode?: 'default' | 'white' | 'footer' }) => {
-  let fillRed = '#E31E24';
-  let fillDark = '#111111';
-  
-  if (colorMode === 'white') {
-    fillRed = '#FFFFFF';
-    fillDark = '#FFFFFF';
-  } else if (colorMode === 'footer') {
-    fillRed = '#FFFFFF'; // Red components changed to pure white
-    fillDark = '#111111'; // Black components kept solid black
-  }
-  
+export const Logo = ({ className = "w-12 h-12", colorMode = 'default' }: { className?: string; colorMode?: 'default' | 'white' }) => {
+  const fillDark = colorMode === 'white' ? '#FFFFFF' : '#111111';
   return (
     <svg viewBox="0 0 100 100" className={className} xmlns="http://www.w3.org/2000/svg">
-      <path d="M50 5 L11 27.5 L25 51 L50 36 Z" fill={fillRed} />
+      <path d="M50 5 L11 27.5 L25 51 L50 36 Z" fill="#E31E24" />
       <path d="M50 5 L89 27.5 L89 51 L50 36 Z" fill={fillDark} />
       <path d="M50 95 L11 72.5 L11 49 L50 64 Z" fill={fillDark} />
-      <path d="M50 95 L89 72.5 L75 49 L50 64 Z" fill={fillRed} />
+      <path d="M50 95 L89 72.5 L75 49 L50 64 Z" fill="#E31E24" />
       <path d="M11 27.5 L11 72.5 L25 51 L25 40 Z" fill={fillDark} />
       <path d="M89 27.5 L89 72.5 L75 49 L75 40 Z" fill={fillDark} />
     </svg>
   );
 };
 
-export const FullLogo = ({ className = "", colorMode = 'default' }: { className?: string; colorMode?: 'default' | 'white' | 'footer' }) => {
+export const FullLogo = ({ className = "", colorMode = 'default' }: { className?: string; colorMode?: 'default' | 'white' }) => {
   const isWhite = colorMode === 'white';
-  const isFooter = colorMode === 'footer';
-  
-  const text1Color = isWhite || isFooter ? 'text-white' : 'text-brand-black';
-  const text2Color = isWhite ? 'text-white' : isFooter ? 'text-brand-black' : 'text-brand-red';
-  const text3Color = isWhite || isFooter ? 'text-white' : 'text-brand-black';
-  
   return (
     <div className={`flex items-center space-x-2 sm:space-x-4 ${className}`}>
       <div className="w-12 h-12 sm:w-16 sm:h-16 flex-shrink-0">
         <Logo className="w-full h-full" colorMode={colorMode} />
       </div>
       <div className="flex flex-col justify-center text-left leading-none">
-        <span className={`text-[9px] sm:text-[11px] font-bold ${text1Color} uppercase tracking-widest leading-none`}>
+        <span className={`text-[9px] sm:text-[11px] font-bold ${isWhite ? 'text-white' : 'text-brand-black'} uppercase tracking-widest leading-none`}>
           Divine Space Construction Inc.
         </span>
-        <span className={`text-2xl sm:text-3xl font-bold ${text2Color} uppercase tracking-tight leading-none mt-1`} style={{ fontFamily: 'Georgia, serif' }}>
+        <span className={`text-2xl sm:text-3xl font-bold ${isWhite ? 'text-white' : 'text-brand-red'} uppercase tracking-tight leading-none mt-1`} style={{ fontFamily: 'Georgia, serif' }}>
           DIVINE SPACE
         </span>
-        <span className={`text-[11px] sm:text-[13px] font-bold ${text3Color} uppercase tracking-widest leading-none mt-1.5`} style={{ fontFamily: 'Georgia, serif' }}>
+        <span className={`text-[11px] sm:text-[13px] font-bold ${isWhite ? 'text-white' : 'text-brand-black'} uppercase tracking-widest leading-none mt-1.5`} style={{ fontFamily: 'Georgia, serif' }}>
           KITCHENS & RENOVATIONS
         </span>
         <div className="flex items-center mt-1.5 justify-center sm:justify-start">
-          <div className={`w-3 sm:w-6 h-[1px] ${isWhite || isFooter ? 'bg-white' : 'bg-brand-red'}`}></div>
-          <span className={`text-[8px] sm:text-[9px] font-bold ${isWhite || isFooter ? 'text-white' : 'text-brand-red'} uppercase tracking-[0.2em] mx-2 leading-none`}>
+          <div className={`w-3 sm:w-6 h-[1px] ${isWhite ? 'bg-white' : 'bg-brand-red'}`}></div>
+          <span className={`text-[8px] sm:text-[9px] font-bold ${isWhite ? 'text-white' : 'text-brand-red'} uppercase tracking-[0.2em] mx-2 leading-none`}>
             WE BUILD DREAMS
           </span>
-          <div className={`w-3 sm:w-6 h-[1px] ${isWhite || isFooter ? 'bg-white' : 'bg-brand-red'}`}></div>
+          <div className={`w-3 sm:w-6 h-[1px] ${isWhite ? 'bg-white' : 'bg-brand-red'}`}></div>
         </div>
       </div>
     </div>
