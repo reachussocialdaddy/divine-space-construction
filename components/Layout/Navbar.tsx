@@ -51,7 +51,7 @@ const Navbar: React.FC<NavbarProps> = ({
               onClick={() => navigateTo('Home')}
               className="flex items-center space-x-2 lg:space-x-4 group"
             >
-              <div className={`${settings.logo_url ? 'h-10 lg:h-12 xl:h-14 w-auto' : ''} flex items-center justify-center transition-transform group-hover:scale-110`}>
+              <div className={`${settings.logo_url ? 'h-8 lg:h-10 xl:h-12 w-auto' : ''} flex items-center justify-center transition-transform group-hover:scale-110`}>
                 {settings.logo_url && (
                   <img src={settings.logo_url} alt={settings.brand_name || "Logo"} className="h-full w-auto object-contain" />
                 )}
