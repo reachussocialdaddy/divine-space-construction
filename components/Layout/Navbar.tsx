@@ -62,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          <div className="hidden lg:flex items-center space-x-2 xl:space-x-5">
+          <div className="hidden lg:flex items-center justify-center flex-grow space-x-2 xl:space-x-4 mx-4">
             <button
               onClick={() => navigateTo('Home')}
               className={`text-[11px] xl:text-[13px] font-bold tracking-wide transition-all whitespace-nowrap ${
@@ -264,11 +264,14 @@ const Navbar: React.FC<NavbarProps> = ({
                 </div>
               )}
             </div>
+          </div>
 
+          {/* Right Actions: Cart & Quote button */}
+          <div className="hidden lg:flex items-center space-x-4 ml-auto">
             {onOpenCart && (
               <button 
                 onClick={onOpenCart}
-                className="relative p-2.5 text-gray-600 hover:text-royal-blue transition-colors flex items-center justify-center mr-2 group"
+                className="relative p-2.5 text-gray-600 hover:text-royal-blue transition-colors flex items-center justify-center group"
                 aria-label="View Cart"
               >
                 <ShoppingBag size={20} className="group-hover:scale-110 transition-transform" />
