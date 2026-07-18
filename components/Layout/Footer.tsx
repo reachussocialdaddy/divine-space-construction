@@ -18,15 +18,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 pb-16 border-b border-white/10">
           <div className="space-y-6">
             <div className="flex items-center space-x-3 mb-2">
-              {(settings.footer_logo_url || settings.logo_url) ? (
-                <div className="bg-white p-3 rounded-sm shadow-md inline-flex">
-                  <img src={settings.footer_logo_url || settings.logo_url} alt={settings.brand_name || "Logo"} className="h-12 md:h-16 w-auto object-contain" />
-                </div>
-              ) : (
-                <>
-                  <FullLogo colorMode="white" />
-                </>
-              )}
+              <img src="/footer_logo.png" alt={settings.brand_name || "Divine Space Construction"} className="h-14 md:h-20 w-auto object-contain" />
             </div>
             <p className="text-white/60 text-sm leading-relaxed max-w-xs">
               {settings.footer_description || 'Luxury construction firm specialized in transforming living spaces across Ontario. Professional, reliable, and high-end results.'}
