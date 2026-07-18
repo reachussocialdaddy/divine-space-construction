@@ -45,8 +45,8 @@ const Navbar: React.FC<NavbarProps> = ({
   return (
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20 items-center">
-          <div className="flex-shrink-0 mr-2 lg:mr-6 xl:mr-12">
+        <div className="flex justify-between h-20 items-center relative">
+          <div className="flex-shrink-0 z-10">
             <button 
               onClick={() => navigateTo('Home')}
               className="flex items-center space-x-2 lg:space-x-4 group"
@@ -62,7 +62,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          <div className="hidden lg:flex items-center justify-center flex-grow space-x-2 xl:space-x-4 mx-4">
+          <div className="hidden lg:flex absolute left-1/2 transform -translate-x-1/2 items-center justify-center space-x-1.5 xl:space-x-3.5 z-0">
             <button
               onClick={() => navigateTo('Home')}
               className={`text-[11px] xl:text-[13px] font-bold tracking-wide transition-all whitespace-nowrap ${
@@ -267,7 +267,7 @@ const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Right Actions: Cart & Quote button */}
-          <div className="hidden lg:flex items-center space-x-4 ml-auto">
+          <div className="hidden lg:flex items-center space-x-4 ml-auto z-10">
             {onOpenCart && (
               <button 
                 onClick={onOpenCart}
