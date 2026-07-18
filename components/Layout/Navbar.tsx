@@ -46,12 +46,12 @@ const Navbar: React.FC<NavbarProps> = ({
     <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 items-center">
-          <div className="flex-shrink-0 mr-4 md:mr-8 lg:mr-12">
+          <div className="flex-shrink-0 mr-2 lg:mr-6 xl:mr-12">
             <button 
               onClick={() => navigateTo('Home')}
-              className="flex items-center space-x-2 md:space-x-4 group"
+              className="flex items-center space-x-2 lg:space-x-4 group"
             >
-              <div className={`${settings.logo_url ? 'h-10 md:h-14 w-auto' : ''} flex items-center justify-center transition-transform group-hover:scale-110`}>
+              <div className={`${settings.logo_url ? 'h-10 lg:h-12 xl:h-14 w-auto' : ''} flex items-center justify-center transition-transform group-hover:scale-110`}>
                 {settings.logo_url && (
                   <img src={settings.logo_url} alt={settings.brand_name || "Logo"} className="h-full w-auto object-contain" />
                 )}
@@ -62,10 +62,10 @@ const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
 
-          <div className="hidden md:flex items-center space-x-4 lg:space-x-7">
+          <div className="hidden lg:flex items-center space-x-2 xl:space-x-5">
             <button
               onClick={() => navigateTo('Home')}
-              className={`text-[13px] font-bold tracking-wide transition-all whitespace-nowrap ${
+              className={`text-[11px] xl:text-[13px] font-bold tracking-wide transition-all whitespace-nowrap ${
                 currentView === 'Home' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
               }`}
             >
@@ -73,7 +73,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </button>
             <button
               onClick={() => navigateTo('Process')}
-              className={`text-[13px] font-bold tracking-wide transition-all whitespace-nowrap ${
+              className={`text-[11px] xl:text-[13px] font-bold tracking-wide transition-all whitespace-nowrap ${
                 currentView === 'Process' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
               }`}
             >
@@ -87,7 +87,7 @@ const Navbar: React.FC<NavbarProps> = ({
               onMouseLeave={() => setIsServicesOpen(false)}
             >
               <button
-                className={`text-[13px] font-bold tracking-wide transition-all flex items-center whitespace-nowrap ${
+                className={`text-[11px] xl:text-[13px] font-bold tracking-wide transition-all flex items-center whitespace-nowrap ${
                   currentView === 'Service' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
                 }`}
               >
@@ -117,7 +117,7 @@ const Navbar: React.FC<NavbarProps> = ({
             >
               <button
                 onClick={() => navigateTo('Products')}
-                className={`text-[13px] font-bold tracking-wide transition-all flex items-center whitespace-nowrap ${
+                className={`text-[11px] xl:text-[13px] font-bold tracking-wide transition-all flex items-center whitespace-nowrap ${
                   currentView === 'Products' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
                 }`}
               >
@@ -166,7 +166,7 @@ const Navbar: React.FC<NavbarProps> = ({
             >
               <button
                 onClick={() => navigateTo('Inverness')}
-                className={`text-[13px] font-bold tracking-wide transition-all flex items-center whitespace-nowrap ${
+                className={`text-[11px] xl:text-[13px] font-bold tracking-wide transition-all flex items-center whitespace-nowrap ${
                   currentView === 'Inverness' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
                 }`}
               >
@@ -211,14 +211,14 @@ const Navbar: React.FC<NavbarProps> = ({
 
             <button
               onClick={() => navigateTo('Products', 'Front Elevation')}
-              className="text-[13px] font-bold tracking-wide transition-all whitespace-nowrap text-gray-600 hover:text-royal-blue"
+              className="text-[11px] xl:text-[13px] font-bold tracking-wide transition-all whitespace-nowrap text-gray-600 hover:text-royal-blue"
             >
               Front Elevation
             </button>
 
             <button
               onClick={() => navigateTo('About')}
-              className={`text-[13px] font-bold tracking-wide transition-all whitespace-nowrap ${
+              className={`text-[11px] xl:text-[13px] font-bold tracking-wide transition-all whitespace-nowrap ${
                 currentView === 'About' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
               }`}
             >
@@ -226,7 +226,7 @@ const Navbar: React.FC<NavbarProps> = ({
             </button>
             <button
               onClick={() => navigateTo('Contact')}
-              className={`text-[13px] font-bold tracking-wide transition-all whitespace-nowrap ${
+              className={`text-[11px] xl:text-[13px] font-bold tracking-wide transition-all whitespace-nowrap ${
                 currentView === 'Contact' ? 'text-royal-blue border-b-2 border-royal-blue pb-1' : 'text-gray-600 hover:text-royal-blue'
               }`}
             >
@@ -240,7 +240,7 @@ const Navbar: React.FC<NavbarProps> = ({
               onMouseLeave={() => setIsPortfolioOpen(false)}
             >
               <button
-                className={`text-[13px] font-bold tracking-wide transition-all flex items-center whitespace-nowrap ${
+                className={`text-[11px] xl:text-[13px] font-bold tracking-wide transition-all flex items-center whitespace-nowrap ${
                   (currentView === 'Projects' || currentView === 'Clients') ? 'text-royal-blue' : 'text-gray-600 hover:text-royal-blue'
                 }`}
               >
@@ -282,13 +282,13 @@ const Navbar: React.FC<NavbarProps> = ({
 
             <button 
               onClick={onOpenQuote}
-              className="bg-royal-blue text-white px-5 py-2.5 rounded-sm text-[13px] font-bold shadow-lg hover:shadow-royal-blue/30 transition-all flex items-center whitespace-nowrap flex-shrink-0"
+              className="bg-royal-blue text-white px-3 py-2 xl:px-5 xl:py-2.5 rounded-sm text-[11px] xl:text-[13px] font-bold shadow-lg hover:shadow-royal-blue/30 transition-all flex items-center whitespace-nowrap flex-shrink-0"
             >
               Get Free Quote <ChevronRight size={16} className="ml-1" />
             </button>
           </div>
 
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="lg:hidden flex items-center space-x-2">
             {onOpenCart && (
               <button 
                 onClick={onOpenCart}
@@ -311,7 +311,7 @@ const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {isOpen && (
-        <div className="md:hidden bg-white border-b border-gray-100 py-6 px-4 space-y-6 max-h-[80vh] overflow-y-auto">
+        <div className="lg:hidden bg-white border-b border-gray-100 py-6 px-4 space-y-6 max-h-[80vh] overflow-y-auto">
           <div className="grid grid-cols-2 gap-4">
             <button onClick={() => { navigateTo('Home'); setIsOpen(false); }} className={`flex flex-col items-center justify-center p-4 rounded-sm border ${currentView === 'Home' ? 'border-royal-blue bg-red-50 text-royal-blue' : 'border-gray-100 text-gray-700'}`}>
               <span className="text-xs font-bold uppercase tracking-widest">Home</span>
