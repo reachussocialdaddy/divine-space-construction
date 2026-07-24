@@ -18,7 +18,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 pb-16 border-b border-white/10">
           <div className="space-y-6">
             <div className="flex items-center space-x-3 mb-2">
-              <img src="/footer_logo.png" alt={settings.brand_name || "Divine Space Construction"} className="h-14 md:h-20 w-auto object-contain" />
+              <FullLogo colorMode="footer" />
             </div>
             <p className="text-white/60 text-sm leading-relaxed max-w-xs">
               {settings.footer_description || 'Luxury construction firm specialized in transforming living spaces across Ontario. Professional, reliable, and high-end results.'}

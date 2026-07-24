@@ -76,7 +76,7 @@ export const FullLogo = ({
   const isSmall = size === 'small';
   
   const text1Color = isWhite || isFooter ? 'text-white' : 'text-brand-black';
-  const text2Color = isWhite ? 'text-white' : isFooter ? 'text-brand-black' : 'text-brand-red';
+  const text2Color = isWhite || isFooter ? 'text-white' : 'text-brand-red';
   const text3Color = isWhite || isFooter ? 'text-white' : 'text-brand-black';
   
   // Icon dimensions
