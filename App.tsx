@@ -316,7 +316,7 @@ const App: React.FC = () => {
         const settingsObj: any = {};
         settingsData.forEach(s => settingsObj[s.key] = s.value);
         // Force the correct email regardless of what's in the database
-        settingsObj.email = 'divinespaceconstructions@gmail.com';
+        settingsObj.email = 'info@divinespaceconstruction.com';
         setSettings(prev => ({ ...prev, ...settingsObj }));
       }
     } catch (error) {
