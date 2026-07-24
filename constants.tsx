@@ -48,14 +48,24 @@ export const COLORS = {
   white: '#FFFFFF',
 };
 
-export const Logo = ({ className = "w-12 h-12", colorMode = 'default' }: { className?: string; colorMode?: 'default' | 'white' }) => {
-  const fillDark = colorMode === 'white' ? '#FFFFFF' : '#111111';
+export const Logo = ({ className = "w-12 h-12", colorMode = 'default' }: { className?: string; colorMode?: 'default' | 'white' | 'footer' }) => {
+  let fillRed = '#E31E24';
+  let fillDark = '#111111';
+  
+  if (colorMode === 'white') {
+    fillRed = '#FFFFFF';
+    fillDark = '#FFFFFF';
+  } else if (colorMode === 'footer') {
+    fillRed = '#FFFFFF'; // Red components changed to pure white
+    fillDark = '#111111'; // Black components kept solid black
+  }
+  
   return (
     <svg viewBox="0 0 100 100" className={className} xmlns="http://www.w3.org/2000/svg">
-      <path d="M50 5 L11 27.5 L25 51 L50 36 Z" fill="#E31E24" />
+      <path d="M50 5 L11 27.5 L25 51 L50 36 Z" fill={fillRed} />
       <path d="M50 5 L89 27.5 L89 51 L50 36 Z" fill={fillDark} />
       <path d="M50 95 L11 72.5 L11 49 L50 64 Z" fill={fillDark} />
-      <path d="M50 95 L89 72.5 L75 49 L50 64 Z" fill="#E31E24" />
+      <path d="M50 95 L89 72.5 L75 49 L50 64 Z" fill={fillRed} />
       <path d="M11 27.5 L11 72.5 L25 51 L25 40 Z" fill={fillDark} />
       <path d="M89 27.5 L89 72.5 L75 49 L75 40 Z" fill={fillDark} />
     </svg>
@@ -75,9 +85,9 @@ export const FullLogo = ({
   const isFooter = colorMode === 'footer';
   const isSmall = size === 'small';
   
-  const text1Color = isWhite ? 'text-white' : 'text-brand-black';
+  const text1Color = isWhite || isFooter ? 'text-white' : 'text-brand-black';
   const text2Color = isWhite || isFooter ? 'text-white' : 'text-brand-red';
-  const text3Color = isWhite ? 'text-white' : 'text-brand-black';
+  const text3Color = isWhite || isFooter ? 'text-white' : 'text-brand-black';
   
   // Icon dimensions
   const iconClass = isSmall 
