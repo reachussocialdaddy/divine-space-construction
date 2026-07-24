@@ -15,8 +15,8 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
   return (
     <footer className="bg-royal-blue text-white pt-20 pb-10">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 pb-16 border-b border-white/10">
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16 pb-16 border-b border-white/10">
+          <div className="space-y-6 md:col-span-6 lg:col-span-4">
             <div className="flex items-center space-x-3 mb-2">
               <FullLogo colorMode="footer" />
             </div>
@@ -38,7 +38,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
             </div>
           </div>
 
-          <div>
+          <div className="md:col-span-6 lg:col-span-2">
             <h4 className="text-lg font-bold mb-6">Quick Links</h4>
             <ul className="space-y-4 text-white/60 text-sm">
               <li><button onClick={() => navigateTo('Home')} className="hover:text-white transition-colors text-left font-bold uppercase tracking-widest text-[10px]">Home</button></li>
@@ -51,7 +51,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
             </ul>
           </div>
 
-          <div>
+          <div className="md:col-span-6 lg:col-span-3">
             <h4 className="text-lg font-bold mb-6">Services</h4>
             <ul className="space-y-4 text-white/60 text-sm">
               {SERVICES.map((service) => (
@@ -67,7 +67,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo, settings, services }) => {
             </ul>
           </div>
 
-          <div>
+          <div className="md:col-span-6 lg:col-span-3">
             <h4 className="text-lg font-bold mb-6">Contact Us</h4>
             <ul className="space-y-4 text-white/60 text-sm">
               <li className="flex items-center space-x-3">

@@ -121,18 +121,18 @@ export const FullLogo = ({
         <Logo className="w-full h-full" colorMode={colorMode} />
       </div>
       <div className="flex flex-col justify-center text-left leading-none">
-        <span className={`font-bold ${text1Class} ${text1Color} uppercase tracking-widest leading-none`}>
+        <span className={`font-bold ${text1Class} ${text1Color} uppercase tracking-widest leading-none whitespace-nowrap`}>
           Divine Space Construction Inc.
         </span>
-        <span className={`font-bold ${text2Class} ${text2Color} uppercase tracking-tight leading-none mt-0.5 lg:mt-1`} style={{ fontFamily: 'Georgia, serif' }}>
+        <span className={`font-bold ${text2Class} ${text2Color} uppercase tracking-tight leading-none mt-0.5 lg:mt-1 whitespace-nowrap`} style={{ fontFamily: 'Georgia, serif' }}>
           DIVINE SPACE
         </span>
-        <span className={`font-bold ${text3Class} ${text3Color} uppercase tracking-widest leading-none mt-1 lg:mt-1.5`} style={{ fontFamily: 'Georgia, serif' }}>
+        <span className={`font-bold ${text3Class} ${text3Color} uppercase tracking-widest leading-none mt-1 lg:mt-1.5 whitespace-nowrap`} style={{ fontFamily: 'Georgia, serif' }}>
           KITCHENS & RENOVATIONS
         </span>
-        <div className="flex items-center mt-1 lg:mt-1.5 justify-center sm:justify-start">
+        <div className="flex items-center mt-1 lg:mt-1.5 justify-center sm:justify-start whitespace-nowrap">
           <div className={`${lineWidthClass} h-[1px] ${isWhite || isFooter ? 'bg-white' : 'bg-brand-red'}`}></div>
-          <span className={`font-bold ${tagClass} ${isWhite || isFooter ? 'text-white' : 'text-brand-red'} uppercase tracking-[0.2em] mx-1.5 lg:mx-2 leading-none`}>
+          <span className={`font-bold ${tagClass} ${isWhite || isFooter ? 'text-white' : 'text-brand-red'} uppercase tracking-[0.2em] mx-1.5 lg:mx-2 leading-none whitespace-nowrap`}>
             WE BUILD DREAMS
           </span>
           <div className={`${lineWidthClass} h-[1px] ${isWhite || isFooter ? 'bg-white' : 'bg-brand-red'}`}></div>
