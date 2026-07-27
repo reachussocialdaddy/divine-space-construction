@@ -72,6 +72,28 @@ const TAB_MATERIALS: Record<string, { id: string; name: string; image: string; d
   ]
 };
 
+const DEMO_ROOM = {
+  image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200',
+  layerMasks: {
+    WALL: 'polygon(0% 0%, 100% 0%, 100% 45%, 0% 45%)',
+    FLOOR: 'polygon(0% 80%, 100% 80%, 100% 100%, 0% 100%)',
+    COUNTERTOPS: [
+      { id: 'demo-countertop-1', mask: 'polygon(0% 70%, 100% 70%, 100% 80%, 0% 80%)', label: 'Main Quartz Countertop' }
+    ],
+    FURNITURE_SURFACES: [
+      { id: 'demo-cabinet-left', mask: 'polygon(10% 45%, 45% 45%, 45% 70%, 10% 70%)', label: 'Left Cabinetry', transform: 'none' },
+      { id: 'demo-cabinet-right', mask: 'polygon(55% 45%, 90% 45%, 90% 70%, 55% 70%)', label: 'Right Cabinetry', transform: 'none' }
+    ],
+    APPLIANCES: [
+      { id: 'demo-stove', mask: 'polygon(45% 55%, 55% 55%, 55% 70%, 45% 70%)', label: 'Stove Occlusion' }
+    ]
+  },
+  hotspots: [
+    { x: 42, y: 58 },
+    { x: 58, y: 58 }
+  ]
+};
+
 interface ProductDetailProps {
   productId: string;
   products: Product[];
@@ -131,6 +153,17 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
   const [aiError, setAiError] = useState<string | null>(null);
   const [isZoomed, setIsZoomed] = useState(false);
   const [isAIAnalyzing, setIsAIAnalyzing] = useState(false);
+
+  const loadDemoRoom = () => {
+    setUploadedImage(DEMO_ROOM.image);
+    setLayerMasks(DEMO_ROOM.layerMasks);
+    setHotspots(DEMO_ROOM.hotspots);
+    setAiError(null);
+    setIsScanning(false);
+    setIsDesignerActive(true);
+    setIsRescanning(false);
+    setIsPenTracing(false);
+  };
 
   const designerProducts = products.filter(p => p.category === 'Quartz');
   const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1621905252507-b354bcadcabc?auto=format&fit=crop&q=60&w=800';
@@ -1136,22 +1169,30 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
                                     </p>
                                   </div>
 
-                                  <div className="flex flex-col sm:flex-row gap-4 w-full pt-4">
+                                  <div className="flex flex-col gap-3 w-full pt-4">
                                     <button 
-                                      onClick={() => uploadedImage && analyzeImageWithAI(uploadedImage)}
-                                      className="flex-1 py-4 bg-royal-blue text-white font-bold text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all flex items-center justify-center shadow-lg"
+                                      onClick={loadDemoRoom}
+                                      className="w-full py-4 bg-royal-blue text-white font-bold text-[10px] uppercase tracking-widest hover:bg-blue-600 transition-all flex items-center justify-center shadow-lg"
                                     >
-                                      <RefreshCw size={14} className="mr-2" /> Retry Analysis
+                                      Use Demo Kitchen Room
                                     </button>
-                                    <button 
-                                      onClick={() => {
-                                        setIsScanning(false);
-                                        setAiError(null);
-                                      }}
-                                      className="flex-1 py-4 border border-white/20 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-white/10 transition-all"
-                                    >
-                                      Cancel
-                                    </button>
+                                    <div className="flex gap-3">
+                                      <button 
+                                        onClick={() => uploadedImage && analyzeImageWithAI(uploadedImage)}
+                                        className="flex-1 py-4 border border-white/20 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center"
+                                      >
+                                        <RefreshCw size={12} className="mr-2" /> Retry
+                                      </button>
+                                      <button 
+                                        onClick={() => {
+                                          setIsScanning(false);
+                                          setAiError(null);
+                                        }}
+                                        className="flex-1 py-4 border border-white/20 text-white font-bold text-[10px] uppercase tracking-widest hover:bg-white/10 transition-all"
+                                      >
+                                        Cancel
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               ) : (
@@ -1195,14 +1236,27 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
                           )}
                         </div>
                       ) : (
-                        <label className="w-full max-w-lg aspect-square md:aspect-video border-4 border-dashed border-gray-200 rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-royal-blue hover:bg-white transition-all group">
-                          <input type="file" className="hidden" onChange={handleUpload} accept="image/*" />
-                          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 group-hover:text-royal-blue group-hover:bg-royal-blue/5 transition-all mb-6">
-                            <Upload size={32} />
+                        <div className="w-full max-w-lg flex flex-col items-center space-y-4">
+                          <label className="w-full aspect-square md:aspect-[1.5] border-4 border-dashed border-gray-200 rounded-sm flex flex-col items-center justify-center cursor-pointer hover:border-royal-blue hover:bg-white transition-all group">
+                            <input type="file" className="hidden" onChange={handleUpload} accept="image/*" />
+                            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center text-gray-400 group-hover:text-royal-blue group-hover:bg-royal-blue/5 transition-all mb-4">
+                              <Upload size={24} />
+                            </div>
+                            <h3 className="text-lg font-bold text-brand-black uppercase tracking-tight mb-1">UPLOAD YOUR ROOM PHOTO</h3>
+                            <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">CLICK TO UPLOAD PHOTO</p>
+                          </label>
+                          <div className="w-full flex items-center justify-between">
+                            <div className="h-[1px] bg-gray-200 flex-grow mr-4" />
+                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">OR</span>
+                            <div className="h-[1px] bg-gray-200 flex-grow ml-4" />
                           </div>
-                          <h3 className="text-xl font-bold text-brand-black uppercase tracking-tight mb-2">UPLOAD YOUR ROOM PHOTO</h3>
-                          <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">CLICK TO UPLOAD PHOTO</p>
-                        </label>
+                          <button 
+                            onClick={loadDemoRoom}
+                            className="w-full py-4 border-2 border-brand-black text-brand-black font-bold text-[10px] uppercase tracking-widest hover:bg-brand-black hover:text-white transition-all shadow-md"
+                          >
+                            Try with Demo Kitchen
+                          </button>
+                        </div>
                       )}
                     </div>
 
