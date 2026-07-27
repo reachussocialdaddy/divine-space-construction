@@ -1,13 +1,6 @@
-
-import React, { useState } from 'react';
-import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF } from '@react-google-maps/api';
-import { MapPin, Info, X, ExternalLink } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { MapPin, Info, X } from 'lucide-react';
 import { ProjectPin } from '../../types.ts';
-
-const containerStyle = {
-  width: '100%',
-  height: '100%'
-};
 
 const center = {
   lat: 43.6532,
@@ -20,61 +13,123 @@ interface ProjectsMapProps {
 
 const ProjectsMap: React.FC<ProjectsMapProps> = ({ pins }) => {
   const [selected, setSelected] = useState<ProjectPin | null>(null);
-  
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: process.env.GOOGLE_MAPS_PLATFORM_KEY || 
-                     import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 
-                     (globalThis as any).GOOGLE_MAPS_PLATFORM_KEY || 
-                     ""
-  });
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const mapContainerRef = useRef<HTMLDivElement | null>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const markersRef = useRef<any[]>([]);
 
-  if (loadError) {
-    const isBillingError = loadError.message?.includes('BillingNotEnabledMapError') || 
-                          loadError.toString().includes('BillingNotEnabledMapError');
-    
-    return (
-      <section className="py-24 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <div className="bg-white p-12 rounded-sm shadow-xl border border-red-100 max-w-2xl mx-auto">
-            <MapPin size={48} className="mx-auto text-red-200 mb-6" />
-            <h2 className="text-2xl font-bold text-royal-blue mb-4 uppercase tracking-tighter">
-              {isBillingError ? "Action Required: Enable Billing" : "Map Loading Error"}
-            </h2>
-            <p className="text-gray-600 mb-6 leading-relaxed">
-              {isBillingError 
-                ? "The Google Maps API requires a billing account to be linked to your project. This is a mandatory step for the map to function."
-                : "The Google Maps API failed to load. This is often due to a configuration issue or billing not being enabled on the Google Cloud project."}
-            </p>
-            <div className="bg-red-50 p-6 rounded-sm text-left mb-6 border border-red-100">
-              <p className="text-xs font-bold text-red-800 uppercase tracking-widest mb-3 flex items-center">
-                <Info size={14} className="mr-2" /> How to fix this:
-              </p>
-              <ul className="text-xs text-red-700 space-y-2 list-disc pl-4 mb-4">
-                <li>Go to the <strong>Google Cloud Console</strong></li>
-                <li>Link a <strong>Billing Account</strong> to this project</li>
-                <li>Ensure <strong>Maps JavaScript API</strong> is enabled</li>
-                {isBillingError && <li>Wait a few minutes after enabling billing for the changes to propagate.</li>}
-              </ul>
-              <a 
-                href="https://console.cloud.google.com/billing" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-royal-blue font-bold text-xs hover:underline"
-              >
-                Open Billing Console <ExternalLink size={12} className="ml-1" />
-              </a>
-            </div>
-            <p className="text-sm text-gray-500 italic">
-              {isBillingError 
-                ? "Error: BillingNotEnabledMapError" 
-                : "Please ensure your API key is valid and billing is active in the Google Cloud Console."}
-            </p>
-          </div>
+  useEffect(() => {
+    // 1. Load Leaflet CSS dynamically if not already loaded
+    const cssId = 'leaflet-css';
+    if (!document.getElementById(cssId)) {
+      const link = document.createElement('link');
+      link.id = cssId;
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+    }
+
+    // 2. Load Leaflet JS dynamically if L is not defined
+    const scriptId = 'leaflet-js';
+    const initMap = () => {
+      setIsMapLoaded(true);
+    };
+
+    if ((window as any).L) {
+      initMap();
+    } else {
+      let script = document.getElementById(scriptId) as HTMLScriptElement;
+      if (!script) {
+        script = document.createElement('script');
+        script.id = scriptId;
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.async = true;
+        document.body.appendChild(script);
+      }
+      script.addEventListener('load', initMap);
+      return () => {
+        script.removeEventListener('load', initMap);
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!isMapLoaded || !mapContainerRef.current) return;
+    const L = (window as any).L;
+    if (!L) return;
+
+    // Initialize map if it doesn't exist
+    if (!mapInstanceRef.current) {
+      mapInstanceRef.current = L.map(mapContainerRef.current, {
+        center: [center.lat, center.lng],
+        zoom: 11,
+        zoomControl: true,
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      }).addTo(mapInstanceRef.current);
+
+      // Listen to popupclose to reset selection
+      mapInstanceRef.current.on('popupclose', () => {
+        setSelected(null);
+      });
+    }
+
+    const map = mapInstanceRef.current;
+
+    // Clear existing markers
+    markersRef.current.forEach(marker => marker.remove());
+    markersRef.current = [];
+
+    // Custom blue pin icon to match the previous marker styling
+    const customIcon = L.divIcon({
+      className: 'bg-transparent border-none',
+      html: `
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-royal-blue text-white shadow-lg border-2 border-white">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
         </div>
-      </section>
-    );
-  }
+      `,
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
+    });
+
+    // Add pins to map
+    pins.forEach(pin => {
+      const marker = L.marker([pin.lat, pin.lng], { icon: customIcon }).addTo(map);
+      
+      marker.bindPopup(`
+        <div class="p-2 min-w-[150px]">
+          <h4 class="font-bold text-royal-blue text-sm mb-1">${pin.title}</h4>
+          <p class="text-xs text-gray-600 line-clamp-2">${pin.description}</p>
+        </div>
+      `);
+      
+      marker.on('click', () => {
+        setSelected(pin);
+        map.panTo([pin.lat, pin.lng]);
+      });
+      
+      markersRef.current.push(marker);
+    });
+
+    // Adjust map bounds if there are pins
+    if (pins.length > 0) {
+      const group = L.featureGroup(markersRef.current);
+      map.fitBounds(group.getBounds().pad(0.1));
+    }
+  }, [isMapLoaded, pins]);
+
+  // Map instance cleanup on component unmount
+  useEffect(() => {
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
 
   return (
     <section className="py-24 bg-gray-50 border-t border-gray-100">
@@ -95,138 +150,9 @@ const ProjectsMap: React.FC<ProjectsMapProps> = ({ pins }) => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-          <div className="lg:col-span-2 relative h-[400px] md:h-[600px] bg-white rounded-sm shadow-xl overflow-hidden border border-gray-200">
-            {isLoaded ? (
-              <GoogleMap
-                mapContainerStyle={containerStyle}
-                center={center}
-                zoom={11}
-                options={{
-                  styles: [
-                    {
-                      "featureType": "all",
-                      "elementType": "geometry.fill",
-                      "stylers": [{ "weight": "2.00" }]
-                    },
-                    {
-                      "featureType": "all",
-                      "elementType": "geometry.stroke",
-                      "stylers": [{ "color": "#9c9c9c" }]
-                    },
-                    {
-                      "featureType": "all",
-                      "elementType": "labels.text",
-                      "stylers": [{ "visibility": "on" }]
-                    },
-                    {
-                      "featureType": "landscape",
-                      "elementType": "all",
-                      "stylers": [{ "color": "#f2f2f2" }]
-                    },
-                    {
-                      "featureType": "landscape",
-                      "elementType": "geometry.fill",
-                      "stylers": [{ "color": "#ffffff" }]
-                    },
-                    {
-                      "featureType": "landscape.man_made",
-                      "elementType": "geometry.fill",
-                      "stylers": [{ "color": "#ffffff" }]
-                    },
-                    {
-                      "featureType": "poi",
-                      "elementType": "all",
-                      "stylers": [{ "visibility": "off" }]
-                    },
-                    {
-                      "featureType": "road",
-                      "elementType": "all",
-                      "stylers": [{ "saturation": -100 }, { "lightness": 45 }]
-                    },
-                    {
-                      "featureType": "road",
-                      "elementType": "geometry.fill",
-                      "stylers": [{ "color": "#eeeeee" }]
-                    },
-                    {
-                      "featureType": "road",
-                      "elementType": "labels.text.fill",
-                      "stylers": [{ "color": "#7b7b7b" }]
-                    },
-                    {
-                      "featureType": "road",
-                      "elementType": "labels.text.stroke",
-                      "stylers": [{ "color": "#ffffff" }]
-                    },
-                    {
-                      "featureType": "road.highway",
-                      "elementType": "all",
-                      "stylers": [{ "visibility": "simplified" }]
-                    },
-                    {
-                      "featureType": "road.arterial",
-                      "elementType": "labels.icon",
-                      "stylers": [{ "visibility": "off" }]
-                    },
-                    {
-                      "featureType": "transit",
-                      "elementType": "all",
-                      "stylers": [{ "visibility": "off" }]
-                    },
-                    {
-                      "featureType": "water",
-                      "elementType": "all",
-                      "stylers": [{ "color": "#46bcec" }, { "visibility": "on" }]
-                    },
-                    {
-                      "featureType": "water",
-                      "elementType": "geometry.fill",
-                      "stylers": [{ "color": "#c8d7d4" }]
-                    },
-                    {
-                      "featureType": "water",
-                      "elementType": "labels.text.fill",
-                      "stylers": [{ "color": "#070707" }]
-                    },
-                    {
-                      "featureType": "water",
-                      "elementType": "labels.text.stroke",
-                      "stylers": [{ "color": "#ffffff" }]
-                    }
-                  ],
-                  disableDefaultUI: false,
-                  zoomControl: true,
-                }}
-              >
-                {pins.map((pin) => (
-                  <MarkerF
-                    key={pin.id}
-                    position={{ lat: pin.lat, lng: pin.lng }}
-                    onClick={() => setSelected(pin)}
-                    icon={{
-                      path: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z",
-                      fillColor: "#003399",
-                      fillOpacity: 1,
-                      strokeWeight: 1,
-                      strokeColor: "#ffffff",
-                      scale: 1.5,
-                      anchor: { x: 12, y: 24 } as any
-                    }}
-                  />
-                ))}
-
-                {selected && (
-                  <InfoWindowF
-                    position={{ lat: selected.lat, lng: selected.lng }}
-                    onCloseClick={() => setSelected(null)}
-                  >
-                    <div className="p-2 max-w-[200px]">
-                      <h4 className="font-bold text-royal-blue text-sm mb-1">{selected.title}</h4>
-                      <p className="text-xs text-gray-600 line-clamp-2">{selected.description}</p>
-                    </div>
-                  </InfoWindowF>
-                )}
-              </GoogleMap>
+          <div className="lg:col-span-2 relative h-[400px] md:h-[600px] bg-white rounded-sm shadow-xl overflow-hidden border border-gray-200 z-0">
+            {isMapLoaded ? (
+              <div ref={mapContainerRef} className="w-full h-full min-h-[400px] md:min-h-[600px] z-0" />
             ) : (
               <div className="w-full h-full flex items-center justify-center bg-gray-100">
                 <div className="text-center">

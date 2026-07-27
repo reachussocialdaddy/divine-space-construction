@@ -1,5 +1,4 @@
-import React, { useState, useCallback } from 'react';
-import { GoogleMap, useJsApiLoader, MarkerF, InfoWindowF } from '@react-google-maps/api';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { 
   LayoutDashboard, 
   Users, 
@@ -66,13 +65,6 @@ interface AdminPanelProps {
   navigateTo?: (view: View) => void;
 }
 
-const API_KEY = 
-  process.env.GOOGLE_MAPS_PLATFORM_KEY || 
-  import.meta.env.VITE_GOOGLE_MAPS_API_KEY || 
-  (globalThis as any).GOOGLE_MAPS_PLATFORM_KEY || 
-  '';
-const hasValidKey = Boolean(API_KEY) && API_KEY !== 'YOUR_API_KEY';
-
 const AdminPanel: React.FC<AdminPanelProps> = ({ 
   leads, projects, setProjects, clients, setClients, products, setProducts,
   categories, setCategories, subCategories, setSubCategories,
@@ -86,139 +78,178 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAddingPin, setIsAddingPin] = useState(false);
   const [tempPin, setTempPin] = useState<{ lat: number, lng: number } | null>(null);
-  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [map, setMap] = useState<any>(null);
   const [formData, setFormData] = useState<any>({});
   const [uploading, setUploading] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  const { isLoaded, loadError } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: API_KEY
-  });
+  const [isAdminMapScriptLoaded, setIsAdminMapScriptLoaded] = useState(false);
+  const adminMapContainerRef = useRef<HTMLDivElement | null>(null);
+  const adminMapInstanceRef = useRef<any>(null);
+  const adminMarkersRef = useRef<any[]>([]);
+  const tempMarkerRef = useRef<any>(null);
 
-  if (loadError && activeTab === 'Map Pins') {
-    return (
-      <div className="flex-grow p-10 bg-white border border-gray-100 rounded-sm shadow-sm">
-        <div className="max-w-xl mx-auto text-center py-20">
-          <MapIcon size={48} className="mx-auto text-red-200 mb-6" />
-          <h2 className="text-2xl font-bold text-brand-black mb-4 uppercase tracking-tighter">Google Maps API Error</h2>
-          <p className="text-gray-500 mb-8 leading-relaxed">
-            The map failed to load. Error: <span className="font-mono text-red-500">{loadError.message}</span>
-          </p>
-          
-          <div className="bg-red-50 p-6 rounded-sm text-left space-y-4 mb-8 border border-red-100">
-            <p className="text-xs font-bold uppercase tracking-widest text-red-800 flex items-center">
-              <AlertCircle size={14} className="mr-2" /> Troubleshooting: BillingNotEnabledMapError
-            </p>
-            <p className="text-sm text-red-700 leading-relaxed">
-              Google requires a <strong>Billing Account</strong> to be linked to your project, even for the free tier. Without it, the map will not display.
-            </p>
-            <div className="space-y-3 pt-2">
-              <a 
-                href="https://console.cloud.google.com/billing" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center justify-between w-full p-3 bg-white border border-red-200 rounded-sm text-royal-blue font-bold text-sm hover:bg-red-50 transition-all"
-              >
-                1. Link Billing Account to Project <ExternalLink size={14} />
-              </a>
-              <a 
-                href="https://console.cloud.google.com/google/maps-apis/library/maps-backend.googleapis.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center justify-between w-full p-3 bg-white border border-red-200 rounded-sm text-royal-blue font-bold text-sm hover:bg-red-50 transition-all"
-              >
-                2. Ensure Maps JavaScript API is Enabled <ExternalLink size={14} />
-              </a>
-            </div>
-          </div>
-          
-          <p className="text-[10px] text-gray-400 uppercase tracking-widest">After enabling billing, it may take a few minutes for the changes to propagate.</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!hasValidKey && activeTab === 'Map Pins') {
-    return (
-      <div className="flex-grow p-10 bg-white border border-gray-100 rounded-sm shadow-sm">
-        <div className="max-w-xl mx-auto text-center py-20">
-          <MapIcon size={48} className="mx-auto text-gray-200 mb-6" />
-          <h2 className="text-2xl font-bold text-brand-black mb-4 uppercase tracking-tighter">Google Maps API Key Required</h2>
-          <p className="text-gray-500 mb-8 leading-relaxed">To use the Map Pins feature, you need to provide a Google Maps Platform API key.</p>
-          
-          <div className="bg-gray-50 p-6 rounded-sm text-left space-y-4 mb-8">
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-400">Step 1: Get an API Key & Enable Billing</p>
-            <div className="space-y-2">
-              <a 
-                href="https://console.cloud.google.com/google/maps-apis/credentials" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-royal-blue font-bold text-sm hover:underline"
-              >
-                1. Create API Key <ExternalLink size={14} className="ml-1" />
-              </a>
-              <br />
-              <a 
-                href="https://console.cloud.google.com/billing" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center text-royal-blue font-bold text-sm hover:underline"
-              >
-                2. Enable Billing for your Project <ExternalLink size={14} className="ml-1" />
-              </a>
-              <p className="text-[10px] text-gray-500 italic">Note: Google Maps requires a billing account even for the free tier. You will get $200 free credit monthly.</p>
-            </div>
-            
-            <p className="text-xs font-bold uppercase tracking-widest text-gray-400 pt-4">Step 2: Add to AI Studio Secrets</p>
-            <ul className="text-xs text-gray-600 space-y-2 list-disc pl-4">
-              <li>Open <strong>Settings</strong> (⚙️ gear icon, top-right)</li>
-              <li>Select <strong>Secrets</strong></li>
-              <li>Add <code>GOOGLE_MAPS_PLATFORM_KEY</code> as the name</li>
-              <li>Paste your API key as the value</li>
-            </ul>
-          </div>
-          
-          <p className="text-[10px] text-gray-400 uppercase tracking-widest">The app will rebuild automatically after you add the secret.</p>
-        </div>
-      </div>
-    );
-  }
-
-  const onMapLoad = useCallback((mapInstance: google.maps.Map) => {
-    setMap(mapInstance);
-  }, []);
-
-  const handleMapClick = (e: google.maps.MapMouseEvent) => {
-    // We'll use the button to start adding, then a draggable marker appears
-  };
-
-  const handleNewPinDragEnd = (e: google.maps.MapMouseEvent) => {
-    if (e.latLng) {
-      const lat = Number(e.latLng.lat());
-      const lng = Number(e.latLng.lng());
-      setTempPin({ lat, lng });
-      setFormData({ type: 'pin', lat, lng, title: '', description: '' });
-      setIsModalOpen(true);
-      // Don't set isAddingPin to false yet, so the red marker stays visible while filling details
+  useEffect(() => {
+    if (activeTab !== 'Map Pins') return;
+    
+    // Load Leaflet CSS
+    const cssId = 'leaflet-css';
+    if (!document.getElementById(cssId)) {
+      const link = document.createElement('link');
+      link.id = cssId;
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
     }
-  };
 
-  const handleMarkerDragEnd = async (e: google.maps.MapMouseEvent, pinId: string) => {
-    if (e.latLng) {
-      const lat = Number(e.latLng.lat());
-      const lng = Number(e.latLng.lng());
-      
-      // Update local state
-      setPins(prev => prev.map(p => p.id === pinId ? { ...p, lat, lng } : p));
-      
-      // Update database
-      const { error } = await supabase.from('project_pins').update({ lat, lng }).eq('id', pinId);
-      if (error) console.error("Failed to update pin position:", error.message);
+    // Load Leaflet JS
+    const scriptId = 'leaflet-js';
+    const initAdminMap = () => {
+      setIsAdminMapScriptLoaded(true);
+    };
+
+    if ((window as any).L) {
+      initAdminMap();
+    } else {
+      let script = document.getElementById(scriptId) as HTMLScriptElement;
+      if (!script) {
+        script = document.createElement('script');
+        script.id = scriptId;
+        script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        script.async = true;
+        document.body.appendChild(script);
+      }
+      script.addEventListener('load', initAdminMap);
+      return () => {
+        script.removeEventListener('load', initAdminMap);
+      };
     }
-  };
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (activeTab !== 'Map Pins' || !isAdminMapScriptLoaded || !adminMapContainerRef.current) return;
+    const L = (window as any).L;
+    if (!L) return;
+
+    // Initialize map if it doesn't exist
+    if (!adminMapInstanceRef.current) {
+      const mapInstance = L.map(adminMapContainerRef.current, {
+        center: [43.6532, -79.3832],
+        zoom: 11,
+        zoomControl: true,
+      });
+
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
+      }).addTo(mapInstance);
+
+      adminMapInstanceRef.current = mapInstance;
+      setMap(mapInstance);
+    }
+
+    const mapInst = adminMapInstanceRef.current;
+
+    // Clear existing project markers
+    adminMarkersRef.current.forEach(m => m.remove());
+    adminMarkersRef.current = [];
+
+    // Custom blue pin icon for project pins
+    const blueIcon = L.divIcon({
+      className: 'bg-transparent border-none',
+      html: `
+        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-royal-blue text-white shadow-lg border-2 border-white">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+      `,
+      iconSize: [32, 32],
+      iconAnchor: [16, 16],
+    });
+
+    // Render project pins
+    (pins || []).forEach(pin => {
+      const marker = L.marker([pin.lat || 0, pin.lng || 0], { 
+        icon: blueIcon,
+        draggable: true 
+      }).addTo(mapInst);
+
+      // Handle marker dragend
+      marker.on('dragend', async (e: any) => {
+        const pos = e.target.getLatLng();
+        const lat = Number(pos.lat);
+        const lng = Number(pos.lng);
+        
+        // Update local state
+        setPins((prev: any[]) => prev.map(p => p.id === pin.id ? { ...p, lat, lng } : p));
+        
+        // Update database
+        const { error } = await supabase.from('project_pins').update({ lat, lng }).eq('id', pin.id);
+        if (error) console.error("Failed to update pin position:", error.message);
+      });
+
+      // Handle click to select
+      marker.on('click', () => {
+        setSelectedPin(pin);
+        mapInst.panTo([pin.lat || 0, pin.lng || 0]);
+      });
+
+      adminMarkersRef.current.push(marker);
+    });
+
+    // Render adding pin (RED marker) if active
+    if (tempMarkerRef.current) {
+      tempMarkerRef.current.remove();
+      tempMarkerRef.current = null;
+    }
+
+    if (isAddingPin) {
+      const startPos = tempPin || { lat: mapInst.getCenter().lat, lng: mapInst.getCenter().lng };
+      
+      const redIcon = L.divIcon({
+        className: 'bg-transparent border-none',
+        html: `
+          <div class="flex items-center justify-center w-10 h-10 rounded-full bg-red-600 text-white shadow-2xl border-2 border-white animate-bounce">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+        `,
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+      });
+
+      const redMarker = L.marker([startPos.lat, startPos.lng], {
+        icon: redIcon,
+        draggable: true
+      }).addTo(mapInst);
+
+      // Handle dragend for the new pin
+      redMarker.on('dragend', (e: any) => {
+        const pos = e.target.getLatLng();
+        const lat = Number(pos.lat);
+        const lng = Number(pos.lng);
+        setTempPin({ lat, lng });
+        setFormData({ type: 'pin', lat, lng, title: '', description: '' });
+        setIsModalOpen(true);
+      });
+
+      tempMarkerRef.current = redMarker;
+    }
+
+  }, [isAdminMapScriptLoaded, activeTab, pins, isAddingPin, tempPin]);
+
+  // Clean up admin map on tab change or unmount
+  useEffect(() => {
+    return () => {
+      if (adminMapInstanceRef.current) {
+        adminMapInstanceRef.current.remove();
+        adminMapInstanceRef.current = null;
+        setMap(null);
+      }
+    };
+  }, [activeTab]);
+
+  // Google Map handlers removed, Leaflet handlers are integrated in useEffect
 
   const internalCategories = [
     { id: 'handles', label: 'Handles and Knobs' },
@@ -1025,90 +1056,42 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
               </div>
             </div>
 
-            <div className="h-[600px] bg-white border border-gray-100 rounded-sm shadow-sm overflow-hidden relative">
-              {isLoaded ? (
-                <GoogleMap
-                  mapContainerStyle={{ width: '100%', height: '100%' }}
-                  center={{ lat: 43.6532, lng: -79.3832 }}
-                  zoom={11}
-                  onLoad={onMapLoad}
-                  onClick={handleMapClick}
-                  options={{
-                    disableDefaultUI: false,
-                    zoomControl: true,
-                    styles: [
-                      { "featureType": "poi", "stylers": [{ "visibility": "off" }] }
-                    ]
-                  }}
-                >
-                  {(pins || []).map((pin) => (
-                    <MarkerF
-                      key={pin.id}
-                      position={{ lat: pin.lat || 0, lng: pin.lng || 0 }}
-                      draggable={true}
-                      onDragEnd={(e) => handleMarkerDragEnd(e, pin.id)}
-                      onClick={() => setSelectedPin(pin)}
-                      icon={{
-                        path: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z",
-                        fillColor: "#003399",
-                        fillOpacity: 1,
-                        strokeWeight: 1,
-                        strokeColor: "#ffffff",
-                        scale: 1.5,
-                        anchor: { x: 12, y: 24 } as any
-                      }}
-                    />
-                  ))}
-                  {selectedPin && (
-                    <InfoWindowF
-                      position={{ lat: selectedPin.lat || 0, lng: selectedPin.lng || 0 }}
-                      onCloseClick={() => setSelectedPin(null)}
-                    >
-                      <div className="p-3 min-w-[180px]">
-                        <h4 className="font-bold text-royal-blue text-sm mb-1 uppercase tracking-tight">{selectedPin.title || 'Untitled'}</h4>
-                        <p className="text-[10px] text-gray-500 mb-3 line-clamp-2">{selectedPin.description}</p>
-                        <div className="flex space-x-2">
-                          <button 
-                            onClick={() => { handleEditPin(selectedPin); setSelectedPin(null); }}
-                            className="flex-grow py-1.5 bg-royal-blue text-white text-[9px] font-bold uppercase tracking-widest hover:bg-opacity-90 transition-all"
-                          >
-                            Edit
-                          </button>
-                          <button 
-                            onClick={() => { deletePin(selectedPin.id); setSelectedPin(null); }}
-                            className="px-2 py-1.5 bg-red-50 text-red-600 border border-red-100 text-[9px] font-bold uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all"
-                          >
-                            <Trash2 size={12} />
-                          </button>
-                        </div>
-                      </div>
-                    </InfoWindowF>
-                  )}
-                  {isAddingPin && (
-                    <MarkerF
-                      position={tempPin || map?.getCenter()?.toJSON() || { lat: 43.6532, lng: -79.3832 }}
-                      draggable={true}
-                      onDragEnd={handleNewPinDragEnd}
-                      icon={{
-                        path: "M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z",
-                        fillColor: "#FF0000", // Red for new pin
-                        fillOpacity: 1,
-                        strokeWeight: 2,
-                        strokeColor: "#ffffff",
-                        scale: 2,
-                        anchor: { x: 12, y: 24 } as any
-                      }}
-                    />
-                  )}
-                  {isAddingPin && (
-                    <div className="absolute top-4 left-1/2 -translate-x-1/2 z-10 bg-red-600 text-white px-6 py-3 rounded-full shadow-2xl font-bold text-xs uppercase tracking-widest animate-pulse">
-                      Drag the RED pin to the project location
-                    </div>
-                  )}
-                </GoogleMap>
+            <div className="h-[600px] bg-white border border-gray-100 rounded-sm shadow-sm overflow-hidden relative z-0">
+              {isAdminMapScriptLoaded ? (
+                <div ref={adminMapContainerRef} className="w-full h-full z-0" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gray-50">
                   <Loader2 className="animate-spin text-royal-blue" size={32} />
+                </div>
+              )}
+              {isAddingPin && (
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 z-20 bg-red-600 text-white px-6 py-3 rounded-full shadow-2xl font-bold text-xs uppercase tracking-widest animate-pulse pointer-events-none">
+                  Drag the RED pin to the project location
+                </div>
+              )}
+              {selectedPin && (
+                <div className="absolute bottom-4 left-4 z-20 bg-white p-4 rounded-sm shadow-2xl border border-gray-100 max-w-sm animate-in fade-in slide-in-from-bottom-4 duration-300">
+                  <div className="flex justify-between items-start mb-2">
+                    <h4 className="font-bold text-royal-blue text-sm uppercase tracking-tight">{selectedPin.title || 'Untitled'}</h4>
+                    <button onClick={() => setSelectedPin(null)} className="p-1 text-gray-400 hover:text-royal-blue">
+                      <X size={16} />
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-gray-500 mb-4 line-clamp-2">{selectedPin.description}</p>
+                  <div className="flex space-x-2">
+                    <button 
+                      onClick={() => { handleEditPin(selectedPin); setSelectedPin(null); }}
+                      className="flex-grow py-1.5 bg-royal-blue text-white text-[9px] font-bold uppercase tracking-widest hover:bg-opacity-90 transition-all text-center"
+                    >
+                      Edit Details
+                    </button>
+                    <button 
+                      onClick={() => { deletePin(selectedPin.id); setSelectedPin(null); }}
+                      className="px-3 py-1.5 bg-red-50 text-red-600 border border-red-100 text-[9px] font-bold uppercase tracking-widest hover:bg-red-600 hover:text-white transition-all flex items-center justify-center"
+                    >
+                      <Trash2 size={12} />
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -1154,7 +1137,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
                               <button 
                                 onClick={() => {
                                   if (map) {
-                                    map.panTo({ lat: pin.lat, lng: pin.lng });
+                                    map.panTo([pin.lat, pin.lng]);
                                     map.setZoom(15);
                                     setSelectedPin(pin);
                                   }
