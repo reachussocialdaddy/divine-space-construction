@@ -192,8 +192,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
     setIsAIAnalyzing(true);
     setAiError(null);
     try {
-      const ai = getAIClient();
-      const model = "gemini-2.5-flash";
+      const { client: ai, model } = getAIClient();
       
       const prompt = `Act as a WORLD-CLASS ARCHITECTURAL SCANNER and PHOTOSHOP EXPERT with 25 years of experience. 
       Analyze this interior room image and perform ULTIMATE DEEP SEGMENTATION with pixel-perfect precision. 
@@ -238,7 +237,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
       Identify ALL visible components, not just the main ones.`;
 
       const response = await ai.chat.completions.create({
-        model: "gpt-4o",
+        model: model,
         messages: [
           {
             role: "user",

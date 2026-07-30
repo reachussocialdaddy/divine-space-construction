@@ -2,36 +2,56 @@ import OpenAI from 'openai';
 
 /**
  * Helper to ensure the AI client is initialized with a valid key.
- * This function works seamlessly on Vercel as long as the OPENAI_API_KEY 
- * environment variable is set in the project dashboard.
+ * Supports both Gemini (OpenAI-compatible) and OpenAI APIs natively.
  */
-export const getAIClient = () => {
-  // Robust API key detection for both local and Vercel environments
-  const apiKey = process.env.OPENAI_API_KEY || 
-                 (import.meta.env && import.meta.env.VITE_OPENAI_API_KEY);
+export const getAIClient = (): { client: OpenAI; model: string } => {
+  const geminiApiKey = (process.env && process.env.GEMINI_API_KEY) || 
+                       (import.meta.env && import.meta.env.VITE_GEMINI_API_KEY) || '';
   
-  if (!apiKey || apiKey === "undefined" || apiKey === "null" || apiKey === "") {
-    console.error("CRITICAL: OPENAI_API_KEY is missing from environment.");
-    throw new Error("MISSING_API_KEY: The 'OPENAI_API_KEY' environment variable is not configured correctly. If you've deployed to Vercel, please add OPENAI_API_KEY to your Environment Variables in the Vercel Dashboard and REDEPLOY your app.");
+  const openaiApiKey = (process.env && process.env.OPENAI_API_KEY) || 
+                       (import.meta.env && import.meta.env.VITE_OPENAI_API_KEY) || '';
+
+  // 1. Prefer Gemini if GEMINI_API_KEY is present
+  if (geminiApiKey && geminiApiKey !== "undefined" && geminiApiKey !== "null" && geminiApiKey !== "") {
+    console.log("AI Client: Initializing Gemini Client - Key starts with:", geminiApiKey.substring(0, 4) + "...");
+    return {
+      client: new OpenAI({
+        apiKey: geminiApiKey,
+        baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
+        dangerouslyAllowBrowser: true
+      }),
+      model: "gemini-2.5-flash"
+    };
   }
-  
-  // Log a sanitized version of the key to verify it's being picked up on Vercel
-  if (process.env.NODE_ENV !== 'production' || true) { // Force log for debugging Vercel issues
-    console.log("AI Client initialization check - Key starts with:", apiKey.substring(0, 4) + "...");
-    if (!apiKey.startsWith('sk-')) {
-      console.warn("WARNING: The detected OPENAI_API_KEY does not appear to be a valid OpenAI API key (expected to start with 'sk-'). Please check your Vercel environment variables.");
+
+  // 2. Fallback to OpenAI if OPENAI_API_KEY is present
+  if (openaiApiKey && openaiApiKey !== "undefined" && openaiApiKey !== "null" && openaiApiKey !== "") {
+    console.log("AI Client: Initializing OpenAI Client - Key starts with:", openaiApiKey.substring(0, 4) + "...");
+    if (!openaiApiKey.startsWith('sk-')) {
+      console.warn("WARNING: The detected OPENAI_API_KEY does not appear to be a valid OpenAI API key (expected to start with 'sk-').");
     }
+    return {
+      client: new OpenAI({
+        apiKey: openaiApiKey,
+        dangerouslyAllowBrowser: true
+      }),
+      model: "gpt-4o"
+    };
   }
-  
-  return new OpenAI({ apiKey, dangerouslyAllowBrowser: true });
+
+  console.error("CRITICAL: Neither GEMINI_API_KEY nor OPENAI_API_KEY is configured in the environment.");
+  throw new Error("MISSING_API_KEY: Neither GEMINI_API_KEY nor OPENAI_API_KEY was found. Please add GEMINI_API_KEY to your .env file to run locally.");
 };
 
 /**
- * Service to interact with OpenAI for lead assistance.
+ * Service to interact with AI for lead assistance.
  */
 export const getAIResponse = async (prompt: string, history: { role: 'user' | 'assistant', content: string }[]) => {
   try {
-    const openai = getAIClient();
+    const { client: ai, model } = getAIClient();
+    
+    // Choose appropriate chat model based on provider
+    const chatModel = model.includes('gemini') ? 'gemini-2.5-flash' : 'gpt-4o-mini';
     
     const messages: any[] = [
       {
@@ -51,15 +71,15 @@ export const getAIResponse = async (prompt: string, history: { role: 'user' | 'a
       { role: "user", content: prompt }
     ];
 
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+    const response = await ai.chat.completions.create({
+      model: chatModel,
       messages,
       temperature: 0.7,
     });
 
     return response.choices[0]?.message?.content || "Our experts are currently reviewing your request.";
   } catch (error: any) {
-    console.error("OpenAI Chat Error:", error);
+    console.error("AI Chat Error:", error);
     
     // Provide more helpful error messages for common issues
     if (error.message?.includes("429") || error.message?.includes("quota")) {
