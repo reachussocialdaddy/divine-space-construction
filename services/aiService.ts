@@ -19,11 +19,13 @@ export const getAIClient = (): { client: OpenAI; model: string } => {
 
   // 1. Prefer NVIDIA NIM if NVIDIA key is present
   if (finalNvidiaKey) {
+    const isBrowser = typeof window !== 'undefined';
+    const baseUrl = isBrowser ? `${window.location.origin}/api/nvidia` : '/api/nvidia';
     console.log("AI Client: Initializing NVIDIA NIM Client (Proxied) - Key starts with:", finalNvidiaKey.substring(0, 8) + "...");
     return {
       client: new OpenAI({
         apiKey: finalNvidiaKey,
-        baseURL: "/api/nvidia",
+        baseURL: baseUrl,
         dangerouslyAllowBrowser: true
       }),
       model: "meta/llama-3.2-11b-vision-instruct"
