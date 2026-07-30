@@ -119,3 +119,26 @@ export const getAIResponse = async (prompt: string, history: { role: 'user' | 'a
     return "I'm having a brief technical moment. Please try again later.";
   }
 };
+
+/**
+ * Utility to parse JSON safely from LLM responses, handles markdown blocks and conversational prefixes.
+ */
+export const parseAIJSON = (text: string): any => {
+  let cleaned = text.trim();
+  
+  // Remove markdown wrapper if present
+  if (cleaned.startsWith("```")) {
+    cleaned = cleaned.replace(/^```(json)?/i, "").replace(/```$/i, "").trim();
+  }
+  
+  // Find first '{' and last '}'
+  const startIdx = cleaned.indexOf("{");
+  const endIdx = cleaned.lastIndexOf("}");
+  
+  if (startIdx !== -1 && endIdx !== -1 && endIdx > startIdx) {
+    const jsonString = cleaned.substring(startIdx, endIdx + 1);
+    return JSON.parse(jsonString);
+  }
+  
+  return JSON.parse(cleaned);
+};

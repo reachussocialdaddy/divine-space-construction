@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Product, View } from '../../types';
 import { formatPrice } from './ProductPage';
-import { getAIClient } from '../../services/aiService.ts';
+import { getAIClient, parseAIJSON } from '../../services/aiService.ts';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -363,7 +363,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
 
       const text = response.choices[0]?.message?.content;
       if (!text) throw new Error("Empty response from AI");
-      const result = JSON.parse(text);
+      const result = parseAIJSON(text);
       if (result) {
         setLayerMasks({
           WALL: result.WALL,
