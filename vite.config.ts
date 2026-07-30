@@ -15,6 +15,15 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
+    server: {
+      proxy: {
+        '/api/nvidia': {
+          target: 'https://integrate.api.nvidia.com/v1',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api\/nvidia/, '')
+        }
+      }
+    },
     define: {
       // Direct replacement for the API key in the client-side bundle.
       'process.env.GEMINI_API_KEY': JSON.stringify(apiKey),
