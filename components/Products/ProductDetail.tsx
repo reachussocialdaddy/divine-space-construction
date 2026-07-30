@@ -69,6 +69,11 @@ const TAB_MATERIALS: Record<string, { id: string; name: string; image: string; d
     { id: 'fu18', name: 'Rose Gold Brushed Metallic', image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=800', description: 'Soft pink-gold metallic finish for dramatic statement kitchen islands.' },
     { id: 'fu19', name: 'French Vanilla Shaker', image: 'https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?auto=format&fit=crop&q=80&w=800', description: 'Warm off-white painted finish on classic shaker style door profiles.' },
     { id: 'fu20', name: 'Industrial Concrete Texture', image: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=800', description: 'Raw, textured concrete-look panels for urban loft aesthetics.' }
+  ],
+  HARDWARE: [
+    { id: 'h1', name: 'Bespoke Champagne Gold Pull', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=200', description: 'Luxury solid brass champagne gold cabinet pull handle.' },
+    { id: 'h2', name: 'Classic Matte Black Bar', image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=200', description: 'Sleek, minimalist matte black hardware bar.' },
+    { id: 'h3', name: 'Brushed Nickel T-Bar', image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=200', description: 'Premium brushed nickel modern T-bar kitchen pull.' }
   ]
 };
 
@@ -112,20 +117,20 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [isDesignerActive, setIsDesignerActive] = useState(false);
-  const [activeTab, setActiveTab] = useState<'FLOOR' | 'WALL' | 'FURNITURE' | 'COUNTERTOP' | 'HARDWARE'>('FURNITURE');
+  const [activeTab, setActiveTab] = useState<'FLOOR' | 'WALL' | 'FURNITURE' | 'COUNTERTOP' | 'HARDWARE'>('COUNTERTOP');
   const [selections, setSelections] = useState<Record<string, string>>({
     FLOOR: 'Smoked Oak Herringbone',
     WALL: 'Chantilly Lace White',
     FURNITURE: 'Premium Walnut Veneer',
-    COUNTERTOP: 'Calacatta Quartz Gold',
-    HARDWARE: ''
+    COUNTERTOP: '',
+    HARDWARE: 'Bespoke Champagne Gold Pull'
   });
   const [appliedImages, setAppliedImages] = useState<Record<string, string>>({
     FLOOR: '',
     WALL: '',
     FURNITURE: '',
     COUNTERTOP: '',
-    HARDWARE: ''
+    HARDWARE: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=200'
   });
   const [imageAspectRatio, setImageAspectRatio] = useState<number | null>(null);
   const [hotspots, setHotspots] = useState<{ x: number, y: number }[]>([]);
@@ -170,10 +175,21 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
 
   useEffect(() => {
     if (product) {
-      setSelections(prev => ({ ...prev, HARDWARE: product.name }));
-      setAppliedImages(prev => ({ ...prev, HARDWARE: product.image }));
+      setSelections(prev => ({ ...prev, COUNTERTOP: product.name }));
+      setAppliedImages(prev => ({ ...prev, COUNTERTOP: product.image }));
     }
   }, [product]);
+
+  const getMaterialList = () => {
+    if (activeTab === 'COUNTERTOP') {
+      const filtered = designerProducts.filter(p => p.id !== product?.id);
+      return product ? [product, ...filtered] : designerProducts;
+    }
+    if (activeTab === 'HARDWARE') {
+      return TAB_MATERIALS.HARDWARE || [];
+    }
+    return TAB_MATERIALS[activeTab] || [];
+  };
 
   useEffect(() => {
     if (isScanning && !isAIAnalyzing && layerMasks.WALL && !aiError) {
@@ -844,7 +860,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ productId, products, navi
 
                       {/* Product List */}
                       <div className="flex-grow overflow-y-auto p-6 space-y-4">
-                        {(activeTab === 'HARDWARE' ? designerProducts : TAB_MATERIALS[activeTab]).map((material) => (
+                        {getMaterialList().map((material) => (
                           <button
                             key={material.id}
                             onClick={() => handleProductSelect(material)}

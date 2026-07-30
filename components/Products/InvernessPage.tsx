@@ -47,6 +47,11 @@ const TAB_MATERIALS: Record<string, { id: string; name: string; image: string; d
     { id: 'fu18', name: 'Rose Gold Brushed Metallic', image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=800', description: 'Soft pink-gold metallic finish for dramatic statement kitchen islands.' },
     { id: 'fu19', name: 'French Vanilla Shaker', image: 'https://images.unsplash.com/photo-1618221381711-42ca8ab6e908?auto=format&fit=crop&q=80&w=800', description: 'Warm off-white painted finish on classic shaker style door profiles.' },
     { id: 'fu20', name: 'Industrial Concrete Texture', image: 'https://images.unsplash.com/photo-1590381105924-c72589b9ef3f?auto=format&fit=crop&q=80&w=800', description: 'Raw, textured concrete-look panels for urban loft aesthetics.' }
+  ],
+  HARDWARE: [
+    { id: 'h1', name: 'Bespoke Champagne Gold Pull', image: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=200', description: 'Luxury solid brass champagne gold cabinet pull handle.' },
+    { id: 'h2', name: 'Classic Matte Black Bar', image: 'https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80&w=200', description: 'Sleek, minimalist matte black hardware bar.' },
+    { id: 'h3', name: 'Brushed Nickel T-Bar', image: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&q=80&w=200', description: 'Premium brushed nickel modern T-bar kitchen pull.' }
   ]
 };
 
@@ -83,20 +88,20 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [isDesignerActive, setIsDesignerActive] = useState(false);
-  const [activeTab, setActiveTab] = useState<'FLOOR' | 'WALL' | 'FURNITURE' | 'COUNTERTOP' | 'HARDWARE'>('FURNITURE');
+  const [activeTab, setActiveTab] = useState<'FLOOR' | 'WALL' | 'FURNITURE' | 'COUNTERTOP' | 'HARDWARE'>('COUNTERTOP');
   const [selections, setSelections] = useState<Record<string, string>>({
     FLOOR: 'Smoked Oak Herringbone',
     WALL: 'Chantilly Lace White',
     FURNITURE: 'Premium Walnut Veneer',
     COUNTERTOP: 'Calacatta Quartz Gold',
-    HARDWARE: 'Luxe Gold Handle'
+    HARDWARE: 'Bespoke Champagne Gold Pull'
   });
   const [appliedImages, setAppliedImages] = useState<Record<string, string>>({
     FLOOR: '',
     WALL: '',
     FURNITURE: '',
     COUNTERTOP: '',
-    HARDWARE: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&q=80&w=200'
+    HARDWARE: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&q=80&w=200'
   });
   const [imageAspectRatio, setImageAspectRatio] = useState<number | null>(null);
   const [hotspots, setHotspots] = useState<{ x: number, y: number }[]>([]);
@@ -137,6 +142,16 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
   const quadProducts = products.filter(p => p.category === 'Quartz');
   const featuredProduct = quadProducts[0];
   const designerProducts = quadProducts;
+
+  const getMaterialList = () => {
+    if (activeTab === 'COUNTERTOP') {
+      return designerProducts;
+    }
+    if (activeTab === 'HARDWARE') {
+      return TAB_MATERIALS.HARDWARE || [];
+    }
+    return TAB_MATERIALS[activeTab] || [];
+  };
 
   const [isZoomed, setIsZoomed] = useState(false);
   const [isAIAnalyzing, setIsAIAnalyzing] = useState(false);
@@ -699,7 +714,7 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
 
                       {/* Product List */}
                       <div className="flex-grow overflow-y-auto p-6 space-y-4">
-                        {(activeTab === 'HARDWARE' ? designerProducts : TAB_MATERIALS[activeTab]).map((product) => (
+                        {getMaterialList().map((product) => (
                           <button
                             key={product.id}
                             onClick={() => handleProductSelect(product)}
