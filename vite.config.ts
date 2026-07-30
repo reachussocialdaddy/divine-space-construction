@@ -11,12 +11,14 @@ export default defineConfig(({ mode }) => {
   // Vercel sometimes doesn't expose variables to loadEnv if they aren't VITE_ prefixed,
   // so we explicitly check process.env as well for the highest reliability.
   const apiKey = env.GEMINI_API_KEY || env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY || process.env.VITE_GEMINI_API_KEY || '';
+  const nvidiaKey = env.NVIDIA_API_KEY || env.VITE_NVIDIA_API_KEY || process.env.NVIDIA_API_KEY || process.env.VITE_NVIDIA_API_KEY || '';
 
   return {
     plugins: [react()],
     define: {
       // Direct replacement for the API key in the client-side bundle.
       'process.env.GEMINI_API_KEY': JSON.stringify(apiKey),
+      'process.env.NVIDIA_API_KEY': JSON.stringify(nvidiaKey),
       'process.env.GOOGLE_MAPS_PLATFORM_KEY': JSON.stringify(process.env.GOOGLE_MAPS_PLATFORM_KEY || '')
     },
     build: {

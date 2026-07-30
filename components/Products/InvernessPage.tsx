@@ -236,7 +236,9 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
       Be extremely precise. Use percentages (0-100%) for coordinates. 
       Identify ALL visible components, not just the main ones.`;
 
-      const response = await ai.chat.completions.create({
+      const isNvidia = model.includes('llama');
+
+      const options: any = {
         model: model,
         messages: [
           {
@@ -251,8 +253,11 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
               }
             ]
           }
-        ],
-        response_format: {
+        ]
+      };
+
+      if (!isNvidia) {
+        options.response_format = {
           type: "json_schema",
           json_schema: {
             name: "room_segmentation",
@@ -319,8 +324,12 @@ const InvernessPage: React.FC<InvernessPageProps> = ({ navigateTo, products }) =
               additionalProperties: false
             }
           }
-        }
-      });
+        };
+      } else {
+        options.response_format = { type: "json_object" };
+      }
+
+      const response = await ai.chat.completions.create(options);
 
       const text = response.choices[0]?.message?.content;
       if (!text) throw new Error("Empty response from AI");

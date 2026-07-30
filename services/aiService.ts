@@ -2,7 +2,7 @@ import OpenAI from 'openai';
 
 /**
  * Helper to ensure the AI client is initialized with a valid key.
- * Supports both Gemini (OpenAI-compatible) and OpenAI APIs natively.
+ * Supports NVIDIA NIM, Gemini, and OpenAI APIs natively.
  */
 export const getAIClient = (): { client: OpenAI; model: string } => {
   const geminiApiKey = (process.env && process.env.GEMINI_API_KEY) || 
@@ -11,7 +11,26 @@ export const getAIClient = (): { client: OpenAI; model: string } => {
   const openaiApiKey = (process.env && process.env.OPENAI_API_KEY) || 
                        (import.meta.env && import.meta.env.VITE_OPENAI_API_KEY) || '';
 
-  // 1. Prefer Gemini if GEMINI_API_KEY is present
+  const nvidiaApiKey = (process.env && process.env.NVIDIA_API_KEY) || 
+                       (import.meta.env && import.meta.env.VITE_NVIDIA_API_KEY) || '';
+
+  // Detect which key is actually the NVIDIA NIM key (starts with nvapi-)
+  const finalNvidiaKey = [nvidiaApiKey, geminiApiKey, openaiApiKey].find(k => k.startsWith('nvapi-'));
+
+  // 1. Prefer NVIDIA NIM if NVIDIA key is present
+  if (finalNvidiaKey) {
+    console.log("AI Client: Initializing NVIDIA NIM Client - Key starts with:", finalNvidiaKey.substring(0, 8) + "...");
+    return {
+      client: new OpenAI({
+        apiKey: finalNvidiaKey,
+        baseURL: "https://integrate.api.nvidia.com/v1",
+        dangerouslyAllowBrowser: true
+      }),
+      model: "meta/llama-3.2-11b-vision-instruct"
+    };
+  }
+
+  // 2. Prefer Gemini if GEMINI_API_KEY is present
   if (geminiApiKey && geminiApiKey !== "undefined" && geminiApiKey !== "null" && geminiApiKey !== "") {
     console.log("AI Client: Initializing Gemini Client - Key starts with:", geminiApiKey.substring(0, 4) + "...");
     return {
@@ -24,7 +43,7 @@ export const getAIClient = (): { client: OpenAI; model: string } => {
     };
   }
 
-  // 2. Fallback to OpenAI if OPENAI_API_KEY is present
+  // 3. Fallback to OpenAI if OPENAI_API_KEY is present
   if (openaiApiKey && openaiApiKey !== "undefined" && openaiApiKey !== "null" && openaiApiKey !== "") {
     console.log("AI Client: Initializing OpenAI Client - Key starts with:", openaiApiKey.substring(0, 4) + "...");
     if (!openaiApiKey.startsWith('sk-')) {
@@ -39,8 +58,8 @@ export const getAIClient = (): { client: OpenAI; model: string } => {
     };
   }
 
-  console.error("CRITICAL: Neither GEMINI_API_KEY nor OPENAI_API_KEY is configured in the environment.");
-  throw new Error("MISSING_API_KEY: Neither GEMINI_API_KEY nor OPENAI_API_KEY was found. Please add GEMINI_API_KEY to your .env file to run locally.");
+  console.error("CRITICAL: No valid API Key (NVIDIA, Gemini, or OpenAI) is configured in the environment.");
+  throw new Error("MISSING_API_KEY: No API key found. Please add GEMINI_API_KEY or NVIDIA_API_KEY to your .env file to run locally.");
 };
 
 /**
@@ -51,7 +70,12 @@ export const getAIResponse = async (prompt: string, history: { role: 'user' | 'a
     const { client: ai, model } = getAIClient();
     
     // Choose appropriate chat model based on provider
-    const chatModel = model.includes('gemini') ? 'gemini-2.5-flash' : 'gpt-4o-mini';
+    let chatModel = 'gpt-4o-mini';
+    if (model.includes('gemini')) {
+      chatModel = 'gemini-2.5-flash';
+    } else if (model.includes('llama')) {
+      chatModel = 'meta/llama-3-70b-instruct'; // Chat fallback for NVIDIA NIM
+    }
     
     const messages: any[] = [
       {
